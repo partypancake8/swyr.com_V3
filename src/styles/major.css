@@ -1,0 +1,123 @@
+/* ====================
+   GLOBAL RESET
+   ==================== */
+/* Reset default browser spacing and set consistent box-sizing across all elements */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Include padding and border in element's total width/height */
+}
+
+/* ====================
+   BODY STYLES
+   ==================== */
+/* Base styles for the entire page */
+body {
+  font-family: Inter, sans-serif; /* Clean, readable font */
+  background-color: #000000; /* Pure black background */
+  color: #00ff00; /* Bright green text for high contrast */
+}
+
+/* ====================
+   HEADER STYLES
+   ==================== */
+/* Top navigation area with border accent */
+header {
+  background-color: #000000; /* Slightly lighter black for subtle contrast */
+  padding: 1rem; /* Spacing inside header (16px) */
+  border-bottom: 2px solid #00ff00; /* Green accent line separating header from content */
+}
+
+/* ====================
+   NAVIGATION STYLES
+   ==================== */
+/* Container for navigation links - centered with max width for readability */
+nav {
+  max-width: 1200px; /* Limit width on large screens for better reading experience */
+  margin: 0 auto; /* Center the navigation horizontally */
+  display: flex; /* Use flexbox for layout */
+  justify-content: flex-end; /* Align navigation links to the right */
+}
+
+/* Individual navigation links */
+nav a {
+  color: #00ff00; /* Green text matching theme */
+  text-decoration: none; /* Remove default underline from links */
+  margin-right: 2rem; /* Space between navigation items (32px) */
+}
+
+/* ====================
+   MAIN CONTENT STYLES
+   ==================== */
+/* Primary content area - centered with padding */
+main {
+  max-width: 1200px; /* Match nav width for consistent layout */
+  margin: 0 auto; /* Center content horizontally */
+  padding: 2rem; /* Space around content (32px) */
+}
+
+/* ====================
+   TYPOGRAPHY STYLES
+   ==================== */
+/* Main heading size */
+h1 {
+  font-size: 3rem; /* Large heading (48px) */
+  margin-bottom: 1rem; /* Space below heading (16px) */
+}
+
+h4 {
+  font-size: 1rem; /* Subheading size (24px) */
+  margin-bottom: 0.5rem; /* Space below heading (16px) */
+}
+
+p-alternate {
+  font-size: 1.2rem; /* Subheading size (24px) */
+  margin-bottom: 0.5rem;
+  color: #757575; /* Space below heading (16px) */
+}
+
+/* Optional class to add a line under h1 headings */
+.h1-underline {
+  padding-bottom: 0.5rem; /* Space between text and line (8px) */
+  border-bottom: 2px solid #00ff00; /* Green line under heading */
+  margin-bottom: 1rem; /* Space below the line (16px) */
+}
+
+/* Paragraph text */
+p {
+  font-size: 1.2rem; /* Slightly larger than default for readability (19.2px) */
+  margin-bottom: 1rem; /* Space below paragraphs (16px) */
+}
+
+/* ====================
+   BOX/CONTAINER STYLES
+   ==================== */
+/* Content box with green border matching the header line */
+.box {
+  border: 2px solid #00ff00; /* Same 2px green border as header */
+  padding: 2rem; /* Space inside the box (24px) */
+  margin: 1rem 1rem; /* Space above and below the box (16px) */
+  background-color: #000000; /* Slightly lighter black for subtle contrast */
+  border-radius: 8px; /* Rounded corners */
+}
+
+/* ====================
+   GRID LAYOUT STYLES
+   ==================== */
+/* Grid container with one full-width box on top, two boxes below */
+.grid-container {
+  display: grid; /* Enable CSS Grid */
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 1rem; /* Space between grid items (16px) */
+  margin: 0rem; /* Space around the grid */
+}
+
+/* Full-width box spanning both columns */
+.grid-full {
+  grid-column: 1 / -1; /* Span from first to last column */
+  margin: 0;
+}
+
+/* * {
+  outline: 1px solid rgb(255, 102, 0) !important;
+} */
