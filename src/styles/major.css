@@ -9,13 +9,24 @@
 }
 
 /* ====================
+   CSS VARIABLES
+   ==================== */
+/* Global variables for consistent spacing and colors */
+:root {
+  --page-padding: 5rem; /* Global horizontal padding - change this to adjust all padding at once */
+  --primary-color: #00ff00; /* Bright green */
+  --background-color: #000000; /* Pure black */
+  --border-width: 2px; /* Standard border width */
+}
+
+/* ====================
    BODY STYLES
    ==================== */
 /* Base styles for the entire page */
 body {
   font-family: Inter, sans-serif; /* Clean, readable font */
-  background-color: #000000; /* Pure black background */
-  color: #00ff00; /* Bright green text for high contrast */
+  background-color: var(--background-color); /* Pure black background */
+  color: var(--primary-color); /* Bright green text for high contrast */
 }
 
 /* ====================
@@ -23,9 +34,9 @@ body {
    ==================== */
 /* Top navigation area with border accent */
 header {
-  background-color: #000000; /* Slightly lighter black for subtle contrast */
+  background-color: #0b0b0b; /* Slightly lighter black for subtle contrast */
   padding: 1rem; /* Spacing inside header (16px) */
-  border-bottom: 2px solid #00ff00; /* Green accent line separating header from content */
+  border-bottom: var(--border-width) solid var(--primary-color); /* Green accent line separating header from content */
 }
 
 /* ====================
@@ -35,15 +46,16 @@ header {
 nav {
   max-width: 1200px; /* Limit width on large screens for better reading experience */
   margin: 0 auto; /* Center the navigation horizontally */
+  padding: 0 var(--page-padding); /* Use global padding variable */
   display: flex; /* Use flexbox for layout */
   justify-content: flex-end; /* Align navigation links to the right */
 }
 
 /* Individual navigation links */
 nav a {
-  color: #00ff00; /* Green text matching theme */
+  color: var(--primary-color); /* Green text matching theme */
   text-decoration: none; /* Remove default underline from links */
-  margin-right: 2rem; /* Space between navigation items (32px) */
+  margin-left: 2rem; /* Space between navigation items (32px) */
 }
 
 /* ====================
@@ -53,7 +65,7 @@ nav a {
 main {
   max-width: 1200px; /* Match nav width for consistent layout */
   margin: 0 auto; /* Center content horizontally */
-  padding: 2rem; /* Space around content (32px) */
+  padding: 2rem var(--page-padding); /* Use global padding variable for horizontal spacing */
 }
 
 /* ====================
@@ -63,6 +75,13 @@ main {
 h1 {
   font-size: 3rem; /* Large heading (48px) */
   margin-bottom: 1rem; /* Space below heading (16px) */
+  font-weight: 450; /* Semi-bold instead of default bold (700) */
+}
+
+h2 {
+  font-size: 2.5rem; /* Large heading (48px) */
+  margin-bottom: 1rem; /* Space below heading (16px) */
+  font-weight: 450; /* Semi-bold */
 }
 
 h4 {
@@ -79,8 +98,15 @@ p-alternate {
 /* Optional class to add a line under h1 headings */
 .h1-underline {
   padding-bottom: 0.5rem; /* Space between text and line (8px) */
-  border-bottom: 2px solid #00ff00; /* Green line under heading */
+  border-bottom: 1px solid var(--primary-color); /* Green line under heading */
   margin-bottom: 1rem; /* Space below the line (16px) */
+}
+
+/* Horizontal divider line matching h1-underline style */
+.divider {
+  border: none; /* Remove default hr border */
+  border-top: 1px solid var(--primary-color); /* Same 1px green line as h1-underline */
+  margin: 1rem 0; /* Space above and below (16px) */
 }
 
 /* Paragraph text */
@@ -94,10 +120,12 @@ p {
    ==================== */
 /* Content box with green border matching the header line */
 .box {
-  border: 2px solid #00ff00; /* Same 2px green border as header */
+  border: var(--border-width) solid var(--primary-color); /* Same green border as header */
   padding: 2rem; /* Space inside the box (24px) */
-  margin: 1rem 1rem; /* Space above and below the box (16px) */
-  background-color: #000000; /* Slightly lighter black for subtle contrast */
+  margin: 1rem 0; /* Space above and below - no left/right margin for alignment */
+  background-color: var(
+    --background-color
+  ); /* Slightly lighter black for subtle contrast */
   border-radius: 8px; /* Rounded corners */
 }
 
@@ -116,6 +144,38 @@ p {
 .grid-full {
   grid-column: 1 / -1; /* Span from first to last column */
   margin: 0;
+}
+
+/* ====================
+   RESPONSIVE STYLES
+   ==================== */
+/* Mobile devices: Stack grid items vertically */
+@media (max-width: 768px) {
+  :root {
+    --page-padding: 1.5rem; /* Reduce padding on mobile - automatically applies to nav and main */
+  }
+
+  .grid-container {
+    grid-template-columns: 1fr; /* Single column on mobile */
+  }
+
+  /* Scale down text sizes for mobile */
+  h1 {
+    font-size: 2rem; /* Reduce from 3rem (48px) to 2rem (32px) */
+  }
+
+  h2 {
+    font-size: 1.8rem; /* Reduce from 2.7rem to 1.8rem */
+  }
+
+  p,
+  p-alternate {
+    font-size: 1rem; /* Reduce from 1.2rem to 1rem (16px) */
+  }
+
+  nav a {
+    margin-left: 1rem; /* Reduce spacing between nav links (was margin-right, changed to margin-left) */
+  }
 }
 
 /* * {
