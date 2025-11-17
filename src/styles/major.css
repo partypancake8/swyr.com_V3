@@ -191,7 +191,7 @@ p {
   background: var(--primary-color); /* Green background */
   color: var(--background-color); /* Black text for contrast */
   border: 2px solid #000000; /* Green border */
-  border-radius: 9px; /* Rounded corners */
+  border-radius: 10px; /* Rounded corners */
   font-family: inherit;
   text-align: center;
   text-decoration: none; /* Remove underline */
@@ -212,5 +212,58 @@ p {
 .button-link:active {
   /* Fully pressed look */
   box-shadow: 0px 0px 0px #757575;
-  transform: translate(4px, 4px);
+  transform: translate(2px, 2px);
+}
+
+/* ====================
+   PACKAGE CARD STYLES
+   ==================== */
+/* Outer container - provides the green background/border effect */
+.package {
+  width: auto; /* Auto width to fit content */
+  height: auto; /* Auto height to fit content */
+  background-color: #00ff00; /* Solid green background */
+  border-radius: 11.5px; /* Rounded corners for outer container */
+  text-align: left; /* Align text content to the left */
+  transition: all 0.5s cubic-bezier(0, 0, 0, 1); /* Smooth animation with custom easing */
+  padding: 0px; /* No padding initially - green background is hidden */
+}
+
+/* Hover state for outer container - reveals green border */
+.package:hover {
+  /*box-shadow: 0px 0px 10px 1px #757575; /* Subtle gray glow effect on hover */
+  padding: 6px; /* Add 6px padding on all sides to push inner card inward and reveal green border */
+}
+
+/* Inner content card - the main visible card */
+.package2 {
+  width: auto; /* Auto width to fit content */
+  height: auto; /* Auto height to fit content */
+  background-color: #1d1724; /* Dark purple/gray background for content area */
+  border-radius: 10px; /* Rounded corners matching outer container to prevent green bleed-through */
+  transition: all 0.25s cubic-bezier(0, 0, 0, 1); /* Faster transition for inner card animations */
+  padding: 15px; /* Internal spacing for card content */
+  cursor: pointer; /* Show pointer cursor to indicate interactivity */
+  overflow: hidden; /* Clip any overflow to prevent content from bleeding outside rounded corners */
+}
+
+/* Hover state for inner card */
+.package2:hover {
+  border-radius: 10px; /* Maintain border radius on hover (keeps corners clean) */
+}
+
+/* Card heading text */
+.text {
+  color: #00ff00; /* Green text color matching theme */
+  font-size: 1.5rem; /* Large heading size (24px) */
+  font-weight: 600; /* Semi-bold weight */
+  margin-bottom: 0.5rem; /* Space below heading (8px) */
+}
+
+/* Card body/content text */
+.text-content {
+  color: #00ff00; /* Green text color matching theme */
+  font-size: 1rem; /* Standard body text size (16px) */
+  line-height: 1.5; /* Comfortable line spacing for readability */
+  margin-bottom: 0.5rem; /* Space below paragraphs (8px) */
 }
