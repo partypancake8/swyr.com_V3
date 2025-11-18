@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - Magazine Layout</title>
+    <link rel="stylesheet" href="prototype_styles.css" />
+  </head>
+  <body class="v5">
+    <!-- MAGAZINE HEADER -->
+    <header class="mag-header">
+      <div class="mag-header-content">
+        <div class="mag-date">November 2025</div>
+        <h1 class="mag-masthead">SAWYER SMITH</h1>
+        <p class="mag-subtitle">Developer × Designer × Problem Solver</p>
+      </div>
+    </header>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="mag-nav">
+      <a href="../src/pages/about.html" class="mag-nav-link">About</a>
+      <a href="../src/pages/workPages/brose.html" class="mag-nav-link"
+        >Projects</a
+      >
+      <a href="../src/pages/contact.html" class="mag-nav-link">Contact</a>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="mag-container">
+      <!-- HERO ARTICLE -->
+      <article class="mag-hero">
+        <div class="mag-hero-image"></div>
+        <div class="mag-hero-content">
+          <span class="mag-label">Featured</span>
+          <h2 class="mag-hero-title">Creating Digital Experiences</h2>
+          <p class="mag-hero-text">
+            Specializing in full-stack development with a focus on clean,
+            efficient code and user-centered design. Currently working on modern
+            web applications that blend functionality with aesthetics.
+          </p>
+        </div>
+      </article>
+
+      <!-- TWO COLUMN LAYOUT -->
+      <div class="mag-columns">
+        <!-- LEFT COLUMN -->
+        <div class="mag-col-left">
+          <!-- Skills Section -->
+          <section class="mag-section">
+            <h3 class="mag-section-title">Technical Expertise</h3>
+            <div class="mag-skill-list">
+              <div class="mag-skill-item">
+                <strong>Frontend</strong>
+                <span>React, Vue, Modern CSS</span>
+              </div>
+              <div class="mag-skill-item">
+                <strong>Backend</strong>
+                <span>Node.js, Python, APIs</span>
+              </div>
+              <div class="mag-skill-item">
+                <strong>Tools</strong>
+                <span>Git, Docker, CI/CD</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Project Card -->
+          <section class="mag-section">
+            <h3 class="mag-section-title">Featured Work</h3>
+            <a
+              href="../src/pages/workPages/brose.html"
+              class="mag-project-card"
+            >
+              <div class="mag-project-thumb"></div>
+              <div class="mag-project-info">
+                <h4>Brose Engineering</h4>
+                <p>
+                  Advanced technical solution with cutting-edge implementation.
+                </p>
+              </div>
+            </a>
+          </section>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="mag-col-right">
+          <!-- About Snippet -->
+          <section class="mag-section mag-pullquote">
+            <blockquote>
+              "I believe in building software that solves real problems with
+              elegant, maintainable solutions."
+            </blockquote>
+          </section>
+
+          <!-- Project List -->
+          <section class="mag-section">
+            <h3 class="mag-section-title">Recent Projects</h3>
+            <div class="mag-project-list">
+              <a href="../src/pages/workPages/brose.html" class="mag-list-item">
+                <span class="mag-list-number">01</span>
+                <div class="mag-list-content">
+                  <h4>Brose</h4>
+                  <p>Engineering Solution</p>
+                </div>
+              </a>
+              <a
+                href="../src/pages/workPages/sanhua.html"
+                class="mag-list-item"
+              >
+                <span class="mag-list-number">02</span>
+                <div class="mag-list-content">
+                  <h4>Sanhua</h4>
+                  <p>Product Design</p>
+                </div>
+              </a>
+            </div>
+          </section>
+
+          <!-- CTA Box -->
+          <section class="mag-section mag-cta-box">
+            <h3>Start a Project</h3>
+            <p>Looking for a developer to bring your ideas to life?</p>
+            <a href="../src/pages/contact.html" class="mag-cta-button"
+              >Let's talk →</a
+            >
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mag-footer">
+      <div class="mag-footer-content">
+        <div class="mag-footer-links">
+          <a href="#">GitHub</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Email</a>
+        </div>
+        <p class="mag-copyright">© 2025 Sawyer Smith</p>
+      </div>
+    </footer>
+  </body>
+</html>

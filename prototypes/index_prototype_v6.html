@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - Fullscreen Slider</title>
+    <link rel="stylesheet" href="prototype_styles.css" />
+  </head>
+  <body class="v6">
+    <!-- FIXED NAVIGATION -->
+    <nav class="slider-nav">
+      <div class="slider-logo">SS</div>
+      <div class="slider-menu">
+        <a href="../src/pages/about.html">About</a>
+        <a href="../src/pages/contact.html">Contact</a>
+      </div>
+    </nav>
+
+    <!-- SLIDE INDICATOR -->
+    <div class="slide-indicator">
+      <div class="slide-dot active"></div>
+      <div class="slide-dot"></div>
+      <div class="slide-dot"></div>
+      <div class="slide-dot"></div>
+    </div>
+
+    <!-- SLIDES CONTAINER -->
+    <div class="slides-wrapper">
+      <!-- SLIDE 1: INTRO -->
+      <section class="slide slide-1 active">
+        <div class="slide-content">
+          <div class="slide-number">01</div>
+          <h1 class="slide-title">Sawyer Smith</h1>
+          <p class="slide-text">Full-Stack Developer</p>
+          <div class="slide-scroll-hint">Scroll to explore ↓</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: ABOUT -->
+      <section class="slide slide-2">
+        <div class="slide-content">
+          <div class="slide-number">02</div>
+          <h2 class="slide-heading">What I Do</h2>
+          <div class="slide-grid">
+            <div class="slide-grid-item">
+              <h3>Frontend Development</h3>
+              <p>React, Vue, Modern CSS frameworks</p>
+            </div>
+            <div class="slide-grid-item">
+              <h3>Backend Engineering</h3>
+              <p>Node.js, Python, Database design</p>
+            </div>
+            <div class="slide-grid-item">
+              <h3>UI/UX Design</h3>
+              <p>User-centered design thinking</p>
+            </div>
+            <div class="slide-grid-item">
+              <h3>DevOps</h3>
+              <p>CI/CD, Docker, Cloud platforms</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: WORK -->
+      <section class="slide slide-3">
+        <div class="slide-content">
+          <div class="slide-number">03</div>
+          <h2 class="slide-heading">Selected Projects</h2>
+          <div class="slide-projects">
+            <a
+              href="../src/pages/workPages/brose.html"
+              class="slide-project-card"
+            >
+              <div class="slide-project-img"></div>
+              <div class="slide-project-details">
+                <span class="slide-project-tag">Engineering</span>
+                <h3>Brose</h3>
+                <p>Advanced engineering solution with modern tech stack</p>
+              </div>
+            </a>
+            <a
+              href="../src/pages/workPages/sanhua.html"
+              class="slide-project-card"
+            >
+              <div class="slide-project-img"></div>
+              <div class="slide-project-details">
+                <span class="slide-project-tag">Product</span>
+                <h3>Sanhua</h3>
+                <p>Innovative design with scalable architecture</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: CONTACT -->
+      <section class="slide slide-4">
+        <div class="slide-content">
+          <div class="slide-number">04</div>
+          <h2 class="slide-heading">Let's Connect</h2>
+          <p class="slide-contact-text">
+            Interested in working together or just want to say hi?
+          </p>
+          <div class="slide-contact-links">
+            <a href="../src/pages/contact.html" class="slide-contact-btn"
+              >Get in Touch</a
+            >
+            <div class="slide-social">
+              <a href="#">GitHub</a>
+              <a href="#">LinkedIn</a>
+              <a href="#">Email</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
