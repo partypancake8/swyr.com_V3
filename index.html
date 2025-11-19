@@ -13,7 +13,7 @@
       <!-- ===== HEADER ===== -->
       <header class="landing__header">
         <div class="logo-hex">
-          <span>B</span>
+          <span>S</span>
         </div>
 
         <nav class="landing__nav">
@@ -29,7 +29,9 @@
 
           <div class="landing__nav-links">
             <a href="#about"><span class="nav-index">01.</span> About</a>
-            <a href="#experience"><span class="nav-index">02.</span> Experience</a>
+            <a href="#experience"
+              ><span class="nav-index">02.</span> Experience</a
+            >
             <a href="#work"><span class="nav-index">03.</span> Work</a>
             <a href="#contact"><span class="nav-index">04.</span> Contact</a>
             <a class="resume-btn" href="/public/resume.pdf">Resume</a>
@@ -84,9 +86,12 @@
         </section>
 
         <section id="about" class="section-block">
+          <div class="hash-divider" data-hash-divider></div>
+
           <h2 class="section-heading">
             <span class="nav-index">01.</span> About
           </h2>
+
           <p class="section-text">
             I'm Sawyer Smith, a full-stack engineer who loves solving complex
             problems with clean, maintainable code and delightful user
@@ -96,6 +101,9 @@
         </section>
 
         <section id="experience" class="section-block">
+                    <div class="hash-divider" data-hash-divider></div>
+
+
           <h2 class="section-heading">
             <span class="nav-index">02.</span> Experience
           </h2>
@@ -108,6 +116,9 @@
         </section>
 
         <section id="work" class="section-block">
+                    <div class="hash-divider" data-hash-divider></div>
+
+
           <h2 class="section-heading">
             <span class="nav-index">03.</span> Work
           </h2>
@@ -119,6 +130,9 @@
         </section>
 
         <section id="contact" class="section-block section-block--contact">
+                    <div class="hash-divider" data-hash-divider></div>
+
+
           <h2 class="section-heading">
             <span class="nav-index">04.</span> Contact
           </h2>
@@ -132,15 +146,18 @@
 
     <!-- ===== FOOTER ===== -->
     <footer class="footer">
-  <div class="footer-social">
-    <a href="#"><img src="../../public/icons/github.svg" alt="GitHub" /></a>
-    <a href="#"><img src="../../public/icons/instagram.svg" alt="Instagram" /></a>
-    <a href="#"><img src="../../public/icons/linkedin.svg" alt="LinkedIn" /></a>
-  </div>
+      <div class="footer-social">
+        <a href="#"><img src="../../public/icons/github.svg" alt="GitHub" /></a>
+        <a href="#"
+          ><img src="../../public/icons/instagram.svg" alt="Instagram"
+        /></a>
+        <a href="#"
+          ><img src="../../public/icons/linkedin.svg" alt="LinkedIn"
+        /></a>
+      </div>
 
-  <p>&copy; 2024 Sawyer Smith. All rights reserved.</p>
-</footer>
-
+      <p>&copy; 2024 Sawyer Smith. All rights reserved.</p>
+    </footer>
 
     <script>
       const hamburger = document.querySelector(".hamburger");
@@ -177,5 +194,7 @@
         })
       );
     </script>
+    <script src="../js/main.js"></script>
+
   </body>
 </html>

@@ -1,288 +1,276 @@
 /* ====================
    GLOBAL RESET
    ==================== */
-/* Reset default browser spacing and set consistent box-sizing across all elements */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Include padding and border in element's total width/height */
+  box-sizing: border-box;
 }
 
 /* ====================
    CSS VARIABLES
    ==================== */
-/* Global variables for consistent spacing and colors */
 :root {
-  --page-padding: 5rem; /* Global horizontal padding - change this to adjust all padding at once */
-  --primary-color: #00ff00; /* Terminal bright green */
-  --background-color: #232323; /* Deep black */
-  --surface-color: #0a0a0a; /* Subtle dark surface */
-  --text-primary: #00ff00; /* Light greenish text */
-  --text-muted: #f9f9f9; /* Muted green text */
-  --border-width: 2px; /* Standard border width */
+  --page-padding: 5rem;
 
+  --primary-color: #00ff00;
+  --background-color: #232323;
+  --surface-color: #0a0a0a;
+  --text-primary: #00ff00;
+  --text-muted: #f9f9f9;
+  --border-width: 2px;
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Inter", "Segoe UI", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --font-size-body: clamp(0.98rem, 0.22vw + 0.9rem, 1.05rem);
+  --line-height-body: 1.7;
+  --measure: 65ch; /* ideal line length ~60–75 chars */
+
+  /* Rails & layout math */
   --rail-offset: 1rem; /* distance from viewport edge to rail */
   --content-rail-gap: 6rem; /* min gap between rail and content */
 }
 
 /* ====================
-   BODY STYLES
+   BODY
    ==================== */
-/* Base styles for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: Inter, sans-serif; /* Clean, readable font */
-  background-color: var(--background-color); /* Deep black background */
-  color: var(--text-muted); /* Muted green text */
+  font-family: var(--font-sans);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  background-color: var(--background-color);
+  color: var(--text-muted);
   min-height: 100vh;
 }
 
 /* ====================
-   HEADER STYLES
+   GENERIC HEADER / NAV (non-landing pages)
    ==================== */
-/* Top navigation area with border accent (generic header, overridden by .landing__header below) */
 header {
-  background-color: #0b0b0b; /* Slightly lighter black for subtle contrast */
-  padding: 1rem; /* Spacing inside header (16px) */
-  border-bottom: var(--border-width) solid var(--primary-color); /* Green accent line separating header from content */
+  background-color: #0b0b0b;
+  padding: 1rem;
+  border-bottom: var(--border-width) solid var(--primary-color);
 }
 
-/* ====================
-   NAVIGATION STYLES
-   ==================== */
-/* Container for navigation links - centered with max width for readability */
 nav {
-  max-width: 1200px; /* Limit width on large screens for better reading experience */
-  margin: 0 auto; /* Center the navigation horizontally */
-  padding: 0 var(--page-padding); /* Use global padding variable */
-  display: flex; /* Use flexbox for layout */
-  justify-content: flex-end; /* Align navigation links to the right */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--page-padding);
+  display: flex;
+  justify-content: flex-end;
 }
 
-/* Individual navigation links */
 nav a {
-  color: var(--primary-color); /* Green text matching theme */
-  text-decoration: none; /* Remove default underline from links */
-  margin-left: 2rem; /* Space between navigation items (32px) */
+  color: var(--primary-color);
+  text-decoration: none;
+  margin-left: 2rem;
 }
 
 /* ====================
-   MAIN CONTENT STYLES
+   GENERIC MAIN
    ==================== */
-/* Generic main layout (landing-specific main is handled below) */
 main {
-  max-width: 1200px; /* Match nav width for consistent layout */
-  margin: 0 auto; /* Center content horizontally */
-  padding: 0; /* No global vertical padding to avoid conflicts with landing layout */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
 }
 
 /* ====================
-   TYPOGRAPHY STYLES
+   TYPOGRAPHY
    ==================== */
-/* Main heading size */
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
 h1 {
-  font-size: 3rem; /* Large heading (48px) */
-  margin-bottom: 1rem; /* Space below heading (16px) */
-  font-weight: 450; /* Semi-bold instead of default bold (700) */
+  font-size: clamp(2.4rem, 3vw + 1.2rem, 3.5rem);
+  margin-bottom: 1rem;
 }
 
 h2 {
-  font-size: 2.5rem; /* Large heading (40px-ish) */
-  margin-bottom: 1rem; /* Space below heading (16px) */
-  font-weight: 450; /* Semi-bold */
+  font-size: clamp(1.8rem, 2vw + 0.8rem, 2.4rem);
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: clamp(1.4rem, 1.3vw + 0.9rem, 1.6rem);
+  margin-bottom: 0.8rem;
 }
 
 h4 {
-  font-size: 1rem; /* Subheading size */
-  margin-bottom: 0.5rem; /* Space below heading (8px) */
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-/* Note: this is a custom element selector and not used currently in the HTML */
+/* nice optional underline for big headings */
+.h1-underline {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+/* Generic paragraph */
+p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  max-width: var(--measure); /* 60–75 chars per line */
+}
+
+/* custom element (unused but kept) */
 p-alternate {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
   color: #757575;
 }
 
-/* Optional class to add a line under h1 headings */
-.h1-underline {
-  padding-bottom: 0.5rem; /* Space between text and line (8px) */
-  border-bottom: 1px solid var(--primary-color); /* Green line under heading */
-  margin-bottom: 1rem; /* Space below the line (16px) */
-}
-
-/* Horizontal divider line matching h1-underline style */
+/* Divider line */
 .divider {
-  border: none; /* Remove default hr border */
-  border-top: 1px solid var(--primary-color); /* Same 1px green line as h1-underline */
-  margin: 1rem 0; /* Space above and below (16px) */
-}
-
-/* Paragraph text */
-p {
-  font-size: 1.2rem; /* Slightly larger than default for readability (19.2px) */
-  margin-bottom: 1rem; /* Space below paragraphs (16px) */
-  max-width: 65ch;
+  border: none;
+  border-top: 1px solid var(--primary-color);
+  margin: 1rem 0;
 }
 
 /* ====================
-   BOX/CONTAINER STYLES
+   BOX / GRID HELPERS
    ==================== */
-/* Content box with green border matching the header line */
 .box {
-  border: var(--border-width) solid var(--primary-color); /* Same green border as header */
-  padding: 2rem; /* Space inside the box (24px) */
-  margin: 1rem 0; /* Space above and below - no left/right margin for alignment */
-  background-color: var(
-    --background-color
-  ); /* Slightly lighter black for subtle contrast */
-  border-radius: 8px; /* Rounded corners */
+  border: var(--border-width) solid var(--primary-color);
+  padding: 2rem;
+  margin: 1rem 0;
+  background-color: var(--background-color);
+  border-radius: 8px;
 }
 
-/* ====================
-   GRID LAYOUT STYLES
-   ==================== */
-/* Grid container with one full-width box on top, two boxes below */
 .grid-container {
-  display: grid; /* Enable CSS Grid */
-  grid-template-columns: 1fr 1fr; /* Two equal columns */
-  gap: 1rem; /* Space between grid items (16px) */
-  margin: 0rem; /* Space around the grid */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 0;
 }
 
-/* Full-width box spanning both columns */
 .grid-full {
-  grid-column: 1 / -1; /* Span from first to last column */
+  grid-column: 1 / -1;
   margin: 0;
 }
 
 /* ====================
-   RESPONSIVE STYLES (GLOBAL)
+   GLOBAL RESPONSIVE
    ==================== */
 @media (max-width: 768px) {
   :root {
-    --page-padding: 1.5rem; /* Reduce padding on mobile - automatically applies to nav and main */
+    --page-padding: 1.5rem;
   }
 
   .grid-container {
-    grid-template-columns: 1fr; /* Single column on mobile */
+    grid-template-columns: 1fr;
   }
 
-  /* Scale down text sizes for mobile */
   h1 {
-    font-size: 2rem; /* Reduce from 3rem (48px) to 2rem (32px) */
+    font-size: clamp(2rem, 4vw + 1.2rem, 2.4rem);
   }
 
   h2 {
-    font-size: 1.8rem; /* Reduce from 2.5rem to 1.8rem */
+    font-size: clamp(1.6rem, 3vw + 0.9rem, 2rem);
   }
 
   p,
   p-alternate {
-    font-size: 1rem; /* Reduce from 1.2rem to 1rem (16px) */
+    font-size: 1rem;
   }
 
   nav a {
-    margin-left: 1rem; /* Reduce spacing between nav links */
+    margin-left: 1rem;
   }
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-/* * {
-  outline: 1px solid rgb(255, 102, 0) !important;
-} */
-
 /* ====================
-   BUTTON STYLES
+   BUTTONS
    ==================== */
-/* Button-styled links */
 .button-link {
   display: inline-block;
-  padding: 1rem 4rem; /* Internal spacing */
-  background: var(--primary-color); /* Green background */
-  color: var(--background-color); /* Black text for contrast */
-  border: 2px solid #000000; /* Border */
-  border-radius: 10px; /* Rounded corners */
+  padding: 1rem 4rem;
+  background: var(--primary-color);
+  color: var(--background-color);
+  border: 2px solid #000000;
+  border-radius: 10px;
   font-family: inherit;
   text-align: center;
-  text-decoration: none; /* Remove underline */
+  text-decoration: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin: 1rem 1rem; /* Spacing */
-  /* 3D effect with offset border shadow */
+  margin: 1rem 1rem;
   box-shadow: 4px 4px 0px #757575;
   position: relative;
 }
 
 .button-link:hover {
-  /* Reduced 3D effect on hover */
   box-shadow: 2px 2px 0px #757575;
-  transform: translate(2px, 2px); /* Move slightly to create pressed effect */
+  transform: translate(2px, 2px);
 }
 
 .button-link:active {
-  /* Fully pressed look */
   box-shadow: 0px 0px 0px #757575;
   transform: translate(2px, 2px);
 }
 
 /* ====================
-   PACKAGE CARD STYLES
+   PACKAGE CARD
    ==================== */
-/* Outer container - provides the green background/border effect */
 .package {
-  width: auto; /* Auto width to fit content */
-  height: auto; /* Auto height to fit content */
-  background-color: #00ff00; /* Solid green background */
-  border-radius: 11.5px; /* Rounded corners for outer container */
-  text-align: left; /* Align text content to the left */
-  transition: all 0.5s cubic-bezier(0, 0, 0, 1); /* Smooth animation with custom easing */
-  padding: 0px; /* No padding initially - green background is hidden */
+  width: auto;
+  height: auto;
+  background-color: #00ff00;
+  border-radius: 11.5px;
+  text-align: left;
+  transition: all 0.5s cubic-bezier(0, 0, 0, 1);
+  padding: 0;
 }
 
-/* Hover state for outer container - reveals green border */
 .package:hover {
-  /* box-shadow: 0px 0px 10px 1px #757575; /* Subtle gray glow effect on hover */
-  padding: 6px; /* Add 6px padding on all sides to push inner card inward and reveal green border */
+  padding: 6px;
 }
 
-/* Inner content card - the main visible card */
 .package2 {
-  width: auto; /* Auto width to fit content */
-  height: auto; /* Auto height to fit content */
-  background-color: #1d1724; /* Dark purple/gray background for content area */
-  border-radius: 10px; /* Rounded corners matching outer container to prevent green bleed-through */
-  transition: all 0.25s cubic-bezier(0, 0, 0, 1); /* Faster transition for inner card animations */
-  padding: 15px; /* Internal spacing for card content */
-  cursor: pointer; /* Show pointer cursor to indicate interactivity */
-  overflow: hidden; /* Clip any overflow to prevent content from bleeding outside rounded corners */
+  width: auto;
+  height: auto;
+  background-color: #1d1724;
+  border-radius: 10px;
+  transition: all 0.25s cubic-bezier(0, 0, 0, 1);
+  padding: 15px;
+  cursor: pointer;
+  overflow: hidden;
 }
 
-/* Hover state for inner card */
 .package2:hover {
-  border-radius: 10px; /* Maintain border radius on hover (keeps corners clean) */
+  border-radius: 10px;
 }
 
-/* Card heading text */
 .text {
-  color: var(--primary-color); /* Accent text color matching theme */
-  font-size: 1.5rem; /* Large heading size (24px) */
-  font-weight: 600; /* Semi-bold weight */
-  margin-bottom: 0.5rem; /* Space below heading (8px) */
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
-/* Card body/content text */
 .text-content {
-  color: var(--primary-color); /* Accent text color matching theme */
-  font-size: 1rem; /* Standard body text size (16px) */
-  line-height: 1.5; /* Comfortable line spacing for readability */
-  margin-bottom: 0.5rem; /* Space below paragraphs (8px) */
+  color: var(--primary-color);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
 }
 
 /* ====================
-   LANDING PAGE (HOME) STYLES
+   LANDING PAGE
    ==================== */
 .landing {
   position: relative;
@@ -291,13 +279,13 @@ html {
   background: var(--background-color);
 }
 
-/* Landing-specific main to keep content centered within the padded container */
+/* constrain content inside landing */
 .landing main {
   max-width: 1100px;
   margin: 0 auto;
 }
 
-/* Header for landing overrides generic header styles */
+/* Header overrides */
 .landing__header {
   display: flex;
   align-items: center;
@@ -309,7 +297,7 @@ html {
   z-index: 20;
 }
 
-/* Landing nav overrides generic nav */
+/* Landing nav */
 .landing__nav {
   display: flex;
   align-items: center;
@@ -336,6 +324,7 @@ html {
 }
 
 .logo-hex {
+  position: relative;
   width: 44px;
   height: 44px;
   border: 2px solid var(--primary-color);
@@ -343,15 +332,26 @@ html {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transform: rotate(45deg);
+  transform: rotate(45deg); /* Square #1 */
+}
+
+.logo-hex::before {
+  content: "";
+  position: absolute;
+  inset: 10px; /* slightly larger to peek behind */
+  border: 2px solid var(--primary-color);
+  border-radius: 12px;
+  transform: rotate(-45deg); /* Square #2 */
+  z-index: -1; /* behind main square */
 }
 
 .logo-hex span {
   color: var(--primary-color);
   font-weight: 700;
-  transform: rotate(-45deg);
+  transform: rotate(-45deg); /* cancel out the parent rotation */
   display: inline-block;
 }
+
 
 .landing__nav-links {
   display: flex;
@@ -385,7 +385,7 @@ html {
 
 .nav-index {
   color: var(--primary-color);
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   letter-spacing: 0.08em;
 }
@@ -404,12 +404,12 @@ html {
   transform: translateY(-1px);
 }
 
-/* Hide hamburger on desktop, show on mobile via media query */
+/* Hamburger */
 .hamburger {
-  display: none; /* ← key change */
+  display: none;
   flex-direction: column;
-  justify-content: center; /* center vertically */
-  align-items: center; /* center horizontally */
+  justify-content: center;
+  align-items: center;
   gap: 5px;
   width: 44px;
   height: 44px;
@@ -427,70 +427,65 @@ html {
   border-radius: 2px;
 }
 
+/* Hero */
 .hero {
-  max-width: 1100px;
+  max-width: var(--measure);
   margin: 0;
   padding-top: 10rem;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Align hero content vertically */
+  justify-content: center;
 }
 
 .hero__eyebrow {
   color: var(--primary-color);
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-family: var(--font-mono);
   letter-spacing: 0.08em;
-  font-size: 0.95rem; /* Eyebrow text size */
-  margin-bottom: 1.2rem; /* Space below eyebrow */
+  font-size: 0.95rem;
+  margin-bottom: 1.2rem;
 }
 
 .hero__title {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; /* Spacing between main and sub headline */
-  font-size: clamp(2.8rem, 5vw, 4.2rem); /* Main headline size */
+  gap: 0.5rem;
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
   line-height: 1.1;
 }
 
 .hero__headline {
-  color: var(--text-primary); /* Main headline color */
-  font-weight: 700; /* Main headline weight */
+  color: var(--text-primary);
+  font-weight: 700;
 }
 
 .hero__subtitle {
-  color: var(--text-primary); /* Secondary headline color */
-  font-weight: 700; /* Secondary headline weight */
-  font-size: clamp(2.3rem, 4vw, 3.2rem); /* Secondary headline size */
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: clamp(2.3rem, 4vw, 3.2rem);
 }
 
 .hero__description {
-  margin: 1.8rem 0 2.6rem; /* Top margin above body / bottom margin before button */
-  max-width: 42rem; /* Body text max width */
-  line-height: 1.7; /* Body line height */
-  color: var(--text-muted); /* Body text color */
-  font-size: 1.05rem; /* Body text size */
+  margin: 1.8rem 0 2.6rem;
+  max-width: var(--measure);
+  line-height: var(--line-height-body);
+  color: var(--text-muted);
+  font-size: 1.05rem;
 }
 
-.link-underline {
-  color: var(--primary-color);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(0, 255, 102, 0.5);
-  padding-bottom: 2px;
-}
-
+/* CTA button */
 .outline-btn {
   display: inline-flex;
-  width: auto; /* Keep button width to its text */
+  width: auto;
   margin: 1rem;
-  padding: 1rem 1.5rem; /* Button height/width padding */
-  border: 1.5px solid var(--primary-color); /* Button border width */
-  border-radius: 4px; /* Button corner radius */
-  color: var(--primary-color); /* Button text color */
+  padding: 1rem 1.5rem;
+  border: 1.5px solid var(--primary-color);
+  border-radius: 4px;
+  color: var(--primary-color);
   text-decoration: none;
-  font-weight: 600; /* Button font weight */
-  letter-spacing: 0.01em; /* Button letter spacing */
-  white-space: nowrap; /* Prevent wrapping and extra width */
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
@@ -499,20 +494,20 @@ html {
   transform: translateY(-1px);
 }
 
-/* Hero-specific button sizing and alignment */
 .hero .outline-btn {
   width: auto;
   padding: 1rem 1.5rem;
   align-self: flex-start;
-  margin: 0; /* Keep it tight under the text */
+  margin: 0;
 }
+
+/* Sections */
 
 .section-block {
-  max-width: 780px;
-  margin: 0 auto;
+  max-width: var(--measure);
+  margin: 0; /* left-align inside main, like hero */
   padding: 4rem 0;
 }
-
 .section-block--contact {
   padding-bottom: 6rem;
 }
@@ -528,14 +523,18 @@ html {
 
 .section-text {
   color: var(--text-muted);
-  line-height: 1.7;
+  line-height: var(--line-height-body);
   font-size: 1.02rem;
+  max-width: var(--measure);
 }
 
 body.nav-open {
   overflow: hidden;
 }
 
+/* ====================
+   SIDE RAILS
+   ==================== */
 .social-rail {
   position: fixed;
   left: var(--rail-offset);
@@ -552,7 +551,6 @@ body.nav-open {
   gap: 0.75rem;
 }
 
-/* Match the icons in your current HTML (img inside the link) */
 .social-rail img {
   width: 22px;
   height: 22px;
@@ -561,7 +559,7 @@ body.nav-open {
 .social-rail a {
   color: var(--text-muted);
   text-decoration: none;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-family: var(--font-mono);
   font-size: 0.9rem;
   transition: color 0.2s ease, transform 0.2s ease;
 }
@@ -592,7 +590,7 @@ body.nav-open {
 .email-rail a {
   color: var(--text-muted);
   text-decoration: none;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-family: var(--font-mono);
   letter-spacing: 0.08em;
   writing-mode: vertical-rl;
   transition: color 0.2s ease, transform 0.2s ease;
@@ -619,6 +617,10 @@ body.nav-open {
 @media (max-width: 770px) {
   .landing {
     padding: 0 1.5rem 3rem;
+  }
+
+  .section-block {
+    margin: auto 0;
   }
 
   .landing__header {
@@ -663,10 +665,25 @@ body.nav-open {
   }
 
   .hamburger {
-    display: inline-flex; /* Show hamburger only at mobile widths */
+    display: inline-flex;
+  }
+
+  .hero {
+    padding-top: 6rem;
   }
 }
 
+/* keep content safely clear of rails on wider viewports */
+@media (min-width: 770px) {
+  .landing main {
+    padding-left: calc(var(--rail-offset) + var(--content-rail-gap));
+    padding-right: calc(var(--rail-offset) + var(--content-rail-gap));
+  }
+}
+
+/* ====================
+   FOOTER + MOBILE SOCIAL
+   ==================== */
 .icon {
   color: #ffffff;
 }
@@ -674,17 +691,9 @@ body.nav-open {
 .footer {
   text-align: center;
   margin: 0;
-  padding: 0rem 0;
+  padding: 2rem 0 3rem;
   color: var(--text-muted);
   font-size: 0.9rem;
-}
-
-@media (min-width: 770px) {
-  .landing main {
-    /* content starts after rail + gap so nothing overlaps */
-    padding-left: calc(var(--rail-offset) + var(--content-rail-gap));
-    padding-right: calc(var(--rail-offset) + var(--content-rail-gap));
-  }
 }
 
 /* hidden on desktop */
@@ -710,11 +719,15 @@ body.nav-open {
 
 @media (max-width: 770px) {
   .footer-social {
-    display: flex; /* show icons in a row */
+    display: flex;
   }
 
   .social-rail,
   .email-rail {
-    display: none; /* already hiding these */
+    display: none;
   }
+}
+
+.hash-divider {
+  color: var(--primary-color);
 }
