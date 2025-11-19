@@ -18,8 +18,11 @@
   --background-color: #232323; /* Deep black */
   --surface-color: #0a0a0a; /* Subtle dark surface */
   --text-primary: #00ff00; /* Light greenish text */
-  --text-muted: #bcbcbc; /* Muted green text */
+  --text-muted: #f9f9f9; /* Muted green text */
   --border-width: 2px; /* Standard border width */
+
+  --rail-offset: 1rem; /* distance from viewport edge to rail */
+  --content-rail-gap: 6rem; /* min gap between rail and content */
 }
 
 /* ====================
@@ -36,7 +39,7 @@ body {
 /* ====================
    HEADER STYLES
    ==================== */
-/* Top navigation area with border accent */
+/* Top navigation area with border accent (generic header, overridden by .landing__header below) */
 header {
   background-color: #0b0b0b; /* Slightly lighter black for subtle contrast */
   padding: 1rem; /* Spacing inside header (16px) */
@@ -65,11 +68,11 @@ nav a {
 /* ====================
    MAIN CONTENT STYLES
    ==================== */
-/* Primary content area - centered with padding */
+/* Generic main layout (landing-specific main is handled below) */
 main {
   max-width: 1200px; /* Match nav width for consistent layout */
   margin: 0 auto; /* Center content horizontally */
-  padding: 30rem var(--page-padding); /* Use global padding variable for horizontal spacing */
+  padding: 0; /* No global vertical padding to avoid conflicts with landing layout */
 }
 
 /* ====================
@@ -83,20 +86,21 @@ h1 {
 }
 
 h2 {
-  font-size: 2.5rem; /* Large heading (48px) */
+  font-size: 2.5rem; /* Large heading (40px-ish) */
   margin-bottom: 1rem; /* Space below heading (16px) */
   font-weight: 450; /* Semi-bold */
 }
 
 h4 {
-  font-size: 1rem; /* Subheading size (24px) */
-  margin-bottom: 0.5rem; /* Space below heading (16px) */
+  font-size: 1rem; /* Subheading size */
+  margin-bottom: 0.5rem; /* Space below heading (8px) */
 }
 
+/* Note: this is a custom element selector and not used currently in the HTML */
 p-alternate {
-  font-size: 1.2rem; /* Subheading size (24px) */
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
-  color: #757575; /* Space below heading (16px) */
+  color: #757575;
 }
 
 /* Optional class to add a line under h1 headings */
@@ -117,6 +121,7 @@ p-alternate {
 p {
   font-size: 1.2rem; /* Slightly larger than default for readability (19.2px) */
   margin-bottom: 1rem; /* Space below paragraphs (16px) */
+  max-width: 65ch;
 }
 
 /* ====================
@@ -151,9 +156,8 @@ p {
 }
 
 /* ====================
-   RESPONSIVE STYLES
+   RESPONSIVE STYLES (GLOBAL)
    ==================== */
-/* Mobile devices: Stack grid items vertically */
 @media (max-width: 768px) {
   :root {
     --page-padding: 1.5rem; /* Reduce padding on mobile - automatically applies to nav and main */
@@ -169,7 +173,7 @@ p {
   }
 
   h2 {
-    font-size: 1.8rem; /* Reduce from 2.7rem to 1.8rem */
+    font-size: 1.8rem; /* Reduce from 2.5rem to 1.8rem */
   }
 
   p,
@@ -178,13 +182,9 @@ p {
   }
 
   nav a {
-    margin-left: 1rem; /* Reduce spacing between nav links (was margin-right, changed to margin-left) */
+    margin-left: 1rem; /* Reduce spacing between nav links */
   }
-
-  
 }
-
-
 
 html {
   scroll-behavior: smooth;
@@ -193,6 +193,7 @@ html {
 /* * {
   outline: 1px solid rgb(255, 102, 0) !important;
 } */
+
 /* ====================
    BUTTON STYLES
    ==================== */
@@ -202,7 +203,7 @@ html {
   padding: 1rem 4rem; /* Internal spacing */
   background: var(--primary-color); /* Green background */
   color: var(--background-color); /* Black text for contrast */
-  border: 2px solid #000000; /* Green border */
+  border: 2px solid #000000; /* Border */
   border-radius: 10px; /* Rounded corners */
   font-family: inherit;
   text-align: center;
@@ -243,7 +244,7 @@ html {
 
 /* Hover state for outer container - reveals green border */
 .package:hover {
-  /*box-shadow: 0px 0px 10px 1px #757575; /* Subtle gray glow effect on hover */
+  /* box-shadow: 0px 0px 10px 1px #757575; /* Subtle gray glow effect on hover */
   padding: 6px; /* Add 6px padding on all sides to push inner card inward and reveal green border */
 }
 
@@ -290,6 +291,13 @@ html {
   background: var(--background-color);
 }
 
+/* Landing-specific main to keep content centered within the padded container */
+.landing main {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Header for landing overrides generic header styles */
 .landing__header {
   display: flex;
   align-items: center;
@@ -301,6 +309,7 @@ html {
   z-index: 20;
 }
 
+/* Landing nav overrides generic nav */
 .landing__nav {
   display: flex;
   align-items: center;
@@ -395,13 +404,16 @@ html {
   transform: translateY(-1px);
 }
 
+/* Hide hamburger on desktop, show on mobile via media query */
 .hamburger {
-  display: none;
+  display: none; /* ← key change */
   flex-direction: column;
+  justify-content: center; /* center vertically */
+  align-items: center; /* center horizontally */
   gap: 5px;
   width: 44px;
   height: 44px;
-  padding: 10px;
+  padding: 0;
   border: 1px solid var(--primary-color);
   border-radius: 6px;
   background: transparent;
@@ -409,7 +421,7 @@ html {
 }
 
 .hamburger span {
-  display: block;
+  width: 60%;
   height: 2px;
   background: var(--primary-color);
   border-radius: 2px;
@@ -487,11 +499,12 @@ html {
   transform: translateY(-1px);
 }
 
-/* Hero-specific button sizing to keep CTA the length of its text */
+/* Hero-specific button sizing and alignment */
 .hero .outline-btn {
   width: auto;
   padding: 1rem 1.5rem;
   align-self: flex-start;
+  margin: 0; /* Keep it tight under the text */
 }
 
 .section-block {
@@ -525,7 +538,7 @@ body.nav-open {
 
 .social-rail {
   position: fixed;
-  left: 3rem;
+  left: var(--rail-offset);
   bottom: 0;
   display: flex;
   flex-direction: column;
@@ -539,11 +552,10 @@ body.nav-open {
   gap: 0.75rem;
 }
 
-.social-rail .social-icon {
+/* Match the icons in your current HTML (img inside the link) */
+.social-rail img {
   width: 22px;
   height: 22px;
-  color: var(--text-muted);
-  display: block;
 }
 
 .social-rail a {
@@ -569,7 +581,7 @@ body.nav-open {
 
 .email-rail {
   position: fixed;
-  right: 3rem;
+  right: var(--rail-offset);
   bottom: 0;
   display: flex;
   flex-direction: column;
@@ -591,19 +603,20 @@ body.nav-open {
   transform: translateY(-2px);
 }
 
+/* ====================
+   LANDING RESPONSIVE
+   ==================== */
 @media (max-width: 1024px) {
   .landing {
     padding: 0 2.5rem 3rem;
   }
-
-
 
   .section-block {
     padding: 3rem 0;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 770px) {
   .landing {
     padding: 0 1.5rem 3rem;
   }
@@ -644,14 +657,13 @@ body.nav-open {
     font-size: 1.05rem;
   }
 
-  .hamburger {
-    display: inline-flex;
-  }
-
-
   .social-rail,
   .email-rail {
     display: none;
+  }
+
+  .hamburger {
+    display: inline-flex; /* Show hamburger only at mobile widths */
   }
 }
 
@@ -659,11 +671,50 @@ body.nav-open {
   color: #ffffff;
 }
 
-
 .footer {
   text-align: center;
   margin: 0;
   padding: 0rem 0;
   color: var(--text-muted);
   font-size: 0.9rem;
+}
+
+@media (min-width: 770px) {
+  .landing main {
+    /* content starts after rail + gap so nothing overlaps */
+    padding-left: calc(var(--rail-offset) + var(--content-rail-gap));
+    padding-right: calc(var(--rail-offset) + var(--content-rail-gap));
+  }
+}
+
+/* hidden on desktop */
+.footer-social {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-social img {
+  width: 22px;
+  height: 22px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.footer-social img:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 770px) {
+  .footer-social {
+    display: flex; /* show icons in a row */
+  }
+
+  .social-rail,
+  .email-rail {
+    display: none; /* already hiding these */
+  }
 }
