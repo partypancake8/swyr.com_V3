@@ -9,38 +9,148 @@
     <link rel="stylesheet" href="../styles/major.css" />
   </head>
   <body>
-    <header>
-      <nav>
-        <a href="home.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </header>
-
-    <main>
-      <h1>Home Page</h1>
-      <p>This is a simple black and green themed homepage.</p>
-      <div class="package">
-        <div class="package2">
-          <h3 class="text">Featured Project</h3>
-          <p class="text-content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-          <p class="text-content">
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-          </p>
+    <div class="landing">
+      <header class="landing__header">
+        <div class="logo-hex">
+          <span>B</span>
         </div>
-      </div>
-    </main>
+        <nav class="landing__nav">
+          <button
+            class="hamburger"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <div class="landing__nav-links">
+            <a href="#about"><span class="nav-index">01.</span> About</a>
+            <a href="#experience"
+              ><span class="nav-index">02.</span> Experience</a
+            >
+            <a href="#work"><span class="nav-index">03.</span> Work</a>
+            <a href="#contact"><span class="nav-index">04.</span> Contact</a>
+            <a class="resume-btn" href="/public/resume.pdf">Resume</a>
+          </div>
+        </nav>
+      </header>
+      <div class="nav-scrim"></div>
 
-    <div class="box">
-      <h2>Box Title</h2>
-      <p>This is content inside a styled box.</p>
-      <div class="box">
-        <h3>Nested Box Title</h3>
-        <p>This is content inside a nested styled box.</p>
-      </div>
+      <aside class="social-rail">
+        <ul>
+          <li><a aria-label="GitHub" href="#"></a><img src="../../public/icons/github.svg" alt="GitHub" /></a></li>
+          <li><a aria-label="LinkedIn" href="#"><img src="../../public/icons/linkedin.svg" alt="LinkedIn" /></a></li>
+          <li><a aria-label="Instagram" href="#"><img src="../../public/icons/instagram.svg" alt="Instagram" /></a></li>
+        </ul>
+        <div class="rail-line"></div>
+      </aside>
+
+      <aside class="email-rail">
+        <a href="mailto:swyr@swyr.com">swyr@swyr.com</a>
+        <div class="rail-line"></div>
+      </aside>
+
+      <main class="hero">
+        <p class="hero__eyebrow">Hi, my name is</p>
+        <h1 class="hero__title">
+          <span class="hero__headline">Sawyer Smith.</span>
+          <span class="hero__subtitle">I build things for the web.</span>
+        </h1>
+        <p class="hero__description">
+          I'm a software engineer focused on shipping fast, accessible, and
+          human-centered web experiences. I enjoy taking products from idea to
+          launch with thoughtful design, modern front-end engineering, and clean
+          systems.
+        </p>
+        <a class="outline-btn" href="#work">See my work</a>
+      </main>
+
+      <section id="about" class="section-block">
+        <h2 class="section-heading">
+          <span class="nav-index">01.</span> About
+        </h2>
+        <p class="section-text">
+          I'm Sawyer Smith, a full-stack engineer who loves solving complex
+          problems with clean, maintainable code and delightful user
+          experiences. I enjoy partnering with teams to design, build, and
+          iterate on products that feel fast and intuitive.
+        </p>
+      </section>
+
+      <section id="experience" class="section-block">
+        <h2 class="section-heading">
+          <span class="nav-index">02.</span> Experience
+        </h2>
+        <p class="section-text">
+          I currently focus on accessible, performant web apps and design
+          systems. I've worked across startups and client projects, owning
+          front-end architecture, collaboration with design, and mentoring
+          engineers to ship quality work on tight timelines.
+        </p>
+      </section>
+
+      <section id="work" class="section-block">
+        <h2 class="section-heading"><span class="nav-index">03.</span> Work</h2>
+        <p class="section-text">
+          Selected projects go here. Highlight a few key builds or link to a
+          portfolio grid if you have one. Include metrics, outcomes, and what
+          you owned on each project.
+        </p>
+      </section>
+
+      <section id="contact" class="section-block section-block--contact">
+        <h2 class="section-heading">
+          <span class="nav-index">04.</span> Contact
+        </h2>
+        <p class="section-text">
+          I'm always open to discussing new opportunities, collaborations, or
+          side projects. Feel free to reach out!
+        </p>
+      </section>
     </div>
+
+    <div class="footer">
+      <a class="outline-btn" href="mailto:swyr@swyr.com">Say hello</a>
+      <p>&copy; 2024 Sawyer Smith. All rights reserved.</p>
+    </div>
+
+    
+
+    <script>
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.querySelector(".landing__nav-links");
+      const navAnchors = navLinks ? navLinks.querySelectorAll("a") : [];
+      const navScrim = document.querySelector(".nav-scrim");
+
+      const toggleNav = () => {
+        if (!hamburger || !navLinks) return;
+        const isOpen = navLinks.classList.toggle("is-open");
+        hamburger.setAttribute("aria-expanded", isOpen);
+        document.body.classList.toggle("nav-open", isOpen);
+        if (navScrim) {
+          navScrim.classList.toggle("is-visible", isOpen);
+        }
+      };
+
+      if (hamburger) {
+        hamburger.addEventListener("click", toggleNav);
+      }
+
+      if (navScrim) {
+        navScrim.addEventListener("click", toggleNav);
+      }
+
+      navAnchors.forEach((link) =>
+        link.addEventListener("click", () => {
+          navLinks.classList.remove("is-open");
+          hamburger.setAttribute("aria-expanded", "false");
+          document.body.classList.remove("nav-open");
+          if (navScrim) {
+            navScrim.classList.remove("is-visible");
+          }
+        })
+      );
+    </script>
   </body>
 </html>

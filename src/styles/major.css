@@ -14,8 +14,11 @@
 /* Global variables for consistent spacing and colors */
 :root {
   --page-padding: 5rem; /* Global horizontal padding - change this to adjust all padding at once */
-  --primary-color: #00ff00; /* Bright green */
-  --background-color: #000000; /* Pure black */
+  --primary-color: #00ff00; /* Terminal bright green */
+  --background-color: #232323; /* Deep black */
+  --surface-color: #0a0a0a; /* Subtle dark surface */
+  --text-primary: #00ff00; /* Light greenish text */
+  --text-muted: #bcbcbc; /* Muted green text */
   --border-width: 2px; /* Standard border width */
 }
 
@@ -25,8 +28,9 @@
 /* Base styles for the entire page */
 body {
   font-family: Inter, sans-serif; /* Clean, readable font */
-  background-color: var(--background-color); /* Pure black background */
-  color: var(--primary-color); /* Bright green text for high contrast */
+  background-color: var(--background-color); /* Deep black background */
+  color: var(--text-muted); /* Muted green text */
+  min-height: 100vh;
 }
 
 /* ====================
@@ -65,7 +69,7 @@ nav a {
 main {
   max-width: 1200px; /* Match nav width for consistent layout */
   margin: 0 auto; /* Center content horizontally */
-  padding: 2rem var(--page-padding); /* Use global padding variable for horizontal spacing */
+  padding: 30rem var(--page-padding); /* Use global padding variable for horizontal spacing */
 }
 
 /* ====================
@@ -176,6 +180,14 @@ p {
   nav a {
     margin-left: 1rem; /* Reduce spacing between nav links (was margin-right, changed to margin-left) */
   }
+
+  
+}
+
+
+
+html {
+  scroll-behavior: smooth;
 }
 
 /* * {
@@ -254,7 +266,7 @@ p {
 
 /* Card heading text */
 .text {
-  color: #00ff00; /* Green text color matching theme */
+  color: var(--primary-color); /* Accent text color matching theme */
   font-size: 1.5rem; /* Large heading size (24px) */
   font-weight: 600; /* Semi-bold weight */
   margin-bottom: 0.5rem; /* Space below heading (8px) */
@@ -262,8 +274,396 @@ p {
 
 /* Card body/content text */
 .text-content {
-  color: #00ff00; /* Green text color matching theme */
+  color: var(--primary-color); /* Accent text color matching theme */
   font-size: 1rem; /* Standard body text size (16px) */
   line-height: 1.5; /* Comfortable line spacing for readability */
   margin-bottom: 0.5rem; /* Space below paragraphs (8px) */
+}
+
+/* ====================
+   LANDING PAGE (HOME) STYLES
+   ==================== */
+.landing {
+  position: relative;
+  min-height: 100vh;
+  padding: 0 4rem 4rem;
+  background: var(--background-color);
+}
+
+.landing__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.5rem 0 0;
+  background: transparent;
+  border: none;
+  position: relative;
+  z-index: 20;
+}
+
+.landing__nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  justify-content: flex-end;
+  max-width: none;
+}
+
+.nav-scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 15;
+}
+
+.nav-scrim.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.logo-hex {
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--primary-color);
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(45deg);
+}
+
+.logo-hex span {
+  color: var(--primary-color);
+  font-weight: 700;
+  transform: rotate(-45deg);
+  display: inline-block;
+}
+
+.landing__nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  justify-content: flex-end;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  z-index: 21;
+}
+
+.landing__nav a,
+.landing__nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.landing__nav a:hover,
+.landing__nav-links a:hover {
+  color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+.nav-index {
+  color: var(--primary-color);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+}
+
+.resume-btn {
+  padding: 0.55rem 1.1rem;
+  border: 1.5px solid var(--primary-color);
+  border-radius: 6px;
+  color: var(--primary-color);
+  background: transparent;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.resume-btn:hover {
+  background: rgba(0, 255, 102, 0.08);
+  transform: translateY(-1px);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border: 1px solid var(--primary-color);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  height: 2px;
+  background: var(--primary-color);
+  border-radius: 2px;
+}
+
+.hero {
+  max-width: 1100px;
+  margin: 0;
+  padding-top: 10rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Align hero content vertically */
+}
+
+.hero__eyebrow {
+  color: var(--primary-color);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  letter-spacing: 0.08em;
+  font-size: 0.95rem; /* Eyebrow text size */
+  margin-bottom: 1.2rem; /* Space below eyebrow */
+}
+
+.hero__title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Spacing between main and sub headline */
+  font-size: clamp(2.8rem, 5vw, 4.2rem); /* Main headline size */
+  line-height: 1.1;
+}
+
+.hero__headline {
+  color: var(--text-primary); /* Main headline color */
+  font-weight: 700; /* Main headline weight */
+}
+
+.hero__subtitle {
+  color: var(--text-primary); /* Secondary headline color */
+  font-weight: 700; /* Secondary headline weight */
+  font-size: clamp(2.3rem, 4vw, 3.2rem); /* Secondary headline size */
+}
+
+.hero__description {
+  margin: 1.8rem 0 2.6rem; /* Top margin above body / bottom margin before button */
+  max-width: 42rem; /* Body text max width */
+  line-height: 1.7; /* Body line height */
+  color: var(--text-muted); /* Body text color */
+  font-size: 1.05rem; /* Body text size */
+}
+
+.link-underline {
+  color: var(--primary-color);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 255, 102, 0.5);
+  padding-bottom: 2px;
+}
+
+.outline-btn {
+  display: inline-flex;
+  width: auto; /* Keep button width to its text */
+  margin: 1rem;
+  padding: 1rem 1.5rem; /* Button height/width padding */
+  border: 1.5px solid var(--primary-color); /* Button border width */
+  border-radius: 4px; /* Button corner radius */
+  color: var(--primary-color); /* Button text color */
+  text-decoration: none;
+  font-weight: 600; /* Button font weight */
+  letter-spacing: 0.01em; /* Button letter spacing */
+  white-space: nowrap; /* Prevent wrapping and extra width */
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.outline-btn:hover {
+  background: rgba(0, 255, 102, 0.08);
+  transform: translateY(-1px);
+}
+
+/* Hero-specific button sizing to keep CTA the length of its text */
+.hero .outline-btn {
+  width: auto;
+  padding: 1rem 1.5rem;
+  align-self: flex-start;
+}
+
+.section-block {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 4rem 0;
+}
+
+.section-block--contact {
+  padding-bottom: 6rem;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-primary);
+  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.section-text {
+  color: var(--text-muted);
+  line-height: 1.7;
+  font-size: 1.02rem;
+}
+
+body.nav-open {
+  overflow: hidden;
+}
+
+.social-rail {
+  position: fixed;
+  left: 3rem;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.social-rail ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.social-rail .social-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--text-muted);
+  display: block;
+}
+
+.social-rail a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.9rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.social-rail a:hover {
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.rail-line {
+  width: 1px;
+  height: 110px;
+  background: var(--text-muted);
+  opacity: 0.5;
+  margin-top: 1rem;
+}
+
+.email-rail {
+  position: fixed;
+  right: 3rem;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.email-rail a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  letter-spacing: 0.08em;
+  writing-mode: vertical-rl;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.email-rail a:hover {
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1024px) {
+  .landing {
+    padding: 0 2.5rem 3rem;
+  }
+
+
+
+  .section-block {
+    padding: 3rem 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .landing {
+    padding: 0 1.5rem 3rem;
+  }
+
+  .landing__header {
+    padding-top: 1.5rem;
+  }
+
+  .landing__nav-links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(360px, 80vw);
+    background: var(--surface-color);
+    padding: 5rem 2rem 2rem;
+    border-left: 1px solid rgba(0, 255, 102, 0.25);
+    border-radius: 0;
+    flex-direction: column;
+    gap: 1.2rem;
+    min-width: auto;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.6);
+    transform: translateX(110%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+
+  .landing__nav-links.is-open {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .landing__nav-links a {
+    width: 100%;
+    justify-content: flex-start;
+    font-size: 1.05rem;
+  }
+
+  .hamburger {
+    display: inline-flex;
+  }
+
+
+  .social-rail,
+  .email-rail {
+    display: none;
+  }
+}
+
+.icon {
+  color: #ffffff;
+}
+
+
+.footer {
+  text-align: center;
+  margin: 0;
+  padding: 0rem 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }
