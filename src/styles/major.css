@@ -352,7 +352,6 @@ p-alternate {
   display: inline-block;
 }
 
-
 .landing__nav-links {
   display: flex;
   align-items: center;
@@ -687,7 +686,6 @@ body.nav-open {
 .icon {
   color: #ffffff;
 }
-
 
 .footer {
   display: flex;
