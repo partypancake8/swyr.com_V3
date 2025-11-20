@@ -344,32 +344,16 @@ p-alternate {
 
 .logo-hex {
   position: relative;
-  width: 44px;
-  height: 44px;
-  border: 2px solid var(--primary-color);
-  border-radius: 12px;
+
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transform: rotate(45deg); /* Square #1 */
+
 }
 
-.logo-hex::before {
-  content: "";
-  position: absolute;
-  inset: 10px; /* slightly larger to peek behind */
-  border: 2px solid var(--primary-color);
-  border-radius: 12px;
-  transform: rotate(-45deg); /* Square #2 */
-  z-index: -1; /* behind main square */
-}
 
-.logo-hex span {
-  color: var(--primary-color);
-  font-weight: 700;
-  transform: rotate(-45deg); /* cancel out the parent rotation */
-  display: inline-block;
-}
+
 
 .landing__nav-links {
   display: flex;
