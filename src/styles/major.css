@@ -87,6 +87,24 @@ main {
 h1,
 h2,
 h3,
+h4,
+a {
+  color: var(--primary-color);
+  transition: color 0.2s ease;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+a:hover {
+  color: #00ff99;
+  text-decoration: underline;
+}
+h1,
+h2,
+h3,
 h4 {
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -102,9 +120,10 @@ h2 {
   margin-bottom: 1rem;
 }
 
-h3 {
+h3-generic, h3 {
   font-size: clamp(1.4rem, 1.3vw + 0.9rem, 1.6rem);
   margin-bottom: 0.8rem;
+  color: #FF9500
 }
 
 h4 {
@@ -352,7 +371,6 @@ p-alternate {
   display: inline-block;
 }
 
-
 .landing__nav-links {
   display: flex;
   align-items: center;
@@ -431,7 +449,7 @@ p-alternate {
 .hero {
   max-width: var(--measure);
   margin: 0;
-  padding-top: 10rem;
+
   min-height: 100vh;
   display: flex;
   flex-direction: column;
