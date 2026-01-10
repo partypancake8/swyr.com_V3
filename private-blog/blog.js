@@ -21,18 +21,18 @@
 
 const POSTS = [
   {
-    title: "Week 1: Course Introduction",
+    title: "The Next 30 Years of 3D Printing",
     date: "2026-01-10",
     slug: "week-01-introduction",
     excerpt:
-      "Overview of the course structure, goals, and initial thoughts on the material.",
+      "Speculation on how 3D printing will evolve from a niche hobby tool into a basic household appliance.",
   },
   {
-    title: "Week 2: First Assignment Reflections",
-    date: "2026-01-17",
+    title: "3DP Project 1 – A Better Bottle Opener",
+    date: "2026-01-10",
     slug: "week-02-assignment-reflections",
     excerpt:
-      "Key takeaways from the first assignment and areas for improvement.",
+      "Introducing the FIVE O'CLOCK: a G-Shock style watch with an integrated bottle opener in the bezel.",
   },
 ];
 
@@ -51,7 +51,10 @@ function renderPostList() {
   // Generate HTML for each post
   const postsHTML = sortedPosts
     .map((post) => {
-      const dateFormatted = new Date(post.date).toLocaleDateString("en-US", {
+      // Parse date as local time to avoid timezone issues
+      const [year, month, day] = post.date.split("-").map(Number);
+      const dateObj = new Date(year, month - 1, day);
+      const dateFormatted = dateObj.toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
         day: "numeric",
