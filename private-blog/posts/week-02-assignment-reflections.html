@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Week 2: First Assignment Reflections | Class Blog</title>
+
+    <!-- Import main site styles -->
+    <link rel="stylesheet" href="../../src/styles/major.css" />
+
+    <!-- Blog-specific styles -->
+    <link rel="stylesheet" href="../blog.css" />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="../../public/icons/favicon.svg"
+    />
+  </head>
+  <body>
+    <main style="padding: var(--page-padding, 5rem) 1.5rem">
+      <!-- Back to Blog Link -->
+      <a href="../index.html" class="back-link">Back to Blog</a>
+
+      <!-- Blog Post Container -->
+      <article class="section-block" style="margin: 0 auto">
+        <!-- Post Header -->
+        <header class="blog-post-header">
+          <time datetime="2026-01-17">January 17, 2026</time>
+          <h1>Week 2: First Assignment Reflections</h1>
+        </header>
+
+        <!-- Post Content -->
+        <div class="blog-post-content">
+          <p>
+            This week I completed and submitted the first assignment. The
+            process revealed several insights about my understanding of the
+            material and areas where I need to focus more attention.
+          </p>
+
+          <h2>Assignment Overview</h2>
+
+          <p>
+            The assignment required implementing a basic algorithm and analyzing
+            its performance characteristics. While the implementation itself was
+            straightforward, the analysis portion challenged me to think more
+            deeply about computational complexity.
+          </p>
+
+          <h2>What Went Well</h2>
+
+          <ul>
+            <li>
+              <strong>Code structure:</strong> Clean, modular implementation
+              with good documentation
+            </li>
+            <li>
+              <strong>Testing:</strong> Comprehensive test cases covering edge
+              cases
+            </li>
+            <li>
+              <strong>Time management:</strong> Started early and finished
+              before the deadline
+            </li>
+          </ul>
+
+          <h2>Challenges Encountered</h2>
+
+          <p>
+            The most significant challenge was understanding the time complexity
+            analysis. Initially, I misidentified the dominant term in the
+            algorithm's runtime. After revisiting the lecture notes and working
+            through examples, the concept became clearer.
+          </p>
+
+          <h3>Example Code Snippet</h3>
+
+          <pre><code>function analyze(data) {
+  // O(n log n) sorting step
+  data.sort((a, b) => a - b);
+  
+  // O(n) linear scan
+  for (let i = 0; i < data.length; i++) {
+    console.log(data[i]);
+  }
+  
+  // Overall: O(n log n)
+}</code></pre>
+
+          <h2>Key Takeaways</h2>
+
+          <blockquote>
+            <p>
+              Understanding the theoretical underpinnings is just as important
+              as writing code that works.
+            </p>
+          </blockquote>
+
+          <p>Moving forward, I'll pay more attention to:</p>
+
+          <ol>
+            <li>Breaking down algorithms into their constituent parts</li>
+            <li>Identifying nested loops and recursive calls</li>
+            <li>
+              Considering best-case, average-case, and worst-case scenarios
+            </li>
+          </ol>
+
+          <h2>Looking Ahead</h2>
+
+          <p>
+            Next week's material builds on these foundations, introducing more
+            advanced data structures. I'm excited to see how these concepts
+            connect and compound.
+          </p>
+
+          <hr />
+
+          <p>
+            <em>
+              This is a private blog for course notes and reflections. Content
+              is not indexed or publicly listed.
+            </em>
+          </p>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>
