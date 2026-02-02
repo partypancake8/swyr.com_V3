@@ -34,6 +34,13 @@ const POSTS = [
     excerpt:
       "Introducing the FIVE O'CLOCK: a G-Shock style watch with an integrated bottle opener in the bezel.",
   },
+  {
+    title: "Anti Screen Film Camera Case for iPhone",
+    date: "2026-02-02",
+    slug: "week-03-anti-screen-camera-case",
+    excerpt:
+      "A gag phone case that forces film camera behavior by blocking the entire screen except a tiny viewfinder window, paired with a minimal camera app.",
+  },
 ];
 
 /**
@@ -45,7 +52,7 @@ function renderPostList() {
 
   // Sort posts newest-first
   const sortedPosts = [...POSTS].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
+    (a, b) => new Date(b.date) - new Date(a.date),
   );
 
   // Generate HTML for each post
