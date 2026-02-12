@@ -41,6 +41,13 @@ const POSTS = [
     excerpt:
       "A gag phone case that forces film camera behavior by blocking the entire screen except a tiny viewfinder window, paired with a minimal camera app.",
   },
+  {
+    title: "MagSafe Fisheye Lens Adapter for iPhone",
+    date: "2026-02-12",
+    slug: "week-04-magsafe-fisheye-lens",
+    excerpt:
+      "A magnetic lens mount that uses MagSafe to attach a fisheye lens to iPhone cameras, replacing clunky clip-on systems with secure, self-centering attachment.",
+  },
 ];
 
 /**
