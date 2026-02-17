@@ -48,6 +48,13 @@ const POSTS = [
     excerpt:
       "A magnetic lens mount that uses MagSafe to attach a fisheye lens to iPhone cameras, replacing clunky clip-on systems with secure, self-centering attachment.",
   },
+  {
+    title: "3DP Project 3 – Sketch A Better Mouse Trap",
+    date: "2026-02-17",
+    slug: "week-05-cable-organizer-remix",
+    excerpt:
+      "A blueprint-style concept improving an existing cable organizer design by combining two references into a cleaner, more secure, and still support-free printable part.",
+  },
 ];
 
 /**
