@@ -62,6 +62,13 @@ const POSTS = [
     excerpt:
       "Final build update: integrated magnets let the organizer snap into place, it manages up to 5 cables, and prints in about 1.5 hours.",
   },
+  {
+    title: "Extra Credit: Music & Sound in Additive Manufacturing",
+    date: "2026-02-26",
+    slug: "extra-credit-music-3d-printing",
+    excerpt:
+      "Exploring a 3D printed 12-hole ocarina—a fully functional musical instrument that demonstrates how additive manufacturing intersects with sound creation and democratizes instrument making.",
+  },
 ];
 
 /**
