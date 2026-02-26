@@ -55,6 +55,13 @@ const POSTS = [
     excerpt:
       "A blueprint-style concept improving an existing cable organizer design by combining two references into a cleaner, more secure, and still support-free printable part.",
   },
+  {
+    title: "3DP Project 3 – Magnetic Cable Organizer Final",
+    date: "2026-02-26",
+    slug: "week-06-magnetic-cable-organizer-final",
+    excerpt:
+      "Final build update: integrated magnets let the organizer snap into place, it manages up to 5 cables, and prints in about 1.5 hours.",
+  },
 ];
 
 /**
