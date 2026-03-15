@@ -69,6 +69,13 @@ const POSTS = [
     excerpt:
       "Exploring a 3D printed 12-hole ocarina—a fully functional musical instrument that demonstrates how additive manufacturing intersects with sound creation and democratizes instrument making.",
   },
+  {
+    title: "Organic Object Challenge - Coaster Blob",
+    date: "2026-03-15",
+    slug: "organic-object-coaster-blob",
+    excerpt:
+      "A 3D-printable drink coaster with a smooth, irregular blob silhouette modeled entirely in Fusion 360's Sculpt environment using T-Spline tools.",
+  },
 ];
 
 /**
