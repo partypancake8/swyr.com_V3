@@ -76,6 +76,13 @@ const POSTS = [
     excerpt:
       "A 3D-printable drink coaster with a smooth, irregular blob silhouette modeled entirely in Fusion 360's Sculpt environment using T-Spline tools.",
   },
+  {
+    title: "Idea: AE Ink – Small Desk Weather Display",
+    date: "2026-03-15",
+    slug: "week-07-ae-ink-weather-display",
+    excerpt:
+      "A compact desk display that prioritizes the \"feels like\" temperature and indoor comfort readings, housed in a 3D printed enclosure with a laser-cut wood front panel.",
+  },
 ];
 
 /**
