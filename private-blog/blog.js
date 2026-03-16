@@ -83,6 +83,13 @@ const POSTS = [
     excerpt:
       "A compact desk display that prioritizes the \"feels like\" temperature and indoor comfort readings, housed in a 3D printed enclosure with a laser-cut wood front panel.",
   },
+  {
+    title: "3DP Project 3 – Sketch Your Ergo Mouse: The Tooth Buster",
+    date: "2026-03-15",
+    slug: "week-08-ergo-mouse-tooth-buster",
+    excerpt:
+      "A brass knuckles-style toothbrush with finger holes for a positive, locked grip and an organic, candle-like rounded profile for extended comfort — reimagining the ergo mouse brief into an unexpected everyday object.",
+  },
 ];
 
 /**
