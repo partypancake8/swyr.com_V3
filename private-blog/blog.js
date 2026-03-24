@@ -21,6 +21,13 @@
 
 const POSTS = [
   {
+    title: "GroceryHoldinator – Ergo Device Project",
+    date: "2026-03-24",
+    slug: "week-09-grocery-holdinator",
+    excerpt:
+      "An ergonomic grocery bag carrier that combines multiple bag handles into one sculpted grip, designed with Fusion 360 Form tools for smooth curves and finger grooves for comfort.",
+  },
+  {
     title: "The Next 30 Years of 3D Printing",
     date: "2026-01-10",
     slug: "week-01-introduction",
