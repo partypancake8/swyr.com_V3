@@ -21,6 +21,13 @@
 
 const POSTS = [
   {
+    title: "3DP Final Project – Sketch Your Idea",
+    date: "2026-04-02",
+    slug: "week-10-final-project-sketch",
+    excerpt:
+      "A blueprint-style sketch for my final project: a minimal e-ink weather display that sits on a desk, shows outdoor conditions and indoor humidity, and is designed to feel like a small intentional object rather than just another screen.",
+  },
+  {
     title: "GroceryHoldinator – Ergo Device Project",
     date: "2026-03-24",
     slug: "week-09-grocery-holdinator",
@@ -88,7 +95,7 @@ const POSTS = [
     date: "2026-03-15",
     slug: "week-07-ae-ink-weather-display",
     excerpt:
-      "A compact desk display that prioritizes the \"feels like\" temperature and indoor comfort readings, housed in a 3D printed enclosure with a laser-cut wood front panel.",
+      'A compact desk display that prioritizes the "feels like" temperature and indoor comfort readings, housed in a 3D printed enclosure with a laser-cut wood front panel.',
   },
   {
     title: "3DP Project 3 – Sketch Your Ergo Mouse: The Tooth Buster",
