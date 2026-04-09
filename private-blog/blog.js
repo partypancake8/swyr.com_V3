@@ -21,6 +21,13 @@
 
 const POSTS = [
   {
+    title: "3DP Final Project – CAD: 2x2 OLED Display",
+    date: "2026-04-09",
+    slug: "week-11-final-project-cad",
+    excerpt:
+      "Pivoting from e-ink to a 2x2 OLED setup — CAD model for a two-piece enclosure with a base holding four display sections and a top housing to keep everything organized.",
+  },
+  {
     title: "3DP Final Project – Sketch Your Idea",
     date: "2026-04-02",
     slug: "week-10-final-project-sketch",
