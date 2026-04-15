@@ -21,8 +21,9 @@
   --border-width: 2px;
 
   /* Typography */
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-    "Inter", "Segoe UI", sans-serif;
+  --font-sans:
+    system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter",
+    "Segoe UI", sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   --font-size-body: clamp(0.98rem, 0.22vw + 0.9rem, 1.05rem);
   --line-height-body: 1.7;
@@ -296,7 +297,7 @@ p-alternate {
   position: relative;
   min-height: 100vh;
   padding: 0 4rem 4rem;
-  background: var(--background-color);
+  background: transparent; /* body provides dark bg; transparent lets canvas show through */
 }
 
 /* constrain content inside landing */
@@ -372,7 +373,9 @@ p-alternate {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .landing__nav a:hover,
@@ -394,7 +397,9 @@ p-alternate {
   border-radius: 6px;
   color: var(--primary-color);
   background: transparent;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .resume-btn:hover {
@@ -429,6 +434,8 @@ p-alternate {
 .hero {
   max-width: var(--measure);
   margin: 0;
+  position: relative;
+  z-index: 2;
 
   min-height: 100vh;
   display: flex;
@@ -484,7 +491,9 @@ p-alternate {
   font-weight: 600;
   letter-spacing: 0.01em;
   white-space: nowrap;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .outline-btn:hover {
@@ -559,7 +568,9 @@ body.nav-open {
   text-decoration: none;
   font-family: var(--font-mono);
   font-size: 0.9rem;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .social-rail a:hover {
@@ -591,7 +602,9 @@ body.nav-open {
   font-family: var(--font-mono);
   letter-spacing: 0.08em;
   writing-mode: vertical-rl;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .email-rail a:hover {
@@ -642,7 +655,9 @@ body.nav-open {
     transform: translateX(110%);
     opacity: 0;
     pointer-events: none;
-    transition: transform 0.25s ease, opacity 0.2s ease;
+    transition:
+      transform 0.25s ease,
+      opacity 0.2s ease;
   }
 
   .landing__nav-links.is-open {
@@ -707,7 +722,9 @@ body.nav-open {
   width: 22px;
   height: 22px;
   opacity: 0.8;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .footer-social img:hover {
@@ -724,6 +741,21 @@ body.nav-open {
   .email-rail {
     display: none;
   }
+}
+
+/* ====================
+   GLOBE CANVAS
+   ==================== */
+#globe-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.35s ease;
 }
 
 .hash-divider {
