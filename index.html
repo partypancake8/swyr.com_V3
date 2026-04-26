@@ -32,13 +32,26 @@
           </button>
 
           <div class="landing__nav-links">
-            <a href="#about"><span class="nav-index">01.</span> About</a>
-            <a href="#experience"
-              ><span class="nav-index">02.</span> Experience</a
-            >
-            <a href="#work"><span class="nav-index">03.</span> Work</a>
-            <a href="#contact"><span class="nav-index">04.</span> Contact</a>
-            <a class="resume-btn" href="/public/documents/Sawyer Smith Resume 2025.pdf">Resume</a>
+            <a href="#about" aria-label="About">
+              <span class="nav-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>
+              <span class="nav-text"><span class="nav-index">01.</span> About</span>
+            </a>
+            <a href="#experience" aria-label="Experience">
+              <span class="nav-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></span>
+              <span class="nav-text"><span class="nav-index">02.</span> Experience</span>
+            </a>
+            <a href="#work" aria-label="Work">
+              <span class="nav-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+              <span class="nav-text"><span class="nav-index">03.</span> Work</span>
+            </a>
+            <a href="#contact" aria-label="Contact">
+              <span class="nav-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg></span>
+              <span class="nav-text"><span class="nav-index">04.</span> Contact</span>
+            </a>
+            <a class="resume-btn" href="/public/documents/Sawyer Smith Resume 2025.pdf" aria-label="Resume">
+              <span class="nav-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+              <span class="nav-text">Resume</span>
+            </a>
           </div>
         </nav>
       </header>
@@ -118,7 +131,7 @@
           <p class="section-text">
             My work includes robotics experiments, data automation pipelines, embedded control interfaces, and full-stack applications. One recent project is a multi-client card game trust-study platform built with Node.js and WebSockets, featuring synchronized interfaces, advisor-balancing logic, per-session CSV logging, and automated analysis scripts. I’m also developing tools, websites, and prototypes that explore how robotics, software, and user experience can come together in cohesive, intuitive systems. Check it out on my GitHub!
           </p>
-          
+        </section>
 
         <section id="contact" class="section-block section-block--contact">
           <div class="hash-divider" data-hash-divider></div>
@@ -155,41 +168,6 @@
       </div>
     </footer>
 
-    <script>
-      const hamburger = document.querySelector(".hamburger");
-      const navLinks = document.querySelector(".landing__nav-links");
-      const navAnchors = navLinks ? navLinks.querySelectorAll("a") : [];
-      const navScrim = document.querySelector(".nav-scrim");
-
-      const toggleNav = () => {
-        if (!hamburger || !navLinks) return;
-        const isOpen = navLinks.classList.toggle("is-open");
-        hamburger.setAttribute("aria-expanded", isOpen);
-        document.body.classList.toggle("nav-open", isOpen);
-        if (navScrim) {
-          navScrim.classList.toggle("is-visible", isOpen);
-        }
-      };
-
-      if (hamburger) {
-        hamburger.addEventListener("click", toggleNav);
-      }
-
-      if (navScrim) {
-        navScrim.addEventListener("click", toggleNav);
-      }
-
-      navAnchors.forEach((link) =>
-        link.addEventListener("click", () => {
-          navLinks.classList.remove("is-open");
-          hamburger.setAttribute("aria-expanded", "false");
-          document.body.classList.remove("nav-open");
-          if (navScrim) {
-            navScrim.classList.remove("is-visible");
-          }
-        })
-      );
-    </script>
     <script src="src/js/main.js"></script>
     <script src="src/js/globe.js"></script>
   </body>

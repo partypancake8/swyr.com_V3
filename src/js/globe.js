@@ -46,6 +46,7 @@
   let paused = false;
   let landFeatures = null; // GeoJSON Feature array, populated after fetch
   let userPoint = null; // { phi, theta } — set after IP geolocation resolves
+  let currentRotSpeed = ROT_SPEED; // modified by scroll
 
   // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -147,9 +148,14 @@
         for (const p of points) {
           p.land = classifyPoint(p.phi, p.theta);
         }
+        // Start loop only now — globe is fully classified before first frame
+        startLoop();
+        canvas.style.opacity = "1";
       })
       .catch(() => {
-        /* silent fallback: all points stay land=true */
+        /* silent fallback: start anyway */
+        startLoop();
+        canvas.style.opacity = "1";
       });
   }
 
@@ -208,7 +214,7 @@
   function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    rotY += ROT_SPEED;
+    rotY += currentRotSpeed;
 
     // Build projected list
     const projected = points.map((p) => {
@@ -256,19 +262,14 @@
 
       if (z > -0.1) {
         const depthAlpha = remap(z, -0.1, 1, 0.3, 1.0);
-        const fontSize   = Math.round(remap(z, -0.1, 1, FONT_MIN + 2, R * FONT_MAX_FACTOR * 1.8));
-        const step       = fontSize * 0.95; // spacing between cluster chars
+        const flash = 0.5 + 0.5 * Math.sin(performance.now() / 300);
+        const alpha = depthAlpha * flash;
+        const dotRadius = remap(z, -0.1, 1, 4, 10);
 
-        // Small cross-shaped cluster: centre + 4 cardinal neighbours
-        const offsets = [
-          [0, 0], [-step, 0], [step, 0], [0, -step], [0, step],
-        ];
-
-        ctx.font      = `bold ${fontSize}px monospace`;
-        ctx.fillStyle = `rgba(255,50,50,${depthAlpha.toFixed(3)})`;
-        for (const [dx, dy] of offsets) {
-          ctx.fillText(randChar(), sx + dx, sy + dy);
-        }
+        ctx.beginPath();
+        ctx.arc(sx, sy, dotRadius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,50,50,${alpha.toFixed(3)})`;
+        ctx.fill();
       }
     }
   }
@@ -302,12 +303,7 @@
       window.scrollY / (window.innerHeight * FADE_SCROLL_VH),
       1,
     );
-    canvas.style.opacity = String(1 - ratio);
-    if (ratio >= 1) {
-      if (!paused) stopLoop();
-    } else {
-      if (paused) startLoop();
-    }
+    currentRotSpeed = ROT_SPEED;
   }
 
   // ── Boot ──────────────────────────────────────────────────────────────────────
@@ -315,11 +311,10 @@
   function init() {
     setLayout();
     initPoints();
-    loadLandData(); // async; updates p.land when ready
+    loadLandData(); // async; starts loop + fade-in when ready
     loadUserLocation(); // async; adds red marker at visitor's IP location
     window.addEventListener("resize", setLayout, { passive: true });
     window.addEventListener("scroll", onScroll, { passive: true });
-    startLoop();
   }
 
   if (document.readyState === "loading") {
