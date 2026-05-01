@@ -1,0 +1,37 @@
+---
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+  title: string;
+  bodyClass?: string;
+}
+const { title, bodyClass } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-body-class={bodyClass ?? ''}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/icons/swyrlogowhite.svg" />
+    <slot name="head" />
+    <ClientRouter />
+  </head>
+  <body class={bodyClass}>
+    <canvas id="globe-canvas" aria-hidden="true" transition:persist transition:name="globe"></canvas>
+    <slot />
+    <script is:inline src="/js/globe.js"></script>
+    <script>
+      // Keep body class in sync after every client-side navigation.
+      // Astro's ClientRouter doesn't always propagate <body> attribute changes
+      // from the incoming page, so we re-apply the class from a data attribute
+      // stamped on <html> by each layout.
+      function syncBodyClass() {
+        const next = document.documentElement.dataset.bodyClass;
+        document.body.className = next || '';
+      }
+      document.addEventListener('astro:after-swap', syncBodyClass);
+    </script>
+  </body>
+</html>

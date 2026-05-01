@@ -20,7 +20,7 @@
   const ROT_SPEED = 0.002; // rad/frame  ≈ 16 s/revolution at 60 fps
   const MUTATE_PROB = 0.00001; // probability a land point char flickers per frame
   const MOBILE_BREAKPOINT = 770;
-  const LAND_DATA_URL = "public/data/land.geojson";
+  const LAND_DATA_URL = "/data/land.geojson";
   const FADE_SCROLL_VH = 1.5; // viewport-heights of scroll over which globe fades out (1.0 = fully gone after scrolling 100vh)
 
   // Character pool: hex digits — uniform width, digital aesthetic, all meaningful

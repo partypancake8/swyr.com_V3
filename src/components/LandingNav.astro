@@ -1,0 +1,81 @@
+---
+interface Props {
+  breadcrumb?: string;
+}
+const { breadcrumb } = Astro.props;
+---
+
+<header class="landing__header" transition:animate="none">
+  <div class="landing__header-left">
+    <div class="logo-hex">
+      <a href="/">
+        <img src="/icons/swyrlogowhite.svg" alt="Swyr Logo" style="width:44px;height:44px;" />
+      </a>
+    </div>
+    {breadcrumb && (
+      <span class="nav-breadcrumb" aria-label={`current page: ${breadcrumb}`}>
+        <span class="nav-breadcrumb__sep" aria-hidden="true">/</span>
+        <span class="nav-breadcrumb__name">{breadcrumb}</span>
+      </span>
+    )}
+  </div>
+
+  <nav class="landing__nav">
+    <button
+      class="hamburger"
+      aria-label="Toggle navigation"
+      aria-expanded="false"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="landing__nav-links">
+      <a href="/#about" aria-label="About">
+        <span class="nav-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+        </span>
+        <span class="nav-text"><span class="nav-index">01.</span> About</span>
+      </a>
+
+      <a href="/#experience" aria-label="Experience">
+        <span class="nav-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+          </svg>
+        </span>
+        <span class="nav-text"><span class="nav-index">02.</span> Experience</span>
+      </a>
+
+      <a href="/#work" aria-label="Work">
+        <span class="nav-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </span>
+        <span class="nav-text"><span class="nav-index">03.</span> Work</span>
+      </a>
+
+      <a href="/#contact" aria-label="Contact">
+        <span class="nav-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/>
+          </svg>
+        </span>
+        <span class="nav-text"><span class="nav-index">04.</span> Contact</span>
+      </a>
+
+      <a class="resume-btn" href="/documents/Sawyer Smith Resume 2025.pdf" target="_blank" rel="noopener" aria-label="Resume">
+        <span class="nav-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+          </svg>
+        </span>
+        <span class="nav-text">Resume</span>
+      </a>
+    </div>
+  </nav>
+</header>

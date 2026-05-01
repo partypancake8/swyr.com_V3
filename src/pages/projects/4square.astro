@@ -1,0 +1,265 @@
+---
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+---
+
+<ProjectLayout title="4 square — build log" breadcrumb="4 square">
+  <!-- ── hero ─────────────────────────── -->
+  <header class="proj-hero">
+    <p class="proj-eyebrow">project build log</p>
+    <h1 class="proj-title">4 square</h1>
+    <p class="proj-tagline">A modular desk display where every screen is yours to configure.</p>
+    <ul class="proj-tags">
+      <li class="proj-tag">embedded</li>
+      <li class="proj-tag">open source</li>
+      <li class="proj-tag">3D printed</li>
+      <li class="proj-tag">ESP32-S3</li>
+    </ul>
+    <div class="proj-meta">
+      <div class="proj-meta-item">
+        <span class="proj-meta-label">Type</span>
+        <span class="proj-meta-value">desk gadget</span>
+      </div>
+      <div class="proj-meta-item">
+        <span class="proj-meta-label">Date</span>
+        <span class="proj-meta-value">April 2026</span>
+      </div>
+      <div class="proj-meta-item">
+        <span class="proj-meta-label">Status</span>
+        <span class="proj-meta-value proj-meta-value--green">complete</span>
+      </div>
+      <div class="proj-meta-item">
+        <span class="proj-meta-label">Source</span>
+        <a
+          class="proj-meta-link"
+          href="https://github.com/partypancake8/oled2x2x"
+          target="_blank"
+          rel="noopener"
+        >oled2x2x&nbsp;&#8599;</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── hero image ───────────────────── -->
+  <img
+    class="proj-hero-img"
+    src="/images/4square/finished.jpeg"
+    alt="Finished 4 square build on a desk"
+  />
+  <p class="proj-media-caption">
+    finished build — 4&times; SSD1306 OLEDs in custom 3D-printed enclosure
+  </p>
+
+  <!-- ── overview ─────────────────────── -->
+  <section class="proj-section">
+    <p class="proj-section-label">overview</p>
+    <div class="proj-overview-split">
+      <div class="proj-overview-text">
+        <h2 class="proj-section-heading">what is this?</h2>
+        <p>
+          Four 128&times;64 OLED screens, each independently programmable. Runs on an Adafruit
+          Feather ESP32-S3 with WiFi, NTP time sync, battery gauge, and a temperature sensor
+          &mdash; all housed in a custom 3D-printed enclosure.
+        </p>
+        <p>
+          Every screen is a &ldquo;widget&rdquo; slot. Swap them out in config, no code changes
+          needed. If it&rsquo;s a number, a word, or an icon &mdash; it fits on a screen.
+        </p>
+      </div>
+      <aside class="proj-specs">
+        <div class="proj-spec-row">
+          <span class="proj-spec-label">MCU</span>
+          <span class="proj-spec-value">ESP32-S3 (WiFi + BLE)</span>
+        </div>
+        <div class="proj-spec-row">
+          <span class="proj-spec-label">Displays</span>
+          <span class="proj-spec-value">4&times; SSD1306 128&times;64 OLED</span>
+        </div>
+        <div class="proj-spec-row">
+          <span class="proj-spec-label">Mux</span>
+          <span class="proj-spec-value">TCA9548A I&sup2;C</span>
+        </div>
+        <div class="proj-spec-row">
+          <span class="proj-spec-label">Sensors</span>
+          <span class="proj-spec-value">SHT40 temp / humidity</span>
+        </div>
+        <div class="proj-spec-row">
+          <span class="proj-spec-label">Power</span>
+          <span class="proj-spec-value">LiPo 2500 mAh</span>
+        </div>
+        <div class="proj-spec-row">
+          <span class="proj-spec-label">Enclosure</span>
+          <span class="proj-spec-value">5-part FDM, Fusion 360</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <hr class="proj-divider" />
+
+  <!-- ── motivation ───────────────────── -->
+  <section class="proj-section">
+    <p class="proj-section-label">motivation</p>
+    <h2 class="proj-section-heading">people want small, intentional desk objects</h2>
+    <p>
+      Succulents, Lego sets, mechanical keyboards &mdash; people curate their personal spaces
+      carefully. There&rsquo;s no good answer for a small, useful, <em>customizable</em> display
+      object that&rsquo;s also genuinely functional. This fills that niche: it looks cool, tells
+      you things you actually care about, and reflects who you are.
+    </p>
+  </section>
+
+  <hr class="proj-divider" />
+
+  <!-- ── software ─────────────────────── -->
+  <section class="proj-section">
+    <p class="proj-section-label">software</p>
+    <h2 class="proj-section-heading">fully customizable 2&times;2 layout</h2>
+    <p>
+      Each of the four screens is independently assigned a widget. Swap them in config &mdash;
+      no code changes needed.
+    </p>
+    <ul class="proj-widget-list">
+      <li class="proj-widget-item">
+        <span class="proj-widget-name">Clock</span>
+        <span class="proj-widget-desc">NTP-synced, timezone-aware</span>
+      </li>
+      <li class="proj-widget-item">
+        <span class="proj-widget-name">Date</span>
+        <span class="proj-widget-desc">day, month, year display</span>
+      </li>
+      <li class="proj-widget-item">
+        <span class="proj-widget-name">Battery</span>
+        <span class="proj-widget-desc">percentage + bar graph</span>
+      </li>
+      <li class="proj-widget-item">
+        <span class="proj-widget-name">Indoor temp</span>
+        <span class="proj-widget-desc">live SHT40 reading</span>
+      </li>
+      <li class="proj-widget-item">
+        <span class="proj-widget-name">Stock price</span>
+        <span class="proj-widget-desc">any ticker via API</span>
+      </li>
+      <li class="proj-widget-item">
+        <span class="proj-widget-name">Countdown</span>
+        <span class="proj-widget-desc">days to any event</span>
+      </li>
+      <li class="proj-widget-item">
+        <span class="proj-widget-name">Spotify</span>
+        <span class="proj-widget-desc">now playing track</span>
+      </li>
+      <li class="proj-widget-item">
+        <span class="proj-widget-name">Server ping</span>
+        <span class="proj-widget-desc">host latency monitor</span>
+      </li>
+    </ul>
+    <div class="proj-callout">
+      Every screen is independently programmable. If it&rsquo;s a number, a word,
+      or an icon &mdash; it fits on a screen.
+    </div>
+  </section>
+
+  <hr class="proj-divider" />
+
+  <!-- ── enclosure ────────────────────── -->
+  <section class="proj-section">
+    <p class="proj-section-label">enclosure</p>
+    <h2 class="proj-section-heading">5-part 3D-printed housing</h2>
+    <p>
+      Designed in Fusion 360. The enclosure splits into a display faceplate, two display
+      mounts, a back panel, and a snap-fit lid &mdash; everything replaceable and remixable.
+    </p>
+    <video
+      class="proj-media"
+      autoplay
+      loop
+      muted
+      playsinline
+      src="/images/4square/enclosure.mp4"
+    ></video>
+    <p class="proj-media-caption">
+      01 &mdash; 5-part enclosure &middot; display faceplate &middot; display mount (&times;2) &middot; back panel &middot; lid
+    </p>
+  </section>
+
+  <hr class="proj-divider" />
+
+  <!-- ── hardware ─────────────────────── -->
+  <section class="proj-section">
+    <p class="proj-section-label">hardware</p>
+    <h2 class="proj-section-heading">components</h2>
+    <div class="proj-comp-grid">
+      <div class="proj-comp-card">
+        <img src="https://cdn-shop.adafruit.com/970x728/5477-06.jpg" alt="Adafruit Feather ESP32-S3" />
+        <div class="proj-comp-footer">
+          <span class="proj-comp-name">ESP32-S3</span>
+          <span class="proj-comp-role">MCU</span>
+        </div>
+      </div>
+      <div class="proj-comp-card">
+        <img src="https://cdn-shop.adafruit.com/970x728/326-04.jpg" alt='SSD1306 0.96" OLED' />
+        <div class="proj-comp-footer">
+          <span class="proj-comp-name">SSD1306</span>
+          <span class="proj-comp-role">4&times; Display</span>
+        </div>
+      </div>
+      <div class="proj-comp-card">
+        <img src="https://cdn-shop.adafruit.com/970x728/2717-05.jpg" alt="TCA9548A I2C Mux" />
+        <div class="proj-comp-footer">
+          <span class="proj-comp-name">TCA9548A</span>
+          <span class="proj-comp-role">I&sup2;C Mux</span>
+        </div>
+      </div>
+      <div class="proj-comp-card">
+        <img src="https://cdn-shop.adafruit.com/970x728/4885-05.jpg" alt="SHT40 Temp/Humidity" />
+        <div class="proj-comp-footer">
+          <span class="proj-comp-name">SHT4x</span>
+          <span class="proj-comp-role">Temp / Humidity</span>
+        </div>
+      </div>
+      <div class="proj-comp-card">
+        <img src="https://cdn-shop.adafruit.com/970x728/328-06.jpg" alt="LiPo 2500mAh battery" />
+        <div class="proj-comp-footer">
+          <span class="proj-comp-name">LiPo 2500</span>
+          <span class="proj-comp-role">Battery</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="proj-divider" />
+
+  <!-- ── build gallery ────────────────── -->
+  <section class="proj-section">
+    <p class="proj-section-label">build gallery</p>
+    <h2 class="proj-section-heading">prototype stage</h2>
+    <img
+      class="proj-media"
+      src="/images/4square/prototype.jpeg"
+      alt="prototype wiring — protoboard mux breakout with 4× OLEDs on jumper wires"
+    />
+    <p class="proj-media-caption">
+      02 &mdash; prototype stage &middot; protoboard mux breakout &middot; 4&times; OLEDs on jumper wires &middot; testing before enclosure
+    </p>
+  </section>
+
+  <hr class="proj-divider" />
+
+  <!-- ── open source CTA ───────────────── -->
+  <section class="proj-section">
+    <div class="proj-cta">
+      <p class="proj-cta-heading">build your own &mdash; it&rsquo;s fully open source.</p>
+      <p>
+        Everything is open source. Fork it, swap out screens, change the layout, add new
+        data sources, and make it yours.
+      </p>
+      <a
+        class="proj-cta-link"
+        href="https://github.com/partypancake8/oled2x2x"
+        target="_blank"
+        rel="noopener"
+      >
+        github.com/partypancake8/oled2x2x &rarr;
+      </a>
+    </div>
+  </section>
+</ProjectLayout>

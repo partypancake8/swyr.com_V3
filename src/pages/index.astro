@@ -1,0 +1,84 @@
+---
+import LandingLayout from '../layouts/LandingLayout.astro';
+import WorkCard from '../components/WorkCard.astro';
+---
+
+<LandingLayout>
+  <section class="hero">
+    <p class="hero__eyebrow">Hi, my name is</p>
+    <h1 class="hero__title">
+      <span class="hero__headline">Sawyer Smith.</span>
+      <span class="hero__subtitle">I like to make things!</span>
+    </h1>
+    <p class="hero__description">
+      I'm a robotics engineer focused on front end and backend software, new coding tools, and
+      human-centered technology experiences. I enjoy taking ideas from idea to
+      launch with thoughtful design, modern front-end engineering, and
+      clean user experiences.
+    </p>
+    <a class="outline-btn" href="#work">See my work</a>
+  </section>
+
+  <section id="about" class="section-block">
+    <div class="hash-divider" data-hash-divider></div>
+    <h2 class="section-heading">
+      <span class="nav-index">01.</span> About
+    </h2>
+    <p class="section-text">
+      I'm Sawyer Smith, a robotics engineer studying at the University of Michigan College of
+      Engineering. I focus on building interactive systems that combine real-time software,
+      robotics, and intuitive user experiences. I enjoy taking projects from concept to
+      deployment, designing clean architectures, and creating products that feel fast,
+      responsive, and thoughtfully engineered.
+    </p>
+  </section>
+
+  <section id="experience" class="section-block">
+    <div class="hash-divider" data-hash-divider></div>
+    <h2 class="section-heading">
+      <span class="nav-index">02.</span> Experience
+    </h2>
+    <p class="section-text">
+      I've worked across robotics, automotive engineering, and software development. At
+      <a href="https://www.sanhuausa.com/us/en/" target="_blank" rel="noopener">Sanhua Automotive USA</a>,
+      I built LabVIEW control software for a LIN-based water pump testbench, supported warranty
+      analysis, and collaborated with engineering and sales teams on thermal-management products.
+      At <a href="https://www.brose.com/us-en/brose-in-the-us-and-canada/" target="_blank" rel="noopener">Brose North America</a>,
+      I ran BLDC motor validation using DYNO systems, updated test procedures, and produced
+      training materials to standardize internal workflows. At the University of Michigan, I've
+      led and contributed to multi-person robotics and HRI projects, including real-time
+      experimental systems, Python automation tools, and software–hardware integrations.
+    </p>
+  </section>
+
+  <section id="work" class="section-block">
+    <div class="hash-divider" data-hash-divider></div>
+    <h2 class="section-heading">
+      <span class="nav-index">03.</span> Work
+    </h2>
+    <p class="section-text">
+      Robotics experiments, embedded systems, data pipelines, and full-stack tools. A mix of
+      personal projects and engineering work.
+    </p>
+    <div class="work-cards">
+      <WorkCard
+        title="4 square"
+        href="/projects/4square"
+        desc="Four 128×64 OLEDs, each independently programmable. Feather ESP32-S3 with WiFi, NTP, battery gauge, and a 3D-printed enclosure."
+        tags={["embedded", "ESP32-S3", "3D printed", "open source"]}
+      />
+    </div>
+  </section>
+
+  <section id="contact" class="section-block section-block--contact">
+    <div class="hash-divider" data-hash-divider></div>
+    <h2 class="section-heading">
+      <span class="nav-index">04.</span> Contact
+    </h2>
+    <p class="section-text">
+      I'm always open to discussing new opportunities, collaborations, or side projects.
+      Feel free to reach out! Check out my
+      <a href="/documents/Sawyer Smith Resume 2025.pdf" target="_blank" rel="noopener">resume</a>!
+    </p>
+  </section>
+</LandingLayout>

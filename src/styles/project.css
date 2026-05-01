@@ -4,34 +4,6 @@
    no overrides to global resets or body.
    ====================================== */
 
-/* ── back nav ─────────────────────────── */
-.proj-nav {
-  padding: 1rem var(--page-padding);
-  border-bottom: 1px solid rgba(0, 255, 0, 0.15);
-  position: sticky;
-  top: 0;
-  background-color: var(--background-color);
-  z-index: 10;
-}
-
-.proj-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--primary-color);
-  text-decoration: none;
-  letter-spacing: 0.05em;
-  opacity: 0.6;
-  transition: opacity 0.2s;
-}
-
-.proj-back:hover {
-  opacity: 1;
-  text-decoration: none;
-}
-
 /* ── page wrapper ─────────────────────── */
 .proj-page {
   max-width: 900px;
@@ -280,6 +252,149 @@
   text-decoration: none;
 }
 
+/* ── project meta strip ──────────────── */
+.proj-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 2.5rem;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(0, 255, 0, 0.12);
+}
+
+.proj-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.proj-meta-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary-color);
+  opacity: 0.55;
+}
+
+.proj-meta-value {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  opacity: 0.75;
+}
+
+.proj-meta-value--green {
+  color: var(--primary-color);
+  opacity: 0.9;
+}
+
+.proj-meta-link {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  opacity: 0.75;
+  border-bottom: 1px solid rgba(0, 255, 0, 0.35);
+  transition: opacity 0.15s;
+  align-self: flex-end;
+}
+
+.proj-meta-link:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+/* ── overview two-column split ────────── */
+.proj-overview-split {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 3rem;
+  align-items: start;
+}
+
+/* ── specs table ──────────────────────── */
+.proj-specs {
+  background-color: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(0, 255, 0, 0.14);
+  border-radius: 4px;
+  padding: 0.25rem 1.25rem;
+}
+
+.proj-spec-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 0.5rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(0, 255, 0, 0.08);
+}
+
+.proj-spec-row:last-child {
+  border-bottom: none;
+}
+
+.proj-spec-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary-color);
+  opacity: 0.6;
+  padding-top: 0.1rem;
+}
+
+.proj-spec-value {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+  line-height: 1.4;
+}
+
+/* ── widget grid ──────────────────────── */
+.proj-widget-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+  border: 1px solid rgba(0, 255, 0, 0.12);
+  border-radius: 4px;
+  overflow: hidden;
+  max-width: 65ch;
+}
+
+.proj-widget-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(0, 255, 0, 0.08);
+  border-right: 1px solid rgba(0, 255, 0, 0.08);
+}
+
+.proj-widget-item:nth-child(even) {
+  border-right: none;
+}
+
+.proj-widget-item:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+.proj-widget-name {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--primary-color);
+  letter-spacing: 0.03em;
+}
+
+.proj-widget-desc {
+  font-size: 0.71rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
 /* ── responsive ───────────────────────── */
 @media (max-width: 768px) {
   .proj-page {
@@ -287,9 +402,25 @@
     padding-right: 1.5rem;
   }
 
-  .proj-nav {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+  .proj-overview-split {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .proj-widget-list {
+    grid-template-columns: 1fr;
+  }
+
+  .proj-widget-item {
+    border-right: none;
+  }
+
+  .proj-widget-item:nth-last-child(-n + 2) {
+    border-bottom: 1px solid rgba(0, 255, 0, 0.08);
+  }
+
+  .proj-widget-item:last-child {
+    border-bottom: none;
   }
 
   .proj-motive-imgs {

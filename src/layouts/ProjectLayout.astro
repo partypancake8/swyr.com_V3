@@ -1,0 +1,43 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import LandingNav from '../components/LandingNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/major.css';
+import '../styles/project.css';
+
+interface Props {
+  title: string;
+  breadcrumb?: string;
+}
+const { title, breadcrumb } = Astro.props;
+---
+
+<BaseLayout title={title}>
+  <LandingNav breadcrumb={breadcrumb} />
+
+  <aside class="social-rail">
+    <ul>
+      <li>
+        <a href="https://github.com/partypancake8/" target="_blank" rel="noopener" aria-label="GitHub">
+          <img src="/icons/github.svg" alt="GitHub" />
+        </a>
+      </li>
+      <li>
+        <a href="https://www.linkedin.com/in/sawyer-smith-60918a221/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <img src="/icons/linkedin.svg" alt="LinkedIn" />
+        </a>
+      </li>
+    </ul>
+    <div class="rail-line"></div>
+  </aside>
+
+  <aside class="email-rail">
+    <a href="mailto:swyr@swyr.com">swyr@swyr.com</a>
+    <div class="rail-line"></div>
+  </aside>
+
+  <div class="proj-page">
+    <slot />
+  </div>
+  <SiteFooter />
+</BaseLayout>

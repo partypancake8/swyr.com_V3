@@ -14,7 +14,7 @@
   --page-padding: 5rem;
 
   --primary-color: #00ff00;
-  --background-color: #232323;
+  --background-color: #1a1a1a;
   --surface-color: #0a0a0a;
   --text-primary: #00ff00;
   --text-muted: #f9f9f9;
@@ -54,9 +54,7 @@ body {
    GENERIC HEADER / NAV (non-landing pages)
    ==================== */
 header {
-  background-color: #0b0b0b;
   padding: 1rem;
-  border-bottom: var(--border-width) solid var(--primary-color);
 }
 
 nav {
@@ -314,11 +312,62 @@ p-alternate {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2.5rem 0 0;
-  background: transparent;
-  border: none;
+  padding: 1rem var(--page-padding) 1rem
+    calc(var(--rail-offset) + var(--content-rail-gap));
+  border-bottom: none;
   position: relative;
   z-index: 20;
+  /* base: transparent, no blur — homepage state */
+  background: transparent;
+}
+
+.landing__header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: var(--page-padding);
+  right: var(--page-padding);
+  height: 1px;
+  background: rgba(0, 255, 0, 0.1);
+}
+
+/* Left cluster: logo + breadcrumb */
+.landing__header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Breadcrumb in nav bar */
+.nav-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+}
+
+.nav-breadcrumb__sep {
+  color: var(--primary-color);
+  opacity: 0.3;
+}
+
+.nav-breadcrumb__name {
+  color: var(--text-muted);
+  opacity: 0.45;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* Project pages: sticky + frosted glass — padding is identical to base */
+body:not(.is-landing) .landing__header {
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(35, 35, 35, 0.82);
+  z-index: 50;
 }
 
 /* Landing nav */
@@ -663,7 +712,8 @@ body.nav-open {
   }
 
   .landing__header {
-    padding-top: 1.2rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   /* Icon-only flat bar — no slide panel, no hamburger */
@@ -800,6 +850,7 @@ body.nav-open {
 /* ====================
    GLOBE CANVAS
    ==================== */
+/* hidden on all pages except landing — canvas context stays alive across navigations */
 #globe-canvas {
   position: fixed;
   top: 0;
@@ -810,6 +861,11 @@ body.nav-open {
   pointer-events: none;
   opacity: 0;
   transition: opacity 1.2s ease;
+  visibility: hidden;
+}
+
+body.is-landing #globe-canvas {
+  visibility: visible;
 }
 
 .hash-divider {

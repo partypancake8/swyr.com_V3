@@ -1,0 +1,20 @@
+---
+interface Props {
+  title: string;
+  href: string;
+  desc: string;
+  tags: string[];
+}
+const { title, href, desc, tags } = Astro.props;
+---
+
+<a class="work-card" href={href}>
+  <div class="work-card__header">
+    <span class="work-card__title">{title}</span>
+    <span class="work-card__arrow">view &rarr;</span>
+  </div>
+  <p class="work-card__desc">{desc}</p>
+  <ul class="work-card__tags">
+    {tags.map((tag) => <li class="work-card__tag">{tag}</li>)}
+  </ul>
+</a>
