@@ -1,43 +1,51 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import LandingNav from '../components/LandingNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import '../styles/major.css';
+import '../styles/split.css';
 ---
 
-<BaseLayout title="Sawyer Smith" bodyClass="is-landing">
-  <LandingNav />
+<BaseLayout title="Sawyer Smith" bodyClass="is-landing is-split">
+  <div class="split">
+    <aside class="split__pane">
+      <div class="pane__top">
+        <a class="pane__logo" href="/">
+          <img src="/icons/swyrlogowhite.svg" alt="Swyr logo" />
+        </a>
+        <h1 class="pane__name">Sawyer Smith</h1>
+        <p class="pane__role">robotics engineer · full-stack developer</p>
+        <p class="pane__bio">
+          I build interactive systems that blend real-time software, robotics,
+          and clean user experiences, taking ideas from concept to launch.
+        </p>
+      </div>
 
-  <div class="landing">
-    <div class="nav-scrim"></div>
+      <nav class="pane__nav" aria-label="Section navigation">
+        <a href="#about" data-spy="about"><span class="pane__nav-index">01</span> About</a>
+        <a href="#experience" data-spy="experience"><span class="pane__nav-index">02</span> Experience</a>
+        <a href="#work" data-spy="work"><span class="pane__nav-index">03</span> Work</a>
+        <a href="#contact" data-spy="contact"><span class="pane__nav-index">04</span> Contact</a>
+        <a class="pane__resume" href="/documents/Sawyer Smith Resume 2025.pdf" target="_blank" rel="noopener">Resume &#8599;</a>
+      </nav>
 
-    <aside class="social-rail">
-      <ul>
-        <li>
-          <a href="https://github.com/partypancake8/" target="_blank" rel="noopener" aria-label="GitHub">
-            <img src="/icons/github.svg" alt="GitHub" />
-          </a>
-        </li>
-        <li>
-          <a href="https://www.linkedin.com/in/sawyer-smith-60918a221/" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <img src="/icons/linkedin.svg" alt="LinkedIn" />
-          </a>
-        </li>
-      </ul>
-      <div class="rail-line"></div>
+      <div class="pane__social">
+        <a href="https://github.com/partypancake8/" target="_blank" rel="noopener" aria-label="GitHub">
+          <img src="/icons/github.svg" alt="GitHub" />
+        </a>
+        <a href="https://www.linkedin.com/in/sawyer-smith-60918a221/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <img src="/icons/linkedin.svg" alt="LinkedIn" />
+        </a>
+        <a href="mailto:swyr@swyr.com" aria-label="Email">
+          <img src="/icons/emailicon.svg" alt="Email" />
+        </a>
+      </div>
     </aside>
 
-    <aside class="email-rail">
-      <a href="mailto:swyr@swyr.com">swyr@swyr.com</a>
-      <div class="rail-line"></div>
-    </aside>
-
-    <main>
+    <main class="split__content">
       <slot />
+      <SiteFooter />
     </main>
   </div>
-
-  <SiteFooter />
 
   <script is:inline src="/js/main.js"></script>
 </BaseLayout>

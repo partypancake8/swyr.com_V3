@@ -210,10 +210,20 @@
   function setLayout() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    const mobile = window.innerWidth < MOBILE_BREAKPOINT;
-    R = Math.min(canvas.width, canvas.height) * (mobile ? 0.3 : 0.36);
-    cx = canvas.width * (mobile ? 0.5 : 0.67);
-    cy = canvas.height * 0.48;
+    const w = canvas.width;
+    const h = canvas.height;
+    if (w < 1024) {
+      // stacked layout: globe sits behind the top identity pane, centered
+      R = Math.min(w, h) * 0.3;
+      cx = w * 0.5;
+      cy = h * 0.3;
+    } else {
+      // split layout: globe centered inside the fixed left pane
+      const paneW = Math.min(Math.max(w * 0.34, 340), 440);
+      R = Math.min(paneW, h) * 0.4;
+      cx = paneW * 0.5;
+      cy = h * 0.46;
+    }
   }
 
   // ── Init points ───────────────────────────────────────────────────────────────
@@ -317,14 +327,8 @@
   // ── Scroll fade ───────────────────────────────────────────────────────────────
 
   function onScroll() {
-    const ratio = Math.min(
-      window.scrollY / (window.innerHeight * FADE_SCROLL_VH),
-      1,
-    );
-    // Fade the globe out as the visitor scrolls past the hero so it stops
-    // competing with the content, but keep a faint ambient texture (0.12)
-    // rather than going fully dead behind the sections.
-    canvas.style.opacity = String(1 - ratio * 0.88);
+    // Split layout keeps the globe fixed inside the identity pane while the
+    // content column scrolls, so there is no scroll-driven fade.
   }
 
   // ── Boot ──────────────────────────────────────────────────────────────────────
