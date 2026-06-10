@@ -139,24 +139,42 @@
     return isLandCoord(lonDeg, latDeg);
   }
 
-  /** Fetch GeoJSON then classify all sphere points (runs once at startup). */
+  /**
+   * Fetch GeoJSON in the background, then classify all sphere points.
+   * The globe is already spinning by the time this runs (see init), so the
+   * continents simply resolve in once the data arrives — first paint never
+   * waits on the 1.6 MB download or the classification work.
+   */
   function loadLandData() {
     fetch(LAND_DATA_URL)
       .then((r) => r.json())
       .then((geojson) => {
         landFeatures = geojson.features;
-        for (const p of points) {
-          p.land = classifyPoint(p.phi, p.theta);
-        }
-        // Start loop only now — globe is fully classified before first frame
-        startLoop();
-        canvas.style.opacity = "1";
+        classifyPointsIncrementally();
       })
       .catch(() => {
-        /* silent fallback: start anyway */
-        startLoop();
-        canvas.style.opacity = "1";
+        /* silent fallback: globe keeps spinning with all points as land */
       });
+  }
+
+  /**
+   * Classify every sphere point against the land polygons in small chunks,
+   * yielding between batches so the spin never stutters while the continents
+   * resolve in (point-in-polygon over 15k points is too heavy for one frame).
+   */
+  function classifyPointsIncrementally() {
+    const CHUNK = 1500;
+    let i = 0;
+    function step() {
+      const end = Math.min(i + CHUNK, points.length);
+      for (; i < end; i++) {
+        points[i].land = classifyPoint(points[i].phi, points[i].theta);
+      }
+      // setTimeout (a macrotask) reliably runs between animation frames;
+      // requestIdleCallback gets starved by the continuous render loop.
+      if (i < points.length) setTimeout(step, 0);
+    }
+    step();
   }
 
   // ── Sphere geometry ───────────────────────────────────────────────────────────
@@ -311,7 +329,9 @@
   function init() {
     setLayout();
     initPoints();
-    loadLandData(); // async; starts loop + fade-in when ready
+    startLoop(); // render + fade in immediately — no waiting on data
+    canvas.style.opacity = "1";
+    loadLandData(); // async; continents resolve in once the geojson arrives
     loadUserLocation(); // async; adds red marker at visitor's IP location
     window.addEventListener("resize", setLayout, { passive: true });
     window.addEventListener("scroll", onScroll, { passive: true });

@@ -15,6 +15,10 @@ const { title, bodyClass } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/icons/swyrlogowhite.svg" />
+    <!-- Kick off the globe's land data download during HTML parse so continents
+         resolve in sooner. crossorigin="anonymous" matches fetch()'s default
+         (cors + same-origin credentials) so the preload is reused, not refetched. -->
+    <link rel="preload" href="/data/land.geojson" as="fetch" crossorigin="anonymous" />
     <slot name="head" />
     <ClientRouter />
   </head>
