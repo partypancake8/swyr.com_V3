@@ -1,43 +1,85 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import LandingNav from '../components/LandingNav.astro';
-import SiteFooter from '../components/SiteFooter.astro';
-import '../styles/major.css';
 import '../styles/project.css';
 
 interface Props {
   title: string;
+  description?: string;
   breadcrumb?: string;
 }
-const { title, breadcrumb } = Astro.props;
+const { title, description, breadcrumb } = Astro.props;
 ---
 
-<BaseLayout title={title}>
-  <LandingNav breadcrumb={breadcrumb} />
+<BaseLayout title={title} description={description}>
+  <header class="proj-header">
+    <a class="proj-back" href="/">
+      <img src="/icons/swyrlogowhite.svg" alt="" width="28" height="28" />
+      <span class="proj-back__label">Sawyer Smith</span>
+    </a>
+    {breadcrumb && (
+      <nav class="proj-crumb" aria-label="Breadcrumb">
+        <span class="proj-crumb__sep" aria-hidden="true">/</span>
+        <span aria-current="page">{breadcrumb}</span>
+      </nav>
+    )}
+    <a class="proj-home" href="/">← Back</a>
+  </header>
 
-  <aside class="social-rail">
-    <ul>
-      <li>
-        <a href="https://github.com/partypancake8/" target="_blank" rel="noopener" aria-label="GitHub">
-          <img src="/icons/github.svg" alt="GitHub" />
-        </a>
-      </li>
-      <li>
-        <a href="https://www.linkedin.com/in/sawyer-smith-60918a221/" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <img src="/icons/linkedin.svg" alt="LinkedIn" />
-        </a>
-      </li>
-    </ul>
-    <div class="rail-line"></div>
-  </aside>
-
-  <aside class="email-rail">
-    <a href="mailto:swyr@swyr.com">swyr@swyr.com</a>
-    <div class="rail-line"></div>
-  </aside>
-
-  <div class="proj-page">
+  <main id="main" class="proj-page">
     <slot />
-  </div>
-  <SiteFooter />
+  </main>
 </BaseLayout>
+
+<style>
+  .proj-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) clamp(var(--space-md), 5vw, var(--space-xl));
+    background: color-mix(in srgb, var(--surface) 82%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .proj-back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-weight: 600;
+  }
+
+  .proj-back__label {
+    font-size: var(--step-0);
+  }
+
+  .proj-crumb {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .proj-crumb__sep {
+    color: var(--accent-dim);
+  }
+
+  .proj-home {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-dim);
+    transition: color var(--dur) var(--ease);
+  }
+  .proj-home:hover,
+  .proj-home:focus-visible {
+    color: var(--accent);
+  }
+</style>

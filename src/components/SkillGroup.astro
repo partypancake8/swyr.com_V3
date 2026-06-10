@@ -1,0 +1,46 @@
+---
+interface Props {
+  label: string;
+  items: string[];
+}
+const { label, items } = Astro.props;
+---
+
+<div class="skill-group">
+  <h3 class="skill-group__label">{label}</h3>
+  <ul class="skill-group__list" role="list">
+    {items.map((item) => <li>{item}</li>)}
+  </ul>
+</div>
+
+<style>
+  .skill-group__label {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: var(--space-xs);
+  }
+
+  .skill-group__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+  }
+
+  .skill-group__list li {
+    font-size: var(--step--1);
+    color: var(--text);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.3rem 0.65rem;
+    transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  }
+
+  .skill-group__list li:hover {
+    border-color: var(--accent-line);
+    color: var(--accent);
+  }
+</style>

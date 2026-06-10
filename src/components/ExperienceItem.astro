@@ -1,0 +1,123 @@
+---
+interface Props {
+  role: string;
+  org: string;
+  href?: string;
+  period: string;
+  tags?: string[];
+  current?: boolean;
+}
+const { role, org, href, period, tags = [], current = false } = Astro.props;
+---
+
+<article class="xp">
+  <div class="xp__period">
+    {period}
+    {current && <span class="xp__now">Now</span>}
+  </div>
+  <div class="xp__main">
+    <h3 class="xp__role">
+      <span>{role}</span>
+      <span class="xp__sep" aria-hidden="true">·</span>
+      {href ? (
+        <a class="xp__org" href={href} target="_blank" rel="noopener">{org} <span aria-hidden="true">↗</span></a>
+      ) : (
+        <span class="xp__org">{org}</span>
+      )}
+    </h3>
+    <p class="xp__desc"><slot /></p>
+    {tags.length > 0 && (
+      <ul class="xp__tags" role="list">
+        {tags.map((t) => <li>{t}</li>)}
+      </ul>
+    )}
+  </div>
+</article>
+
+<style>
+  .xp {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: var(--space-md);
+    padding: var(--space-md) 0;
+    border-top: 1px solid var(--border);
+  }
+  .xp:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .xp__period {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-faint);
+    letter-spacing: 0.02em;
+    padding-top: 0.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+  }
+
+  .xp__now {
+    width: fit-content;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius-full);
+    padding: 0.1rem 0.5rem;
+  }
+
+  .xp__role {
+    font-size: var(--step-1);
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  .xp__sep {
+    color: var(--text-faint);
+  }
+
+  .xp__org {
+    color: var(--accent);
+  }
+  a.xp__org:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .xp__desc {
+    color: var(--text-dim);
+    font-size: var(--step-0);
+    margin-top: var(--space-2xs);
+  }
+
+  .xp__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin-top: var(--space-sm);
+  }
+  .xp__tags li {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: 0.15rem 0.5rem;
+  }
+
+  @media (max-width: 560px) {
+    .xp {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xs);
+    }
+  }
+</style>

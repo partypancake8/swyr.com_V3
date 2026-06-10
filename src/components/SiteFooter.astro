@@ -1,19 +1,23 @@
 ---
+const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
-  <div class="footer-social">
-    <a href="https://github.com/partypancake8/" target="_blank" rel="noopener" aria-label="GitHub">
-      <img src="/icons/github.svg" alt="GitHub" />
-    </a>
-    <a href="https://www.linkedin.com/in/sawyer-smith-60918a221/" target="_blank" rel="noopener" aria-label="LinkedIn">
-      <img src="/icons/linkedin.svg" alt="LinkedIn" />
-    </a>
-    <a href="mailto:swyr@swyr.com?subject=Hello%20Sawyer&body=Hi%20Sawyer%2C%20I%20found%20your%20website..." aria-label="Email">
-      <img src="/icons/emailicon.svg" alt="Email" />
-    </a>
-  </div>
-  <div class="footer-contact">
-    <p>&copy; 2026 Sawyer Smith. All rights reserved.</p>
-  </div>
+  <p>© {year} Sawyer Smith</p>
+  <p class="footer__meta">Built with Astro · designed &amp; coded by hand</p>
 </footer>
+
+<style>
+  .footer {
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2xs);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-faint);
+  }
+</style>

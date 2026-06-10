@@ -1,41 +1,58 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import '../styles/tokens.css';
+import '../styles/base.css';
 
 interface Props {
   title: string;
-  bodyClass?: string;
+  description?: string;
+  /** Path to an OG/social image under /public (absolute path). */
+  ogImage?: string;
 }
-const { title, bodyClass } = Astro.props;
+
+const {
+  title,
+  description = 'Sawyer Smith — robotics engineer and full-stack developer building real-time software, robotics, and clean user experiences.',
+  ogImage = '/og.png',
+} = Astro.props;
+
+const siteUrl = 'https://swyr.com';
+const canonical = new URL(Astro.url.pathname, siteUrl).href;
+const ogImageUrl = new URL(ogImage, siteUrl).href;
 ---
 
 <!doctype html>
-<html lang="en" data-body-class={bodyClass ?? ''}>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0a0c0b" />
+
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/icons/swyrlogowhite.svg" />
-    <!-- Kick off the globe's land data download during HTML parse so continents
-         resolve in sooner. crossorigin="anonymous" matches fetch()'s default
-         (cors + same-origin credentials) so the preload is reused, not refetched. -->
-    <link rel="preload" href="/data/land.geojson" as="fetch" crossorigin="anonymous" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:site_name" content="Sawyer Smith" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
     <slot name="head" />
     <ClientRouter />
   </head>
-  <body class={bodyClass}>
-    <canvas id="globe-canvas" aria-hidden="true" transition:persist transition:name="globe"></canvas>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <slot />
-    <script is:inline src="/js/globe.js"></script>
-    <script>
-      // Keep body class in sync after every client-side navigation.
-      // Astro's ClientRouter doesn't always propagate <body> attribute changes
-      // from the incoming page, so we re-apply the class from a data attribute
-      // stamped on <html> by each layout.
-      function syncBodyClass() {
-        const next = document.documentElement.dataset.bodyClass;
-        document.body.className = next || '';
-      }
-      document.addEventListener('astro:after-swap', syncBodyClass);
-    </script>
   </body>
 </html>

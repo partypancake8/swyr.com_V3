@@ -1,81 +1,173 @@
 ---
 import LandingLayout from '../layouts/LandingLayout.astro';
+import Section from '../components/Section.astro';
+import ExperienceItem from '../components/ExperienceItem.astro';
+import SkillGroup from '../components/SkillGroup.astro';
 import WorkCard from '../components/WorkCard.astro';
+
+const skills = [
+  { label: 'Languages', items: ['Python', 'C#', 'TypeScript', 'JavaScript', 'SQL'] },
+  { label: 'Frontend', items: ['Astro', 'Angular', 'HTML', 'CSS'] },
+  { label: 'Backend & Data', items: ['Node.js', 'Express', '.NET', 'PostgreSQL', 'Liquibase'] },
+  { label: 'Embedded & Robotics', items: ['ESP32 / Arduino', 'LabVIEW', 'Real-time systems', 'HRI'] },
+  { label: 'Tools & Practice', items: ['Git / GitHub', 'Playwright', 'TDD', 'AI-assisted dev'] },
+];
 ---
 
 <LandingLayout>
-  <section id="about" class="section-block">
-    <div class="hash-divider" data-hash-divider></div>
-    <h2 class="section-heading">
-      <span class="nav-index">01.</span> About
-    </h2>
-    <p class="section-text">
-      I'm Sawyer Smith, a robotics engineer studying at the University of Michigan College of
-      Engineering. I focus on building interactive systems that combine real-time software,
-      robotics, and intuitive user experiences. I enjoy taking projects from concept to
-      deployment, designing clean architectures, and creating products that feel fast,
-      responsive, and thoughtfully engineered.
+  <Section id="about" index="01" title="About">
+    <p>
+      I'm a robotics engineer studying at the University of Michigan College of
+      Engineering. I focus on building interactive systems that combine real-time
+      software, robotics, and intuitive user experiences. I like taking projects
+      from concept to deployment: designing clean architectures and shipping
+      products that feel fast, responsive, and thoughtfully engineered.
     </p>
-  </section>
+  </Section>
 
-  <section id="experience" class="section-block">
-    <div class="hash-divider" data-hash-divider></div>
-    <h2 class="section-heading">
-      <span class="nav-index">02.</span> Experience
-    </h2>
-    <p class="section-text">
-      Currently I'm a software developer at
-      <a href="https://decyphercorp.com/" target="_blank" rel="noopener">Decypher</a>.
-      I build full-stack web apps from the database and API up to the UI, working with
-      AI-assisted, spec-first tools as well as plenty of regular hands-on coding. A lot of
-      my work is shipping data integrations, building product features, and putting together
-      internal tools to get things from an idea to something people actually use.
-    </p>
+  <Section id="experience" index="02" title="Experience">
+    <div class="xp-list">
+      <ExperienceItem
+        role="Software Developer"
+        org="Decypher"
+        href="https://decyphercorp.com/"
+        period="2026 — Now"
+        current={true}
+        tags={['TypeScript', '.NET', 'PostgreSQL', 'Angular', 'AI-assisted']}
+      >
+        Building full-stack web apps end to end, from the database and API up to
+        the UI. I work with AI-assisted, spec-first tooling alongside plenty of
+        hands-on coding, shipping data integrations, product features, and
+        internal tools that take ideas from a spec to something people use.
+      </ExperienceItem>
 
-    <hr class="divider" style="max-width: var(--measure);" />
+      <ExperienceItem
+        role="Engineering Intern"
+        org="Sanhua Automotive USA"
+        href="https://www.sanhuausa.com/us/en/"
+        period="Summer 2024"
+        tags={['LabVIEW', 'LIN bus', 'Thermal systems']}
+      >
+        Built LabVIEW control software for a LIN-based water pump testbench,
+        supported warranty analysis, and collaborated with engineering and sales
+        teams on thermal-management products.
+      </ExperienceItem>
 
-    <p class="section-text">
-      Before Decypher, I worked across robotics, automotive engineering, and software
-      development. At
-      <a href="https://www.sanhuausa.com/us/en/" target="_blank" rel="noopener">Sanhua Automotive USA</a>,
-      I built LabVIEW control software for a LIN-based water pump testbench, supported warranty
-      analysis, and collaborated with engineering and sales teams on thermal-management products.
-      At <a href="https://www.brose.com/us-en/brose-in-the-us-and-canada/" target="_blank" rel="noopener">Brose North America</a>,
-      I ran BLDC motor validation using DYNO systems, updated test procedures, and produced
-      training materials to standardize internal workflows. At the University of Michigan, I've
-      led and contributed to multi-person robotics and HRI projects, including real-time
-      experimental systems, Python automation tools, and software–hardware integrations.
-    </p>
-  </section>
+      <ExperienceItem
+        role="Test Release Intern"
+        org="Brose North America"
+        href="https://www.brose.com/us-en/brose-in-the-us-and-canada/"
+        period="Summer 2023"
+        tags={['BLDC validation', 'DYNO systems', 'Automotive']}
+      >
+        Ran BLDC motor validation using DYNO systems, updated test procedures, and
+        produced training materials to standardize internal workflows.
+      </ExperienceItem>
 
-  <section id="work" class="section-block">
-    <div class="hash-divider" data-hash-divider></div>
-    <h2 class="section-heading">
-      <span class="nav-index">03.</span> Work
-    </h2>
-    <p class="section-text">
-      Robotics experiments, embedded systems, data pipelines, and full-stack tools. A mix of
+      <ExperienceItem
+        role="Robotics & HRI Projects"
+        org="University of Michigan"
+        period="Ongoing"
+        tags={['Real-time systems', 'Python', 'Hardware integration']}
+      >
+        Led and contributed to multi-person robotics and human-robot interaction
+        projects, including real-time experimental systems, Python automation
+        tools, and software and hardware integrations.
+      </ExperienceItem>
+    </div>
+  </Section>
+
+  <Section id="skills" index="03" title="Skills">
+    <div class="skills-grid">
+      {skills.map((g) => <SkillGroup label={g.label} items={g.items} />)}
+    </div>
+  </Section>
+
+  <Section id="work" index="04" title="Work">
+    <p class="work-intro">
+      Robotics experiments, embedded systems, and full-stack tools. A mix of
       personal projects and engineering work.
     </p>
-    <div class="work-cards">
+    <div class="work-grid">
       <WorkCard
         title="4 square"
         href="/projects/4square"
-        desc="Four 128×64 OLEDs, each independently programmable. Feather ESP32-S3 with WiFi, NTP, battery gauge, and a 3D-printed enclosure."
-        tags={["embedded", "ESP32-S3", "3D printed", "open source"]}
+        status="Complete"
+        desc="Four 128×64 OLEDs, each independently programmable. Feather ESP32-S3 with WiFi, NTP, a battery gauge, and a 3D-printed enclosure."
+        tags={['Embedded', 'ESP32-S3', '3D printed', 'Open source']}
       />
     </div>
-  </section>
+  </Section>
 
-  <section id="contact" class="section-block section-block--contact">
-    <div class="hash-divider" data-hash-divider></div>
-    <h2 class="section-heading">
-      <span class="nav-index">04.</span> Contact
-    </h2>
-    <p class="section-text">
-      I'm always open to discussing new opportunities, collaborations, or side projects.
-      Feel free to reach out! Check out my
-      <a href="/documents/Sawyer Smith Resume 2025.pdf" target="_blank" rel="noopener">resume</a>!
+  <Section id="contact" index="05" title="Contact">
+    <p>
+      I'm always open to discussing new opportunities, collaborations, or side
+      projects. The fastest way to reach me is email.
     </p>
-  </section>
+    <div class="contact-actions">
+      <a class="btn btn--primary" href="mailto:swyr@swyr.com">Say hello</a>
+      <a class="btn" href="/documents/Sawyer Smith Resume 2025.pdf" target="_blank" rel="noopener">
+        View résumé <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </Section>
 </LandingLayout>
+
+<style>
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .work-intro {
+    margin-bottom: var(--space-md);
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.7rem 1.3rem;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.03em;
+    transition:
+      background var(--dur) var(--ease),
+      border-color var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
+  }
+  .btn:hover,
+  .btn:focus-visible {
+    border-color: var(--accent-line);
+    transform: translateY(-2px);
+  }
+
+  .btn--primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+  .btn--primary:hover,
+  .btn--primary:focus-visible {
+    background: var(--accent-bright);
+    border-color: var(--accent-bright);
+  }
+</style>

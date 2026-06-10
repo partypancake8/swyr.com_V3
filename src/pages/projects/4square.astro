@@ -2,7 +2,11 @@
 import ProjectLayout from '../../layouts/ProjectLayout.astro';
 ---
 
-<ProjectLayout title="4 square — build log" breadcrumb="4 square">
+<ProjectLayout
+  title="4 square — build log · Sawyer Smith"
+  description="Build log for 4 square: a modular desk display with four independently programmable OLED screens on an ESP32-S3, in a custom 3D-printed enclosure."
+  breadcrumb="4 square"
+>
   <!-- ── hero ─────────────────────────── -->
   <header class="proj-hero">
     <p class="proj-eyebrow">project build log</p>
@@ -44,6 +48,10 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
     class="proj-hero-img"
     src="/images/4square/finished.jpeg"
     alt="Finished 4 square build on a desk"
+    width="768"
+    height="1024"
+    loading="eager"
+    decoding="async"
   />
   <p class="proj-media-caption">
     finished build — 4&times; SSD1306 OLEDs in custom 3D-printed enclosure
@@ -174,6 +182,9 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
       loop
       muted
       playsinline
+      preload="metadata"
+      width="1920"
+      height="1080"
       src="/images/4square/enclosure.mp4"
     ></video>
     <p class="proj-media-caption">
@@ -189,35 +200,35 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
     <h2 class="proj-section-heading">components</h2>
     <div class="proj-comp-grid">
       <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/5477-06.jpg" alt="Adafruit Feather ESP32-S3" />
+        <img loading="lazy" decoding="async" src="https://cdn-shop.adafruit.com/970x728/5477-06.jpg" alt="Adafruit Feather ESP32-S3" />
         <div class="proj-comp-footer">
           <span class="proj-comp-name">ESP32-S3</span>
           <span class="proj-comp-role">MCU</span>
         </div>
       </div>
       <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/326-04.jpg" alt='SSD1306 0.96" OLED' />
+        <img loading="lazy" decoding="async" src="https://cdn-shop.adafruit.com/970x728/326-04.jpg" alt='SSD1306 0.96" OLED' />
         <div class="proj-comp-footer">
           <span class="proj-comp-name">SSD1306</span>
           <span class="proj-comp-role">4&times; Display</span>
         </div>
       </div>
       <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/2717-05.jpg" alt="TCA9548A I2C Mux" />
+        <img loading="lazy" decoding="async" src="https://cdn-shop.adafruit.com/970x728/2717-05.jpg" alt="TCA9548A I2C Mux" />
         <div class="proj-comp-footer">
           <span class="proj-comp-name">TCA9548A</span>
           <span class="proj-comp-role">I&sup2;C Mux</span>
         </div>
       </div>
       <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/4885-05.jpg" alt="SHT40 Temp/Humidity" />
+        <img loading="lazy" decoding="async" src="https://cdn-shop.adafruit.com/970x728/4885-05.jpg" alt="SHT40 Temp/Humidity" />
         <div class="proj-comp-footer">
           <span class="proj-comp-name">SHT4x</span>
           <span class="proj-comp-role">Temp / Humidity</span>
         </div>
       </div>
       <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/328-06.jpg" alt="LiPo 2500mAh battery" />
+        <img loading="lazy" decoding="async" src="https://cdn-shop.adafruit.com/970x728/328-06.jpg" alt="LiPo 2500mAh battery" />
         <div class="proj-comp-footer">
           <span class="proj-comp-name">LiPo 2500</span>
           <span class="proj-comp-role">Battery</span>
@@ -236,6 +247,10 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
       class="proj-media"
       src="/images/4square/prototype.jpeg"
       alt="prototype wiring — protoboard mux breakout with 4× OLEDs on jumper wires"
+      width="768"
+      height="1024"
+      loading="lazy"
+      decoding="async"
     />
     <p class="proj-media-caption">
       02 &mdash; prototype stage &middot; protoboard mux breakout &middot; 4&times; OLEDs on jumper wires &middot; testing before enclosure

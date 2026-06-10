@@ -1,47 +1,13 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import Pane from '../components/Pane.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import '../styles/major.css';
-import '../styles/split.css';
 ---
 
-<BaseLayout title="Sawyer Smith" bodyClass="is-landing is-split">
-  <div class="split">
-    <aside class="split__pane">
-      <div class="pane__top">
-        <a class="pane__logo" href="/">
-          <img src="/icons/swyrlogowhite.svg" alt="Swyr logo" />
-        </a>
-        <h1 class="pane__name">Sawyer Smith</h1>
-        <p class="pane__role">robotics engineer · full-stack developer</p>
-        <p class="pane__bio">
-          I build interactive systems that blend real-time software, robotics,
-          and clean user experiences, taking ideas from concept to launch.
-        </p>
-      </div>
-
-      <nav class="pane__nav" aria-label="Section navigation">
-        <a href="#about" data-spy="about"><span class="pane__nav-index">01</span> About</a>
-        <a href="#experience" data-spy="experience"><span class="pane__nav-index">02</span> Experience</a>
-        <a href="#work" data-spy="work"><span class="pane__nav-index">03</span> Work</a>
-        <a href="#contact" data-spy="contact"><span class="pane__nav-index">04</span> Contact</a>
-        <a class="pane__resume" href="/documents/Sawyer Smith Resume 2025.pdf" target="_blank" rel="noopener">Resume &#8599;</a>
-      </nav>
-
-      <div class="pane__social">
-        <a href="https://github.com/partypancake8/" target="_blank" rel="noopener" aria-label="GitHub">
-          <img src="/icons/github.svg" alt="GitHub" />
-        </a>
-        <a href="https://www.linkedin.com/in/sawyer-smith-60918a221/" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <img src="/icons/linkedin.svg" alt="LinkedIn" />
-        </a>
-        <a href="mailto:swyr@swyr.com" aria-label="Email">
-          <img src="/icons/emailicon.svg" alt="Email" />
-        </a>
-      </div>
-    </aside>
-
-    <main class="split__content">
+<BaseLayout title="Sawyer Smith — Robotics Engineer & Full-Stack Developer">
+  <div class="layout">
+    <Pane />
+    <main id="main" class="content">
       <slot />
       <SiteFooter />
     </main>
@@ -49,3 +15,25 @@ import '../styles/split.css';
 
   <script is:inline src="/js/main.js"></script>
 </BaseLayout>
+
+<style>
+  .layout {
+    min-height: 100vh;
+  }
+
+  .content {
+    margin-left: var(--pane-w);
+    padding: var(--space-2xl) clamp(var(--space-md), 5vw, var(--space-2xl));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  @media (max-width: 1024px) {
+    .content {
+      margin-left: 0;
+      padding: var(--space-xl) var(--space-md) var(--space-lg);
+      gap: var(--space-xl);
+    }
+  }
+</style>
