@@ -321,7 +321,10 @@
       window.scrollY / (window.innerHeight * FADE_SCROLL_VH),
       1,
     );
-    currentRotSpeed = ROT_SPEED;
+    // Fade the globe out as the visitor scrolls past the hero so it stops
+    // competing with the content, but keep a faint ambient texture (0.12)
+    // rather than going fully dead behind the sections.
+    canvas.style.opacity = String(1 - ratio * 0.88);
   }
 
   // ── Boot ──────────────────────────────────────────────────────────────────────
@@ -335,6 +338,7 @@
     loadUserLocation(); // async; adds red marker at visitor's IP location
     window.addEventListener("resize", setLayout, { passive: true });
     window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll(); // sync opacity in case the page loads already scrolled
   }
 
   if (document.readyState === "loading") {

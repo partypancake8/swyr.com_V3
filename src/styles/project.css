@@ -24,7 +24,7 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--primary-color);
-  opacity: 0.65;
+  opacity: 0.78;
   margin-bottom: 0.6rem;
 }
 
@@ -40,7 +40,7 @@
 .proj-tagline {
   font-size: clamp(1rem, 1.2vw + 0.6rem, 1.2rem);
   color: var(--text-muted);
-  opacity: 0.6;
+  opacity: 0.8;
   max-width: 50ch;
   margin-bottom: 1.5rem;
 }
@@ -125,7 +125,7 @@
   font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--text-muted);
-  opacity: 0.4;
+  opacity: 0.62;
   margin-bottom: 1.5rem;
   letter-spacing: 0.04em;
 }
@@ -274,7 +274,7 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--primary-color);
-  opacity: 0.55;
+  opacity: 0.72;
 }
 
 .proj-meta-value {
