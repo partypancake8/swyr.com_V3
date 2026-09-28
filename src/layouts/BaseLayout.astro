@@ -18,6 +18,7 @@ const { title, bodyClass } = Astro.props;
     <meta name="color-scheme" content="dark" />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/icons/swyrlogowhite.svg" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <slot name="head" />
   </head>
   <body class={bodyClass}>
@@ -25,5 +26,6 @@ const { title, bodyClass } = Astro.props;
     <slot />
     <SiteFooter />
     <script is:inline src="/js/nav.js" defer></script>
+    <script is:inline src="/js/flair.js" defer></script>
   </body>
 </html>

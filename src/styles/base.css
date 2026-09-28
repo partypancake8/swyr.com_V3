@@ -96,7 +96,14 @@ video {
   top: 0;
   z-index: 50;
   background: var(--header-bg);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid transparent;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+.site-header.is-scrolled {
+  background: rgba(1, 4, 9, 0.78);
+  border-bottom-color: var(--border);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  backdrop-filter: saturate(180%) blur(12px);
 }
 .site-header__inner {
   position: relative;
@@ -120,9 +127,12 @@ video {
   flex: none;
   border-radius: var(--radius);
 }
-.site-header__logo img {
+.logo-sprite {
+  display: block;
   width: 32px;
   height: 32px;
+  background: url(/icons/swyrlogo-walk.svg) 0 0 / 200% 100% no-repeat;
+  image-rendering: pixelated;
 }
 
 .breadcrumb {
@@ -148,6 +158,7 @@ video {
 }
 
 .site-nav__list {
+  position: relative;
   list-style: none;
   display: flex;
   align-items: center;
@@ -170,8 +181,21 @@ video {
   text-decoration: none;
 }
 .site-nav__link.is-active {
+  color: var(--fg);
   background: var(--btn-bg);
-  box-shadow: inset 0 -2px 0 #f78166;
+}
+/* Sliding underline: a 1px-wide bar scaled to the active link's width. */
+.site-nav__indicator {
+  position: absolute;
+  left: 0;
+  bottom: -13px;
+  width: 1px;
+  height: 2px;
+  background: #f78166;
+  border-radius: 2px;
+  transform-origin: 0 0;
+  opacity: 0;
+  pointer-events: none;
 }
 .site-nav__icon {
   flex: none;
@@ -254,6 +278,9 @@ video {
     padding: 10px 12px;
     font-size: 16px;
   }
+  .site-nav__indicator {
+    display: none;
+  }
   .site-nav__resume {
     margin: 8px 0 0;
     justify-content: center;
@@ -280,9 +307,12 @@ video {
   align-items: center;
   padding: 16px 0 0;
 }
-.hero__photo {
+.hero__tilt {
   grid-column: 2;
   grid-row: 1;
+}
+.hero__photo {
+  display: block;
   width: 100%;
   aspect-ratio: 4 / 3;
   height: auto;
@@ -342,34 +372,47 @@ video {
   color: var(--fg-muted);
 }
 
-/* contribution-graph logo */
+/* contribution graph (bottom of the Work section) */
 .contrib {
-  padding: 16px;
+  position: relative;
+  margin-top: 16px;
+  padding: 12px 16px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
+}
+.contrib__title {
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+.contrib__scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .contrib__graph {
   display: block;
-  width: 100%;
-  max-width: 543px;
-  height: auto;
+  margin: 0 auto;
+}
+.contrib__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: var(--fg-muted);
 }
 .contrib__legend {
-  align-self: flex-end;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   gap: 4px;
+  margin-top: 8px;
   font-size: 12px;
   color: var(--fg-muted);
 }
 .contrib__swatch {
-  width: 10px;
-  height: 10px;
+  width: 11px;
+  height: 11px;
   border-radius: 2px;
+  outline: 1px solid rgba(240, 246, 252, 0.06);
+  outline-offset: -1px;
 }
 .contrib__legend span:first-child {
   margin-right: 2px;
@@ -424,36 +467,88 @@ video {
   border-radius: var(--radius);
 }
 
-/* experience: org cards */
-.org-card {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  padding: 16px;
-  border: 1px solid var(--border);
+/* experience: activity-feed timeline */
+.timeline {
+  position: relative;
+  list-style: none;
+  padding-left: 28px;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+.tl-item {
+  position: relative;
+  margin-left: -8px;
+  padding: 8px;
   border-radius: var(--radius);
 }
-.org-card + .org-card {
-  margin-top: 12px;
+.tl-item + .tl-item,
+.tl-note + .tl-item {
+  margin-top: 8px;
 }
-.org-card__avatars {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: none;
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: -19px;
+  top: 16px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: 0 0 0 2px var(--border);
 }
-.org-avatar {
+.tl-item:hover::before {
+  box-shadow: 0 0 0 2px #58a6ff;
+  background: #58a6ff;
+}
+.tl-item__head {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius);
-  background: var(--org);
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: 700;
-  box-shadow: inset 0 0 0 1px rgba(240, 246, 252, 0.1);
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin-bottom: 4px;
+}
+.tl-item__org {
+  font-weight: 600;
+  color: var(--fg);
+}
+a.tl-item__org:hover {
+  color: var(--link);
+}
+.tl-item__meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+a.tl-item__meta:hover {
+  color: var(--link);
+  text-decoration: none;
+}
+.tl-item__body {
+  max-width: 72ch;
+  font-size: 15px;
+  color: var(--fg);
+}
+.tl-note {
+  position: relative;
+  margin: 16px 0 8px;
+  font-size: 14px;
+  color: var(--fg-muted);
+}
+.tl-note::before {
+  content: "";
+  position: absolute;
+  left: -25px;
+  top: 50%;
+  width: 14px;
+  height: 2px;
+  background: var(--border);
 }
 
 /* work cards */
@@ -468,7 +563,6 @@ video {
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  overflow: hidden;
 }
 .work-card:hover {
   text-decoration: none;
@@ -481,6 +575,7 @@ video {
   min-height: 160px;
   object-fit: cover;
   border-right: 1px solid var(--border);
+  border-radius: 5px 0 0 5px;
 }
 .work-card__body {
   display: flex;
@@ -545,7 +640,7 @@ video {
     gap: 16px;
     padding-top: 0;
   }
-  .hero__photo,
+  .hero__tilt,
   .hero__text {
     grid-column: 1;
   }
@@ -570,15 +665,6 @@ video {
     width: auto;
     aspect-ratio: 4 / 3;
   }
-  .org-card {
-    padding: 12px;
-    gap: 12px;
-  }
-  .org-avatar {
-    width: 32px;
-    height: 32px;
-    font-size: 15px;
-  }
   .work-card {
     flex-direction: column;
   }
@@ -588,6 +674,7 @@ video {
     min-height: 0;
     border-right: 0;
     border-bottom: 1px solid var(--border);
+    border-radius: 5px 5px 0 0;
   }
 }
 
@@ -628,8 +715,259 @@ video {
   height: 18px;
 }
 
+
+
+/* ======================================
+   FLAIR: motion and hover polish
+   Static styling first; every animation or transition lives inside
+   prefers-reduced-motion: no-preference and touches only opacity / transform
+   (plus color-only paints for borders and gradients).
+   ====================================== */
+
+.contrib__tip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 18px;
+  white-space: nowrap;
+  color: var(--fg);
+  background: #3d444d;
+  border-radius: var(--radius);
+  pointer-events: none;
+}
+.contrib__tip[hidden] {
+  display: none;
+}
+.contrib__graph rect {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Spotlight border + lift targets */
+.work-card,
+.tl-item,
+.contact-links a {
+  position: relative;
+  --mx: 50%;
+  --my: 50%;
+}
+.work-card::before,
+.contact-links a::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(180px circle at var(--mx) var(--my), #58a6ff, transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0;
+  pointer-events: none;
+}
+.work-card::after,
+.contact-links a::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  box-shadow: 0 8px 24px rgba(1, 4, 9, 0.6);
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+.work-card:hover,
+.contact-links a:hover {
+  border-color: #58a6ff;
+}
+.tl-item:hover {
+  background: var(--bg-subtle);
+}
+.work-card:hover::before,
+.contact-links a:hover::before,
+.work-card:hover::after,
+.contact-links a:hover::after {
+  opacity: 1;
+}
+
+/* Inline links: underline draws in from the left; external ones get a glyph. */
+.section-text a,
+.proj-section p a,
+.breadcrumb a,
+.page-links__email {
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+}
+.section-text a:hover,
+.proj-section p a:hover,
+.breadcrumb a:hover,
+.page-links__email:hover {
+  text-decoration: none;
+  background-size: 100% 1px;
+}
+.section-text a[target="_blank"]::after,
+.proj-section p a[target="_blank"]::after {
+  content: "\2197";
+  display: inline-block;
+  margin-left: 2px;
+  font-size: 0.75em;
+  vertical-align: 0.15em;
+}
+
+/* Photo strip: hover focus on desktop */
+.photo-strip img {
+  transform-origin: center;
+}
+@media (hover: hover) and (min-width: 768px) {
+  .photo-strip:hover img {
+    opacity: 0.55;
+  }
+  .photo-strip li:hover img {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+/* Hero photo tilt */
+.hero__tilt {
+  --rx: 0deg;
+  --ry: 0deg;
+}
+.hero__photo {
+  transform: perspective(800px) rotateX(var(--rx)) rotateY(var(--ry));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Scroll reveal: hidden only when JS is present, revealed once. */
+  .js :is(.contrib, .work-card, .tl-item, .photo-strip li, .contact-links a):not(.in) {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  /* Sections are anchor targets: fade only, so a transform never skews the
+     scroll offset the browser computes for /#section links. */
+  .js .section-block:not(.in) {
+    opacity: 0;
+  }
+  .section-block.in {
+    animation-name: reveal-fade;
+  }
+  @keyframes reveal-fade {
+    from {
+      opacity: 0;
+    }
+  }
+  .in {
+    animation: reveal 480ms cubic-bezier(0.2, 0.7, 0.2, 1) var(--stagger, 0ms) backwards;
+  }
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+
+  /* Contribution graph: left-to-right fill wave, then a gentle pulse on hover. */
+  .js .contrib:not(.is-drawn) rect {
+    opacity: 0;
+  }
+  .contrib.is-drawn rect {
+    animation: cell-in 360ms ease-out calc(var(--d, 0ms) + var(--stagger, 0ms)) backwards;
+  }
+  @keyframes cell-in {
+    from {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+  }
+  .contrib__graph:hover rect[fill="#39d353"],
+  .contrib__graph:hover rect[fill="#26a641"],
+  .contrib__graph:hover rect[fill="#006d32"] {
+    animation: cell-pulse 1.6s ease-in-out calc(var(--d, 0ms) / 3) infinite;
+  }
+  @keyframes cell-pulse {
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  /* Cards: 2px lift, 150ms */
+  .work-card,
+  .tl-item,
+  .contact-links a {
+    transition: transform 150ms ease, border-color 150ms ease;
+  }
+  .work-card::before,
+    .contact-links a::before,
+  .work-card::after,
+    .contact-links a::after {
+    transition: opacity 150ms ease;
+  }
+  .work-card:hover,
+  .tl-item:hover,
+  .contact-links a:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Hero name: one gradient sweep on load, settling to solid text. */
+  .hero__headline {
+    background: linear-gradient(90deg, var(--fg) 0 40%, #4493f8 48%, #3fb950 56%, var(--fg) 64% 100%) 0 0 / 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: name-sweep 1.8s ease-in-out 250ms both;
+  }
+  @keyframes name-sweep {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: 0 0;
+    }
+  }
+
+  .hero__photo {
+    transition: transform 400ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    will-change: transform;
+  }
+
+  .photo-strip img {
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+
+  .site-nav__indicator {
+    transition: transform 250ms cubic-bezier(0.2, 0.7, 0.2, 1), opacity 150ms ease;
+  }
+
+  .section-text a,
+  .proj-section p a,
+  .breadcrumb a,
+  .page-links__email {
+    transition: background-size 200ms ease;
+  }
+
+  /* Header invader: 4-frame walk (A B A B, 250ms each) on hover. */
+  .site-header__logo:hover .logo-sprite,
+  .site-header__logo:focus-visible .logo-sprite {
+    animation: invader-walk 500ms steps(2, jump-none) 2;
+  }
+  @keyframes invader-walk {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 100% 0;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .hero__photo {
+    transform: none;
   }
 }

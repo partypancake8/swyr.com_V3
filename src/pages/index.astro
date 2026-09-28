@@ -1,7 +1,7 @@
 ---
 import LandingLayout from '../layouts/LandingLayout.astro';
 import WorkCard from '../components/WorkCard.astro';
-import ContribLogo from '../components/ContribLogo.astro';
+import ContribGraph from '../components/ContribGraph.astro';
 
 const photos = [
   { src: '/images/carousel/sawyerinvad.jpeg', alt: 'Sawyer next to a pixel invader mural' },
@@ -15,6 +15,7 @@ const photos = [
 
 <LandingLayout>
   <section class="hero">
+    <div class="hero__tilt" data-tilt>
     <img
       class="hero__photo"
       src="/images/carousel/sawyerinvad.jpeg"
@@ -22,6 +23,7 @@ const photos = [
       width="480"
       height="360"
     />
+    </div>
     <div class="hero__text">
     <p class="hero__eyebrow">Hi, my name is</p>
     <h1 class="hero__title">
@@ -37,8 +39,6 @@ const photos = [
     <a class="outline-btn" href="#work">See my work</a>
     </div>
   </section>
-
-  <ContribLogo />
 
   <section id="about" class="section-block">
     <h2 class="section-heading">
@@ -62,38 +62,56 @@ const photos = [
     <h2 class="section-heading">
       <span class="nav-index">02.</span> Experience
     </h2>
-    <div class="org-card">
-      <div class="org-card__avatars" aria-hidden="true">
-        <span class="org-avatar" style="--org: #8957e5" title="Decypher">D</span>
-      </div>
-    <p class="section-text">
-      Currently I'm a software developer at
-      <a href="https://decyphercorp.com/" target="_blank" rel="noopener">Decypher</a>.
-      I build full-stack web apps from the database and API up to the UI, working with
-      AI-assisted, spec-first tools as well as plenty of regular hands-on coding. A lot of
-      my work is shipping data integrations, building product features, and putting together
-      internal tools to get things from an idea to something people actually use.
-    </p>
-    </div>
-
-    <div class="org-card">
-      <div class="org-card__avatars" aria-hidden="true">
-        <span class="org-avatar" style="--org: #1f6feb" title="Sanhua Automotive USA">S</span>
-        <span class="org-avatar" style="--org: #da3633" title="Brose North America">B</span>
-      </div>
-    <p class="section-text">
-      Before Decypher, I worked across robotics, automotive engineering, and software
-      development. At
-      <a href="https://www.sanhuausa.com/us/en/" target="_blank" rel="noopener">Sanhua Automotive USA</a>,
-      I built LabVIEW control software for a LIN-based water pump testbench, supported warranty
-      analysis, and collaborated with engineering and sales teams on thermal-management products.
-      At <a href="https://www.brose.com/us-en/brose-in-the-us-and-canada/" target="_blank" rel="noopener">Brose North America</a>,
-      I ran BLDC motor validation using DYNO systems, updated test procedures, and produced
-      training materials to standardize internal workflows. At the University of Michigan, I've
-      led and contributed to multi-person robotics and HRI projects, including real-time
-      experimental systems, Python automation tools, and software–hardware integrations.
-    </p>
-    </div>
+    <ol class="timeline">
+      <li class="tl-item">
+        <div class="tl-item__head">
+          <a class="tl-item__org" href="https://decyphercorp.com/" target="_blank" rel="noopener">Decypher</a>
+        </div>
+        <p class="tl-item__body">
+          Currently I'm a software developer at Decypher.
+          I build full-stack web apps from the database and API up to the UI, working with
+          AI-assisted, spec-first tools as well as plenty of regular hands-on coding. A lot of
+          my work is shipping data integrations, building product features, and putting together
+          internal tools to get things from an idea to something people actually use.
+        </p>
+      </li>
+      <li class="tl-note">
+        Before Decypher, I worked across robotics, automotive engineering, and software
+        development.
+      </li>
+      <li class="tl-item">
+        <div class="tl-item__head">
+          <a class="tl-item__org" href="https://www.sanhuausa.com/us/en/" target="_blank" rel="noopener">Sanhua Automotive USA</a>
+          <a class="tl-item__meta" href="/work/sanhua">Engineering Intern &middot; US Engineering Division &middot; May–Aug 2024</a>
+        </div>
+        <p class="tl-item__body">
+          At Sanhua Automotive USA,
+          I built LabVIEW control software for a LIN-based water pump testbench, supported warranty
+          analysis, and collaborated with engineering and sales teams on thermal-management products.
+        </p>
+      </li>
+      <li class="tl-item">
+        <div class="tl-item__head">
+          <a class="tl-item__org" href="https://www.brose.com/us-en/brose-in-the-us-and-canada/" target="_blank" rel="noopener">Brose North America</a>
+          <a class="tl-item__meta" href="/work/brose">Test Release Intern &middot; Drives Division &middot; May–Aug 2023</a>
+        </div>
+        <p class="tl-item__body">
+          At Brose North America,
+          I ran BLDC motor validation using DYNO systems, updated test procedures, and produced
+          training materials to standardize internal workflows.
+        </p>
+      </li>
+      <li class="tl-item">
+        <div class="tl-item__head">
+          <span class="tl-item__org">University of Michigan</span>
+        </div>
+        <p class="tl-item__body">
+          At the University of Michigan, I've
+          led and contributed to multi-person robotics and HRI projects, including real-time
+          experimental systems, Python automation tools, and software–hardware integrations.
+        </p>
+      </li>
+    </ol>
   </section>
 
   <section id="work" class="section-block">
@@ -114,6 +132,7 @@ const photos = [
         imageAlt="4 square desk display"
       />
     </div>
+    <ContribGraph />
   </section>
 
   <section id="contact" class="section-block section-block--contact">

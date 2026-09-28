@@ -43,44 +43,64 @@
   if (mq.addEventListener) mq.addEventListener('change', onMq);
   else if (mq.addListener) mq.addListener(onMq);
 
-  // Active section highlighting (landing page only).
-  var links = header.querySelectorAll('[data-section-link]');
-  var sections = [];
-  links.forEach(function (a) {
-    var s = document.getElementById(a.dataset.sectionLink);
-    if (s) sections.push(s);
-  });
-  if (!sections.length) return;
+  // Header gains its border + blur backdrop once the page has scrolled 8px.
   var ticking = false;
-  function update() {
+  function onScroll() {
     ticking = false;
-    var offset = header.getBoundingClientRect().height + 24;
-    var current = null;
-    sections.forEach(function (s) {
-      if (s.getBoundingClientRect().top <= offset) current = s.id;
-    });
-    // At the bottom of the page the last sections can never reach the top;
-    // prefer the one named in the URL hash, else the last one.
-    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
-    if (atBottom) {
-      var hashId = location.hash.slice(1);
-      var inView = sections.filter(function (s) { return s.getBoundingClientRect().top < window.innerHeight; });
-      var byHash = inView.filter(function (s) { return s.id === hashId; })[0];
-      if (byHash) current = byHash.id;
-      else if (inView.length) current = inView[inView.length - 1].id;
+    header.classList.toggle('is-scrolled', window.scrollY > 8);
+    if (sections.length) pickActive();
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
+
+  // Active section (landing page): IntersectionObserver tracks which sections
+  // cross a band just under the header; the first one in document order wins.
+  var links = [].slice.call(header.querySelectorAll('[data-section-link]'));
+  var indicator = header.querySelector('.site-nav__indicator');
+  var sections = links.map(function (a) { return document.getElementById(a.dataset.sectionLink); }).filter(Boolean);
+  var inBand = {};
+  var current = null;
+
+  function moveIndicator() {
+    var a = current && header.querySelector('[data-section-link="' + current + '"]');
+    if (!indicator) return;
+    if (!a || !a.offsetWidth) { indicator.style.opacity = '0'; return; }
+    indicator.style.opacity = '1';
+    indicator.style.transform = 'translateX(' + a.offsetLeft + 'px) scaleX(' + a.offsetWidth + ')';
+  }
+
+  function pickActive() {
+    var next = null;
+    for (var i = 0; i < sections.length; i++) {
+      if (inBand[sections[i].id]) { next = sections[i].id; break; }
     }
+    // At the very bottom the last sections never reach the band; prefer the
+    // section named in the hash if it is on screen, else the last one visible.
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+      var seen = sections.filter(function (s) { return s.getBoundingClientRect().top < window.innerHeight; });
+      var h = location.hash.slice(1);
+      next = seen.some(function (s) { return s.id === h; }) ? h : (seen.length ? seen[seen.length - 1].id : next);
+    }
+    if (next === current) return;
+    current = next;
     links.forEach(function (a) {
       var on = a.dataset.sectionLink === current;
       a.classList.toggle('is-active', on);
       if (on) a.setAttribute('aria-current', 'location');
       else a.removeAttribute('aria-current');
     });
+    moveIndicator();
   }
-  function schedule() {
-    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+
+  if (sections.length && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { inBand[en.target.id] = en.isIntersecting; });
+      pickActive();
+    }, { rootMargin: '-80px 0px -55% 0px' });
+    sections.forEach(function (s) { io.observe(s); });
+    window.addEventListener('hashchange', pickActive);
+    window.addEventListener('resize', moveIndicator);
   }
-  window.addEventListener('scroll', schedule, { passive: true });
-  window.addEventListener('resize', schedule);
-  window.addEventListener('hashchange', schedule);
-  update();
+  onScroll();
 })();

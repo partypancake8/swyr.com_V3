@@ -19,7 +19,7 @@ const links = [
   <div class="site-header__inner">
     <div class="site-header__left">
       <a class="site-header__logo" href="/" aria-label="Sawyer Smith, home">
-        <img src="/icons/swyrlogowhite.svg" alt="" width="32" height="32" />
+        <span class="logo-sprite" aria-hidden="true"></span>
       </a>
       {!isHome && (
         <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -50,6 +50,7 @@ const links = [
 
     <nav class="site-nav" id="site-nav-panel" aria-label="Main" data-nav-panel>
       <ul class="site-nav__list">
+        <li class="site-nav__indicator" aria-hidden="true"></li>
         {links.map((l) => (
           <li>
             <a class="site-nav__link" href={`/#${l.id}`} data-section-link={l.id}>
