@@ -1,0 +1,10 @@
+{
+  "renderer": "pdftoppm",
+  "pages": [
+    {
+      "src": "/documents/resume-pages/page-1.webp",
+      "width": 1700,
+      "height": 2200
+    }
+  ]
+}

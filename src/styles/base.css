@@ -1131,7 +1131,7 @@ video {
 
 @media (prefers-reduced-motion: no-preference) {
   /* Scroll reveal: hidden only when JS is present, revealed once. */
-  .js :is(.contrib, .work-card, .tl-item, .photo-strip li, .contact-links a, .proj-gallery__item, .proj-stage__item, .proj-comp-card, .proj-specs, .proj-widget-list, .proj-cta, .repo-head, .readme-panel, .resume-head, .resume-panel, .resume-mobile):not(.in) {
+  .js :is(.contrib, .work-card, .tl-item, .photo-strip li, .contact-links a, .proj-gallery__item, .proj-stage__item, .proj-comp-card, .proj-specs, .proj-widget-list, .proj-cta, .repo-head, .readme-panel, .resume-head, .resume-page):not(.in) {
     opacity: 0;
     transform: translateY(12px);
   }

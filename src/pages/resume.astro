@@ -1,7 +1,9 @@
 ---
-// Resume: inline PDF preview (desktop) plus download / open buttons.
-// Dependency-free: the browser's own PDF viewer via <object>, with a fallback.
-import { statSync } from 'node:fs';
+// Resume: the PDF's pages shown inline as images (works in every browser, incl. Safari / iOS),
+// plus download / open buttons. The images are pre-rendered and committed: after replacing
+// public/documents/sawyer-smith-resume.pdf, run `npm run resume:render` locally and commit
+// public/documents/resume-pages/ (Netlify's build image has no PDF renderer).
+import { readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import ProjectLayout from '../layouts/ProjectLayout.astro';
 
@@ -11,6 +13,10 @@ let updated = '';
 try {
   const m = statSync(join(process.cwd(), 'public/documents/sawyer-smith-resume.pdf')).mtime;
   updated = `${MONTHS[m.getMonth()]} ${m.getFullYear()}`;
+} catch {}
+let pages: { src: string; width: number; height: number }[] = [];
+try {
+  pages = JSON.parse(readFileSync(join(process.cwd(), 'public/documents/resume-pages/manifest.json'), 'utf8')).pages;
 } catch {}
 ---
 
@@ -30,16 +36,21 @@ try {
   </header>
 
   <section class="resume-panel" aria-label="Resume preview">
-    <object class="resume-panel__frame" data={`${PDF}#navpanes=0&view=FitH`} type="application/pdf" aria-label="Sawyer Smith resume (PDF)">
+    {pages.map((pg, i) => (
+      <img
+        class="resume-page"
+        src={pg.src}
+        width={pg.width}
+        height={pg.height}
+        alt={`Resume page ${i + 1}`}
+        loading={i === 0 ? 'eager' : 'lazy'}
+        decoding="async"
+      />
+    ))}
+    {pages.length === 0 && (
       <div class="resume-panel__fallback">
-        <p>This browser does not show PDFs inline.</p>
         <a class="outline-btn resume-btn resume-btn--primary" href={PDF} download="Sawyer Smith Resume.pdf">Download PDF</a>
       </div>
-    </object>
-  </section>
-
-  <section class="resume-mobile" aria-label="Resume download">
-    <a class="outline-btn resume-btn resume-btn--primary resume-btn--large" href={PDF} download="Sawyer Smith Resume.pdf">Download PDF</a>
-    <a class="resume-mobile__open" href={PDF} target="_blank" rel="noopener">Open &#8599;</a>
+    )}
   </section>
 </ProjectLayout>
