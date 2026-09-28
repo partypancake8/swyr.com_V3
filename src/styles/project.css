@@ -271,7 +271,7 @@
 }
 .proj-cta-link:hover {
   background: var(--btn-hover);
-  text-decoration: none;
+  text-decoration-color: transparent;
 }
 
 /* 2-up media gallery */
@@ -394,14 +394,14 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   .proj-stage__item {
-    transition: transform var(--dur-fast, 150ms) var(--ease-out, ease-out);
+    transition: var(--t-ui), transform var(--dur-fast) var(--ease-out);
   }
   .proj-stage__frame {
-    transition: border-color var(--dur-fast, 150ms) var(--ease-out, ease-out);
+    transition: border-color var(--dur-fast) var(--ease-out);
   }
   .proj-stage__frame img,
   .proj-stage__frame video {
-    transition: transform var(--dur-slow, 400ms) var(--ease-out, ease-out), opacity var(--dur-slow, 400ms) var(--ease-out, ease-out);
+    transition: transform var(--dur-slow) var(--ease-out), opacity var(--dur-slow) var(--ease-out);
   }
   .proj-stage__item:hover {
     transform: translateY(-2px);

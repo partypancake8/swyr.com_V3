@@ -84,17 +84,39 @@
     graph.addEventListener('pointerleave', function () { tip.classList.remove('is-visible'); });
   }
 
-  // Experience timeline: the entry in the middle band of the viewport is current.
-  var items = [].slice.call(document.querySelectorAll('.tl-item'));
-  if (items.length) {
-    var seen = {};
-    var tio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { seen[items.indexOf(en.target)] = en.isIntersecting; });
-      var cur = -1;
-      items.forEach(function (_, i) { if (seen[i]) cur = i; });
-      if (cur < 0) return;
-      items.forEach(function (it, i) { it.classList.toggle('is-current', i === cur); });
-    }, { rootMargin: '-30% 0px -45% 0px' });
-    items.forEach(function (it) { tio.observe(it); });
+  // Experience timeline: ONE indicator (dot + lit line) slides to the active entry.
+  // Active = the entry crossing a band at 35-45% of the viewport, held for 80 ms
+  // (debounced so it never flickers); at the bottom of the page the last entry wins.
+  var wrap = document.querySelector('.timeline-wrap');
+  if (wrap) {
+    var ind = wrap.querySelector('.tl-indicator');
+    var dot = ind.querySelector('.tl-indicator__dot');
+    var line = ind.querySelector('.tl-indicator__line');
+    var items = [].slice.call(wrap.querySelectorAll('.tl-item'));
+    var inBand = [], active = -1, pending = -1, holdTimer = 0;
+    function place() {
+      if (active < 0) return;
+      // offsetTop is layout-only, so reveal transforms on the entries never move the indicator.
+      var y = items[active].offsetTop + 21; // center of the entry's hollow marker
+      dot.style.transform = 'translateY(' + (y - 6) + 'px)';
+      line.style.transform = 'scaleY(' + Math.max(0, y - 6) + ')';
+      ind.classList.add('is-on');
+    }
+    function choose() {
+      var next = -1;
+      for (var i = 0; i < items.length; i++) if (inBand[i]) { next = i; break; }
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) next = items.length - 1;
+      if (next < 0 || next === active || next === pending) return;
+      pending = next;
+      clearTimeout(holdTimer);
+      holdTimer = setTimeout(function () { active = pending; pending = -1; place(); }, 80);
+    }
+    var bio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { inBand[items.indexOf(en.target)] = en.isIntersecting; });
+      choose();
+    }, { rootMargin: '-35% 0px -55% 0px' });
+    items.forEach(function (it) { bio.observe(it); });
+    window.addEventListener('scroll', function () { if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) choose(); }, { passive: true });
+    window.addEventListener('resize', place);
   }
 })();

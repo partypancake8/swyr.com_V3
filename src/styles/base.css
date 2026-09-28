@@ -31,6 +31,21 @@
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
+  /* motion tokens: every transition and animation references these */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
+  --dur-slide: 350ms;
+  --dur-ui: 180ms;
+  /* the shared interactive transition list; specific rules append to it */
+  --t-ui: color var(--dur-ui) var(--ease-out), background-color var(--dur-ui) var(--ease-out),
+    border-color var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out),
+    opacity var(--dur-ui) var(--ease-out), transform var(--dur-ui) var(--ease-out),
+    outline-color var(--dur-ui) var(--ease-out), text-decoration-color var(--dur-ui) var(--ease-out);
+
   --radius: 6px;
   --content-width: 1012px;
   --gutter: 16px;
@@ -61,19 +76,28 @@ body {
   scroll-margin-top: calc(var(--header-h) + 16px);
 }
 
+/* Underline is always there but transparent; hover only fades its color in,
+   so the underline eases instead of snapping. */
 a {
   color: var(--link);
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
   text-underline-offset: 0.2em;
 }
-a:focus-visible,
-button:focus-visible {
-  outline: 2px solid var(--link);
+a:hover {
+  text-decoration-color: currentColor;
+}
+/* Focus ring: always present but transparent, so focusing only changes
+   outline-color (which transitions) instead of snapping an outline in. */
+:where(a, button, [role="button"], summary) {
+  outline: 2px solid transparent;
   outline-offset: 2px;
-  border-radius: var(--radius);
+}
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+summary:focus-visible {
+  outline-color: var(--link);
 }
 
 img,
@@ -100,7 +124,8 @@ video {
   z-index: 50;
   background: var(--header-bg);
   border-bottom: 1px solid transparent;
-  transition: background-color 200ms ease, border-color 200ms ease;
+  transition: background-color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out),
+    backdrop-filter var(--dur-base) var(--ease-out), -webkit-backdrop-filter var(--dur-base) var(--ease-out);
 }
 .site-header.is-scrolled {
   background: rgba(1, 4, 9, 0.78);
@@ -194,7 +219,7 @@ video {
 }
 .site-nav__link:hover {
   background: var(--btn-hover);
-  text-decoration: none;
+  text-decoration-color: transparent;
 }
 .site-nav__link.is-active {
   color: var(--fg);
@@ -407,7 +432,7 @@ video {
 }
 .outline-btn:hover {
   background: var(--btn-hover);
-  text-decoration: none;
+  text-decoration-color: transparent;
 }
 .outline-btn .icon {
   color: var(--fg-muted);
@@ -513,6 +538,9 @@ video {
 }
 
 /* experience: activity-feed timeline */
+.timeline-wrap {
+  position: relative;
+}
 .timeline {
   position: relative;
   list-style: none;
@@ -529,52 +557,42 @@ video {
 }
 .tl-item {
   position: relative;
+  isolation: isolate;
   margin-left: -8px;
   padding: 8px;
-  border-radius: var(--radius);
 }
 .tl-item + .tl-item,
 .tl-note + .tl-item {
   margin-top: 8px;
 }
-/* dot centered on the 2px line (line center is 12px left of the item box) */
+/* static hollow marker; the moving indicator sits above it */
 .tl-item::before {
   content: "";
   position: absolute;
   left: -17px;
   top: 16px;
-  z-index: 1;
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background: var(--bg);
   box-shadow: 0 0 0 2px var(--border);
 }
-/* line segment above the dot, lit in blue for the current entry */
+/* hover background on an inset layer: fades, never shifts layout */
 .tl-item::after {
   content: "";
   position: absolute;
-  left: -13px;
-  top: -18px;
-  width: 2px;
-  height: 34px;
-  background: #58a6ff;
-  transform: scaleY(0);
-  transform-origin: 50% 100%;
+  inset: 0;
+  z-index: -1;
+  border-radius: var(--radius);
+  background: var(--bg-subtle);
+  opacity: 0;
   pointer-events: none;
 }
-.tl-item:first-child::after {
-  top: -4px;
-  height: 20px;
+.tl-item:hover::after {
+  opacity: 1;
 }
-.tl-item.is-current::after {
-  transform: scaleY(1);
-}
-.tl-item.is-current::before,
-.tl-item:hover::before {
-  box-shadow: 0 0 0 2px #58a6ff;
-  background: #58a6ff;
-  transform: scale(1.3);
+.tl-item > * {
+  position: relative;
 }
 .tl-item__head {
   display: flex;
@@ -587,17 +605,14 @@ video {
   font-weight: 600;
   color: var(--fg);
 }
-a.tl-item__org:hover {
+.tl-item:hover .tl-item__org {
   color: var(--link);
 }
 .tl-item__meta {
+  text-decoration: none;
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--fg-muted);
-}
-a.tl-item__meta:hover {
-  color: var(--link);
-  text-decoration: none;
 }
 .tl-item__body {
   max-width: 72ch;
@@ -618,6 +633,41 @@ a.tl-item__meta:hover {
   width: 14px;
   height: 2px;
   background: var(--border);
+}
+/* The single active indicator: a lit line from the top of the timeline to the
+   active entry (scaleY) and a blue dot on it (translateY). Positioned by flair.js. */
+.tl-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 16px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+.tl-indicator__line {
+  position: absolute;
+  left: 7px;
+  top: 6px;
+  width: 2px;
+  height: 1px;
+  background: #58a6ff;
+  transform-origin: 50% 0;
+  transform: scaleY(0);
+}
+.tl-indicator__dot {
+  position: absolute;
+  left: 2px;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #58a6ff;
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.25);
+  opacity: 0;
+}
+.tl-indicator.is-on .tl-indicator__dot {
+  opacity: 1;
 }
 
 /* work cards: GitHub-repo-style project grid, 3-up on desktop */
@@ -682,8 +732,7 @@ a.tl-item__meta:hover {
   border-radius: var(--radius);
 }
 .work-card:hover .work-card__title {
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
+  text-decoration-color: currentColor;
 }
 .work-card__pill {
   flex: none;
@@ -894,7 +943,6 @@ a.tl-item__meta:hover {
 
 /* Spotlight border + lift targets */
 .work-card,
-.tl-item,
 .contact-links a {
   position: relative;
   --mx: 50%;
@@ -929,9 +977,6 @@ a.tl-item__meta:hover {
 .contact-links a:hover {
   border-color: #58a6ff;
 }
-.tl-item:hover {
-  background: var(--bg-subtle);
-}
 .work-card:hover::before,
 .contact-links a:hover::before,
 .work-card:hover::after,
@@ -951,7 +996,7 @@ a.tl-item__meta:hover {
 .proj-section p a:hover,
 .breadcrumb a:hover,
 .page-links__email:hover {
-  text-decoration: none;
+  text-decoration-color: transparent;
   background-size: 100% 1px;
 }
 .section-text a[target="_blank"]::after,
@@ -1006,7 +1051,7 @@ a.tl-item__meta:hover {
     }
   }
   .in {
-    animation: reveal 480ms cubic-bezier(0.2, 0.7, 0.2, 1) var(--stagger, 0ms) backwards;
+    animation: reveal var(--dur-slow) var(--ease-out) var(--stagger, 0ms) backwards;
   }
   @keyframes reveal {
     from {
@@ -1020,7 +1065,7 @@ a.tl-item__meta:hover {
     opacity: 0;
   }
   .contrib.is-drawn rect {
-    animation: cell-in 360ms ease-out calc(var(--d, 0ms) + var(--stagger, 0ms)) backwards;
+    animation: cell-in var(--dur-slide) var(--ease-out) calc(var(--d, 0ms) + var(--stagger, 0ms)) backwards;
   }
   @keyframes cell-in {
     from {
@@ -1031,7 +1076,7 @@ a.tl-item__meta:hover {
   .contrib__graph:hover rect[fill="#39d353"],
   .contrib__graph:hover rect[fill="#26a641"],
   .contrib__graph:hover rect[fill="#006d32"] {
-    animation: cell-pulse 1.6s ease-in-out calc(var(--d, 0ms) / 3) infinite;
+    animation: cell-pulse calc(var(--dur-slow) * 4) var(--ease-in-out) calc(var(--d, 0ms) / 3) infinite;
   }
   @keyframes cell-pulse {
     50% {
@@ -1041,18 +1086,16 @@ a.tl-item__meta:hover {
 
   /* Cards: 2px lift, 150ms */
   .work-card,
-  .tl-item,
   .contact-links a {
-    transition: transform 150ms ease, border-color 150ms ease;
+    transition: var(--t-ui), transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
   }
   .work-card::before,
     .contact-links a::before,
   .work-card::after,
     .contact-links a::after {
-    transition: opacity 150ms ease;
+    transition: opacity var(--dur-fast) var(--ease-out);
   }
   .work-card:hover,
-  .tl-item:hover,
   .contact-links a:hover {
     transform: translateY(-2px);
   }
@@ -1063,7 +1106,7 @@ a.tl-item__meta:hover {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: name-sweep 1.8s ease-in-out 250ms both;
+    animation: name-sweep calc(var(--dur-slow) * 4.5) var(--ease-in-out) var(--dur-base) both;
   }
   @keyframes name-sweep {
     from {
@@ -1075,29 +1118,29 @@ a.tl-item__meta:hover {
   }
 
   .hero__photo {
-    transition: transform 400ms cubic-bezier(0.2, 0.7, 0.2, 1), opacity 400ms ease;
+    transition: transform var(--dur-slow) var(--ease-out), opacity var(--dur-slow) var(--ease-out);
     will-change: transform;
   }
 
   .photo-strip img {
-    transition: opacity 200ms ease, transform 200ms ease;
+    transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
   }
 
   .site-nav__indicator {
-    transition: transform 250ms cubic-bezier(0.2, 0.7, 0.2, 1), opacity 150ms ease;
+    transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
   }
 
   .section-text a,
   .proj-section p a,
   .breadcrumb a,
   .page-links__email {
-    transition: background-size 200ms ease;
+    transition: var(--t-ui), background-size var(--dur-base) var(--ease-out), font-weight var(--dur-ui) var(--ease-out);
   }
 
   /* Header invader: 4-frame walk (A B A B, 250ms each) on hover. */
   .site-header__logo:hover .logo-sprite,
   .site-header__logo:focus-visible .logo-sprite {
-    animation: invader-walk 500ms steps(2, jump-none) 2;
+    animation: invader-walk calc(var(--dur-base) * 2) steps(2, jump-none) 2;
   }
   @keyframes invader-walk {
     from {
@@ -1110,26 +1153,21 @@ a.tl-item__meta:hover {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Generic state changes: colors and backgrounds ease instead of snapping. */
-  a,
-  button,
-  .site-nav__link,
-  .outline-btn,
-  .nav-toggle,
-  .tl-item {
-    transition-property: color, background-color, border-color, transform, opacity;
-    transition-duration: 150ms;
-    transition-timing-function: ease;
+  /* Baseline for every interactive element (zero specificity via :where, so the
+     longer, specific transitions below still win): nothing interactive snaps. */
+  :where(a, button, [role="button"], summary, .outline-btn, .nav-toggle, .site-nav__link,
+    .work-card, .work-card__tag, .breadcrumb__crumb, .tl-item, .proj-stage__item) {
+    transition: var(--t-ui);
   }
 
   /* Live breadcrumb crumb: fades and slides up 4px on change (~180 ms). */
   .breadcrumb__live {
-    transition: opacity 180ms ease, transform 180ms ease;
+    transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
   }
   .breadcrumb__live.is-leaving {
     opacity: 0;
     transform: translateY(-4px);
-    transition-duration: 90ms;
+    transition-duration: var(--dur-fast);
   }
   .breadcrumb__live.is-entering {
     opacity: 0;
@@ -1140,48 +1178,52 @@ a.tl-item__meta:hover {
   /* Mobile menu: slides down and fades; bars morph to X. */
   @media (max-width: 767px) {
     .site-nav {
-      transition: opacity 200ms ease, transform 200ms ease, visibility 0s linear 200ms;
+      transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-base);
     }
     .site-header.is-open .site-nav {
-      transition: opacity 200ms ease, transform 200ms ease, visibility 0s;
+      transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), visibility 0s;
     }
   }
   .nav-toggle__bars span {
-    transition: transform 200ms ease, opacity 150ms ease;
+    transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
   }
 
   /* Graph tooltip fades and rises in. */
   .contrib__tip {
-    transition: opacity 150ms ease, transform 150ms ease, visibility 0s linear 150ms;
+    transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), visibility 0s linear var(--dur-fast);
   }
   .contrib__tip.is-visible {
-    transition: opacity 150ms ease, transform 150ms ease, visibility 0s;
+    transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), visibility 0s;
   }
 
   /* Work card: thumbnail zoom + tag brighten. */
   .work-card__thumb img {
-    transition: transform 300ms ease, opacity 300ms ease;
+    transition: transform var(--dur-slow) var(--ease-out), opacity var(--dur-slow) var(--ease-out);
   }
   .work-card:hover .work-card__thumb img {
     transform: scale(1.04);
   }
   .work-card__tag::after {
-    transition: opacity 150ms ease;
+    transition: opacity var(--dur-fast) var(--ease-out);
   }
 
-  /* Timeline: dot grows and the segment above lights as the entry becomes current. */
-  .tl-item::before {
-    transition: transform 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+  /* Timeline: one indicator slides between entries; hover fades an inset background. */
+  .tl-indicator__dot,
+  .tl-indicator__line {
+    transition: transform var(--dur-slide) var(--ease-out), opacity var(--dur-base) var(--ease-out);
   }
   .tl-item::after {
-    transition: transform 300ms ease;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+  .tl-item__org {
+    transition: var(--t-ui), color var(--dur-base) var(--ease-out);
   }
 
   /* Icon links and the Resume button lift like cards. */
   .footer-social a,
   .page-links a,
   .site-nav__resume {
-    transition: transform 150ms ease, color 150ms ease, background-color 150ms ease;
+    transition: var(--t-ui), transform var(--dur-fast) var(--ease-out), background-size var(--dur-base) var(--ease-out);
   }
   .footer-social a:hover,
   .page-links a:hover,
@@ -1198,13 +1240,13 @@ a.tl-item__meta:hover {
   .proj-gallery__item img,
   .proj-gallery__item video,
   .proj-comp-card img {
-    transition: opacity 400ms ease, transform 200ms ease;
+    transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-base) var(--ease-out);
   }
 
   /* Arriving on /#section from another page: land instantly, fade the heading in. */
   .is-arrived > .section-heading,
   .is-arrived > .proj-section-heading {
-    animation: reveal-fade 500ms ease 100ms backwards;
+    animation: reveal-fade var(--dur-slow) var(--ease-out) 100ms backwards;
   }
 }
 
