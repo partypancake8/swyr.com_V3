@@ -97,7 +97,8 @@
     function place() {
       if (active < 0) return;
       // offsetTop is layout-only, so reveal transforms on the entries never move the indicator.
-      var y = items[active].offsetTop + 21; // center of the entry's hollow marker
+      var mark = parseFloat(getComputedStyle(items[active], '::before').top) || 16;
+      var y = items[active].offsetTop + mark + 5; // center of the entry's hollow marker
       dot.style.transform = 'translateY(' + (y - 6) + 'px)';
       line.style.transform = 'scaleY(' + Math.max(0, y - 6) + ')';
       ind.classList.add('is-on');

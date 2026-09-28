@@ -570,7 +570,7 @@ video {
   content: "";
   position: absolute;
   left: -17px;
-  top: 16px;
+  top: 23px; /* centered on the 40px title row (8px padding + 20px - 5px) */
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -602,8 +602,54 @@ video {
   margin-bottom: 4px;
 }
 .tl-item__org {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-weight: 600;
   color: var(--fg);
+}
+.tl-item__head {
+  align-items: center;
+}
+/* iOS-app-style organization tile, inline after the title */
+.org-tile {
+  position: relative;
+  flex: none;
+  display: block;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border: 1px solid #30363d;
+  border-radius: 22%;
+  background: #21262d;
+}
+.org-tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.org-tile::after {
+  /* subtle inner highlight, like an app icon's top edge */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+}
+.tl-item__org:hover .org-tile,
+.org-tile:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(1, 4, 9, 0.55);
+}
+@media (max-width: 767px) {
+  .org-tile {
+    width: 32px;
+    height: 32px;
+  }
+  .tl-item::before {
+    top: 19px; /* centered on the 32px title row */
+  }
 }
 .tl-item:hover .tl-item__org {
   color: var(--link);
@@ -1217,6 +1263,9 @@ video {
   }
   .tl-item__org {
     transition: var(--t-ui), color var(--dur-base) var(--ease-out);
+  }
+  .org-tile {
+    transition: var(--t-ui), transform var(--dur-fast) var(--ease-spring), box-shadow var(--dur-base) var(--ease-out);
   }
 
   /* Icon links and the Resume button lift like cards. */
