@@ -421,9 +421,12 @@
     width: 100%;
   }
 }
-/* A lone tile would stretch to the full column; cap it at half the row, left-aligned. */
+/* A lone tile would stretch to the full column; cap it by height instead (320px
+   tall at its natural aspect, no crop), left-aligned. The caption wraps within it. */
 .jrow--single .proj-stage__item {
-  flex: 0 1 50%;
+  flex: 0 0 auto;
+  width: calc(320px * var(--a));
+  max-width: 100%;
 }
 @media (max-width: 560px) {
   .jrow__half {
