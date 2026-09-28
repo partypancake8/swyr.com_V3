@@ -320,6 +320,12 @@
   line-height: 20px;
   color: var(--fg);
 }
+.proj-stage__note {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--fg-muted);
+}
 .proj-stage__dot {
   width: 12px;
   height: 12px;
@@ -382,13 +388,7 @@
 }
 .proj-solo .proj-stage__frame video {
   aspect-ratio: 16 / 9;
-}
-/* finished.jpeg is portrait; shown whole inside a 4:3 tile (pillarboxed, not cropped) */
-.proj-stage__frame--fit {
-  background: #0d1117;
-}
-.proj-stage__frame--fit img {
-  object-fit: contain;
+  object-fit: fill; /* <video> defaults to contain; the box is already 16:9, so fill shows it edge to edge with no bars */
 }
 .proj-stage__frame {
   position: relative;
@@ -418,11 +418,6 @@
   font-family: var(--font-mono);
   font-size: 11px;
   line-height: 16px;
-  color: var(--fg-muted);
-}
-.proj-stage__caption {
-  margin-top: 8px;
-  font-size: 14px;
   color: var(--fg-muted);
 }
 .proj-stage__item:hover .proj-stage__frame::after {
