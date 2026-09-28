@@ -1,0 +1,29 @@
+{
+  "fetched": "2026-09-28T19:34:21.483Z",
+  "repos": {
+    "4square_production": {
+      "name": "4square_production",
+      "url": "https://github.com/partypancake8/4square_production",
+      "description": "4square: four-OLED ESP32-C3 desk clock. Firmware, prebuilt demo build, flashing and build instructions.",
+      "language": "C++",
+      "stars": 1,
+      "visibility": "public"
+    },
+    "MDLive": {
+      "name": "MDLive",
+      "url": "https://github.com/partypancake8/MDLive",
+      "description": "A Markdown previewer that re-renders the moment the file changes on disk. Native macOS app (Swift, WKWebView) plus a Linux port (GTK3, WebKit2GTK) sharing the same renderer.",
+      "language": "Swift",
+      "stars": 0,
+      "visibility": "public"
+    },
+    "supercaffeinate": {
+      "name": "supercaffeinate",
+      "url": "https://github.com/partypancake8/supercaffeinate",
+      "description": "Keep a Mac fully awake from the terminal or a menu bar item: no sleep, no display sleep, no screensaver, no auto-lock, with sensible lid and external display handling.",
+      "language": "Shell",
+      "stars": 0,
+      "visibility": "public"
+    }
+  }
+}
