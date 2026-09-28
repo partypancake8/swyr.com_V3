@@ -289,6 +289,105 @@
   display: none !important;
 }
 
+/* build stages: V0 -> V1 as a horizontal timeline on desktop, stacked on mobile */
+.proj-stages {
+  position: relative;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 8px;
+}
+.proj-stages::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 0;
+  top: 9px;
+  height: 2px;
+  background: var(--border);
+}
+.proj-stage {
+  position: relative;
+  min-width: 0;
+}
+.proj-stage__label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 12px;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--fg);
+  background: var(--bg);
+}
+.proj-stage__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: 0 0 0 2px #58a6ff;
+}
+/* Large tile on the left spans both rows; small 4:5 tiles stack on the right.
+   Equal 1fr rows keep both stages the same height even when V0 has one small tile. */
+.proj-stage__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+}
+.proj-stage__tile {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-subtle);
+  aspect-ratio: 4 / 5;
+}
+.proj-stage__tile--large {
+  grid-row: 1 / span 2;
+  aspect-ratio: auto;
+}
+.proj-stage__tile img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* the PCB shot keeps the whole board in frame */
+.proj-stage__tile--contain img {
+  object-fit: contain;
+}
+.proj-stage .proj-media-caption {
+  margin-top: 8px;
+}
+.proj-stage__tile:hover {
+  border-color: #58a6ff;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .proj-stage__tile {
+    transition: transform 150ms ease, border-color 150ms ease;
+  }
+  .proj-stage__tile img {
+    transition: transform 300ms ease, opacity 400ms ease;
+  }
+  .proj-stage__tile:hover {
+    transform: translateY(-2px);
+  }
+  .proj-stage__tile:hover img {
+    transform: scale(1.04);
+  }
+  .js .proj-stage__tile img:not([data-loaded]) {
+    opacity: 0;
+  }
+}
+
 /* contact links at the foot of every detail page */
 .page-links {
   display: flex;
@@ -334,6 +433,12 @@
   }
   .proj-gallery {
     gap: 8px;
+  }
+  .proj-stages {
+    grid-template-columns: 1fr;
+  }
+  .proj-stages::before {
+    display: none;
   }
   .proj-title {
     font-size: 28px;

@@ -42,9 +42,9 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
   <!-- ── hero image ───────────────────── -->
   <img
     class="proj-hero-img"
-    src="/images/4square/finished.jpeg"
-    width="768"
-    height="1024"
+    src="/images/4square/v1-front.jpg"
+    width="1200"
+    height="1600"
     alt="Finished 4 square build on a desk"
   />
   <p class="proj-media-caption">
@@ -261,6 +261,42 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
         </figcaption>
       </figure>
     </div>
+  </section>
+
+  <hr class="proj-divider" />
+
+  <!-- ── build stages ─────────────────── -->
+  <section class="proj-section" id="build-stages" data-crumb="build stages">
+    <p class="proj-section-label">build stages</p>
+    <ol class="proj-stages">
+      <li class="proj-stage">
+        <p class="proj-stage__label"><span class="proj-stage__dot" aria-hidden="true"></span>V0 &middot; Prototype</p>
+        <div class="proj-stage__grid">
+          <figure class="proj-stage__tile proj-stage__tile--large">
+            <img src="/images/4square/v0-front.jpg" alt="4 square V0 prototype, front, showing the clock face" width="1600" height="1200" loading="lazy" />
+          </figure>
+          <figure class="proj-stage__tile">
+            <img src="/images/4square/v0-desk.jpg" alt="4 square V0 prototype on the desk" width="1600" height="1200" loading="lazy" />
+          </figure>
+        </div>
+        <p class="proj-media-caption">3D-printed enclosure</p>
+      </li>
+      <li class="proj-stage">
+        <p class="proj-stage__label"><span class="proj-stage__dot" aria-hidden="true"></span>V1 &middot; Custom PCB</p>
+        <div class="proj-stage__grid">
+          <figure class="proj-stage__tile proj-stage__tile--large proj-stage__tile--contain">
+            <img src="/images/4square/v1-pcb.jpg" alt="4 square V1 with the lid off, showing the custom PCB" width="1200" height="1600" loading="lazy" />
+          </figure>
+          <figure class="proj-stage__tile">
+            <img src="/images/4square/v1-front.jpg" alt="4 square V1 finished, clock face" width="1200" height="1600" loading="lazy" />
+          </figure>
+          <figure class="proj-stage__tile">
+            <img src="/images/4square/v1-tickers.jpg" alt="4 square V1 finished, stock ticker screen" width="1200" height="1600" loading="lazy" />
+          </figure>
+        </div>
+        <p class="proj-media-caption">Custom PCB, finished build</p>
+      </li>
+    </ol>
   </section>
 
   <hr class="proj-divider" />
