@@ -106,77 +106,72 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
     <ol class="proj-stages">
       <li class="proj-stage">
         <p class="proj-stage__label"><span class="proj-stage__dot" aria-hidden="true"></span>V0 &middot; Prototype</p>
-        <ul class="proj-stage__row">
-        <li class="proj-stage__item" style="--a: 0.75000; --df: 0.21951; --dn: 3; --tf: 0.36000; --tn: 2">
-          <figure>
-            <div class="proj-stage__frame">
-              <img src="/images/4square/prototype.jpeg" alt="prototype wiring: protoboard mux breakout with 4× OLEDs on jumper wires" width="768" height="1024" style="aspect-ratio: 768 / 1024" loading="lazy" />
-            </div>
-          <figcaption class="proj-stage__cap">02 &middot; prototype stage &middot; protoboard mux breakout &middot; 4&times; OLEDs on jumper wires &middot; testing before enclosure</figcaption>
-          </figure>
-        </li>
-        <li class="proj-stage__item" style="--a: 1.33333; --df: 0.39024; --dn: 3; --tf: 0.64000; --tn: 2">
-          <figure>
-            <div class="proj-stage__frame">
-              <img src="/images/4square/v0-front.jpg" alt="4 square V0 prototype, front, showing the clock face" width="1600" height="1200" style="aspect-ratio: 1600 / 1200" loading="lazy" />
-            </div>
-          </figure>
-        </li>
-        <li class="proj-stage__item" style="--a: 1.33333; --df: 0.39024; --dn: 3; --tf: 0.42857; --tn: 2">
-          <figure>
-            <div class="proj-stage__frame">
-              <img src="/images/4square/v0-desk.jpg" alt="4 square V0 prototype on the desk" width="1600" height="1200" style="aspect-ratio: 1600 / 1200" loading="lazy" />
-            </div>
-          </figure>
-        </li>
-        <li class="proj-stage__item" style="--a: 1.77778; --df: 1.00000; --dn: 1; --tf: 0.57143; --tn: 2">
-          <figure>
-            <div class="proj-stage__frame">
-              <video
-                autoplay
-                loop
-                muted
-                playsinline
-                disablepictureinpicture
-                preload="metadata"
-                width="1920"
-                height="1080"
-                style="aspect-ratio: 1920 / 1080"
-                poster="/images/4square/finished.jpeg"
-                src="/images/4square/enclosure.mp4"
-              ></video>
-            </div>
-          <figcaption class="proj-stage__cap">01 &middot; 5-part enclosure &middot; display faceplate &middot; display mount (&times;2) &middot; back panel &middot; lid</figcaption>
-          </figure>
-        </li>
-        </ul>
+        <div class="jrow">
+          <ul class="jrow__half">
+            <li class="proj-stage__item" style="--a: 0.75">
+              <figure>
+                <div class="proj-stage__frame">
+                  <img src="/images/4square/prototype.jpeg" alt="prototype wiring: protoboard mux breakout with 4× OLEDs on jumper wires" width="768" height="1024" loading="lazy" />
+                </div>
+              <figcaption class="proj-stage__cap">02 &middot; prototype stage &middot; protoboard mux breakout &middot; 4&times; OLEDs on jumper wires &middot; testing before enclosure</figcaption>
+              </figure>
+            </li>
+            <li class="proj-stage__item" style="--a: 1.33333">
+              <figure>
+                <div class="proj-stage__frame">
+                  <img src="/images/4square/v0-front.jpg" alt="4 square V0 prototype, front, showing the clock face" width="1600" height="1200" loading="lazy" />
+                </div>
+              </figure>
+            </li>
+          </ul>
+          <ul class="jrow__half">
+            <li class="proj-stage__item" style="--a: 1.33333">
+              <figure>
+                <div class="proj-stage__frame">
+                  <img src="/images/4square/v0-desk.jpg" alt="4 square V0 prototype on the desk" width="1600" height="1200" loading="lazy" />
+                </div>
+              </figure>
+            </li>
+          </ul>
+        </div>
         <p class="proj-stage__caption">3D-printed enclosure</p>
       </li>
       <li class="proj-stage">
         <p class="proj-stage__label"><span class="proj-stage__dot" aria-hidden="true"></span>V1 &middot; Custom PCB</p>
-        <ul class="proj-stage__row">
-        <li class="proj-stage__item" style="--a: 0.75000; --df: 0.33333; --dn: 3; --tf: 0.50000; --tn: 2">
-          <figure>
-            <div class="proj-stage__frame">
-              <img src="/images/4square/v1-pcb.jpg" alt="4 square V1 with the lid off, showing the custom PCB" width="1200" height="1600" style="aspect-ratio: 1200 / 1600" loading="lazy" />
-            </div>
-          </figure>
-        </li>
-        <li class="proj-stage__item" style="--a: 0.75000; --df: 0.33333; --dn: 3; --tf: 0.50000; --tn: 2">
-          <figure>
-            <div class="proj-stage__frame">
-              <img src="/images/4square/v1-front.jpg" alt="4 square V1 finished, clock face" width="1200" height="1600" style="aspect-ratio: 1200 / 1600" loading="lazy" />
-            </div>
-          </figure>
-        </li>
-        <li class="proj-stage__item" style="--a: 0.75000; --df: 0.33333; --dn: 3; --tf: 1.00000; --tn: 1">
-          <figure>
-            <div class="proj-stage__frame">
-              <img src="/images/4square/v1-tickers.jpg" alt="4 square V1 finished, stock ticker screen" width="1200" height="1600" style="aspect-ratio: 1200 / 1600" loading="lazy" />
-            </div>
-          </figure>
-        </li>
-        </ul>
+        <div class="jrow">
+          <ul class="jrow__half">
+            <li class="proj-stage__item" style="--a: 0.75">
+              <figure>
+                <div class="proj-stage__frame">
+                  <img src="/images/4square/v1-pcb.jpg" alt="4 square V1 with the lid off, showing the custom PCB" width="1200" height="1600" loading="lazy" />
+                </div>
+              </figure>
+            </li>
+            <li class="proj-stage__item" style="--a: 0.75">
+              <figure>
+                <div class="proj-stage__frame">
+                  <img src="/images/4square/v1-front.jpg" alt="4 square V1 finished, clock face" width="1200" height="1600" loading="lazy" />
+                </div>
+              </figure>
+            </li>
+          </ul>
+          <ul class="jrow__half">
+            <li class="proj-stage__item" style="--a: 0.75">
+              <figure>
+                <div class="proj-stage__frame">
+                  <img src="/images/4square/v1-tickers.jpg" alt="4 square V1 finished, stock ticker screen" width="1200" height="1600" loading="lazy" />
+                </div>
+              </figure>
+            </li>
+            <li class="proj-stage__item" style="--a: 1.33333">
+              <figure>
+                <div class="proj-stage__frame proj-stage__frame--fit">
+                  <img src="/images/4square/finished.jpeg" alt="Finished 4 square build on a desk" width="768" height="1024" loading="lazy" />
+                </div>
+              </figure>
+            </li>
+          </ul>
+        </div>
         <p class="proj-stage__caption">Custom PCB, finished build</p>
       </li>
     </ol>
@@ -194,16 +189,32 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
       object that&rsquo;s also genuinely functional. This fills that niche: it looks cool, tells
       you things you actually care about, and reflects who you are.
     </p>
-    <div class="proj-gallery">
-      <figure class="proj-gallery__item">
-        <img src="/images/4square/succulent.png" alt="Succulent" width="3024" height="4032" loading="lazy" />
-      </figure>
-      <figure class="proj-gallery__item">
-        <img src="/images/4square/lego.png" alt="Lego set" width="570" height="570" loading="lazy" />
-      </figure>
-      <figure class="proj-gallery__item proj-gallery__item--wide">
-        <img src="/images/4square/keyboard.png" alt="Mechanical keyboard" width="2048" height="1024" loading="lazy" />
-      </figure>
+    <div class="jrow">
+      <ul class="jrow__half">
+        <li class="proj-stage__item" style="--a: 0.75">
+          <figure>
+            <div class="proj-stage__frame">
+              <img src="/images/4square/succulent.png" alt="Succulent" width="3024" height="4032" loading="lazy" />
+            </div>
+          </figure>
+        </li>
+        <li class="proj-stage__item" style="--a: 1">
+          <figure>
+            <div class="proj-stage__frame">
+              <img src="/images/4square/lego.png" alt="Lego set" width="570" height="570" loading="lazy" />
+            </div>
+          </figure>
+        </li>
+      </ul>
+      <ul class="jrow__half">
+        <li class="proj-stage__item" style="--a: 2">
+          <figure>
+            <div class="proj-stage__frame">
+              <img src="/images/4square/keyboard.png" alt="Mechanical keyboard" width="2048" height="1024" loading="lazy" />
+            </div>
+          </figure>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -267,6 +278,23 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
       Designed in Fusion 360. The enclosure splits into a display faceplate, two display
       mounts, a back panel, and a snap-fit lid: everything replaceable and remixable.
     </p>
+    <figure class="proj-solo proj-stage__item">
+      <div class="proj-stage__frame">
+        <video
+          autoplay
+          loop
+          muted
+          playsinline
+          disablepictureinpicture
+          preload="metadata"
+          width="1920"
+          height="1080"
+          poster="/images/4square/finished.jpeg"
+          src="/images/4square/enclosure.mp4"
+        ></video>
+      </div>
+      <figcaption class="proj-stage__cap">01 &middot; 5-part enclosure &middot; display faceplate &middot; display mount (&times;2) &middot; back panel &middot; lid</figcaption>
+    </figure>
   </section>
 
   <hr class="proj-divider" />
