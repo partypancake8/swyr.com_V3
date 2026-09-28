@@ -40,6 +40,10 @@
   --dur-slow: 400ms;
   --dur-slide: 350ms;
   --dur-ui: 180ms;
+  --dur-step: 80ms; /* hero entrance stagger */
+  --dur-draw: 700ms; /* timeline line draw */
+  --dur-count: 900ms; /* contribution count-up (read by flair.js) */
+  --dur-drift: 6s; /* thumbnail Ken Burns drift */
   /* the shared interactive transition list; specific rules append to it */
   --t-ui: color var(--dur-ui) var(--ease-out), background-color var(--dur-ui) var(--ease-out),
     border-color var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out),
@@ -368,7 +372,7 @@ video {
 /* hero: text left, photo right */
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
+  grid-template-columns: minmax(0, 1fr) 320px;
   gap: 32px;
   align-items: center;
   padding: 0;
@@ -440,10 +444,9 @@ video {
   color: var(--fg-muted);
 }
 
-/* contribution graph (bottom of the Work section) */
+/* contribution graph: its own panel between Experience and About */
 .contrib {
   position: relative;
-  margin-top: 16px;
   padding: 12px 16px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -885,6 +888,27 @@ video {
   gap: 8px;
   margin-top: 16px;
 }
+.hero__links {
+  margin-top: 12px;
+}
+.contrib__count {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+/* scroll progress: 2px bar on the header's bottom edge, scaled by flair.js */
+.site-header__progress {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, #4493f8, #3fb950);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  pointer-events: none;
+}
 
 @media (max-width: 767px) {
   .hero {
@@ -1059,6 +1083,7 @@ video {
 .proj-section p a,
 .breadcrumb a,
 .page-links__email {
+  display: inline-block; /* so the hover lift (transform) applies */
   text-decoration: none;
   background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
 }
@@ -1096,6 +1121,9 @@ video {
 .hero__tilt {
   --rx: 0deg;
   --ry: 0deg;
+}
+.hero__tilt {
+  transform: translateY(var(--py, 0px)); /* scroll parallax, set by flair.js */
 }
 .hero__photo {
   transform: perspective(800px) rotateX(var(--rx)) rotateY(var(--ry));
@@ -1329,5 +1357,194 @@ video {
   }
   .hero__photo {
     transform: none;
+  }
+}
+
+/* ======================================
+   SECOND MOTION LAYER
+   Transforms and opacity only, all on the shared tokens, all off under
+   prefers-reduced-motion (nothing below exists for reduced motion).
+   ====================================== */
+@media (prefers-reduced-motion: no-preference) {
+  /* Hero entrance, once per load: label, name, tagline, button, contact row, photo. */
+  .hero__eyebrow,
+  .hero__subtitle,
+  .hero__text > .outline-btn {
+    animation: hero-in var(--dur-slow) var(--ease-out) backwards;
+  }
+  .hero__subtitle {
+    animation-delay: calc(var(--dur-step) * 2);
+  }
+  .hero__text > .outline-btn {
+    animation-delay: calc(var(--dur-step) * 3);
+  }
+  .hero__headline {
+    animation: hero-in var(--dur-slow) var(--ease-out) var(--dur-step) backwards,
+      name-sweep calc(var(--dur-slow) * 4.5) var(--ease-in-out) calc(var(--dur-base) + var(--dur-step)) both;
+  }
+  .hero__links a {
+    --stagger: calc(var(--dur-step) * 4);
+  }
+  .hero__tilt {
+    animation: hero-photo-in var(--dur-slow) var(--ease-out) calc(var(--dur-step) * 5) backwards;
+  }
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+  @keyframes hero-photo-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
+  /* Scroll progress bar under the sticky header. */
+  .site-header__progress {
+    display: block;
+  }
+
+  /* Project cards: rise + settle from 0.98; thumbnail drifts slowly while hovered. */
+  .js .work-card:not(.in) {
+    transform: translateY(16px) scale(0.98);
+  }
+  .work-card.in {
+    animation-name: card-in;
+  }
+  @keyframes card-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+    }
+  }
+  .work-card:hover .work-card__thumb img {
+    animation: thumb-zoom var(--dur-slow) var(--ease-out),
+      ken-burns var(--dur-drift) var(--ease-in-out) var(--dur-slow) infinite alternate;
+  }
+  @keyframes thumb-zoom {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.04);
+    }
+  }
+  @keyframes ken-burns {
+    from {
+      transform: scale(1.04);
+    }
+    to {
+      transform: scale(1.08);
+    }
+  }
+
+  /* Tag pills: stagger in when their card reveals; brightness ripple on card hover. */
+  .work-card.in .work-card__tag {
+    animation: pill-in var(--dur-base) var(--ease-out) calc(var(--stagger, 0ms) + var(--dur-base) + var(--i, 0) * 30ms) backwards;
+  }
+  @keyframes pill-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px) scale(0.9);
+    }
+  }
+  .work-card__tag::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: rgba(240, 246, 252, 0.22);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .work-card:hover .work-card__tag::before {
+    animation: pill-ripple var(--dur-slow) var(--ease-out) calc(var(--i, 0) * var(--dur-step) / 2);
+  }
+  @keyframes pill-ripple {
+    40% {
+      opacity: 1;
+    }
+  }
+
+  /* Section headers: the index slides in from the left, the title fades. */
+  .section-block.in .section-heading .nav-index {
+    animation: index-in var(--dur-slow) var(--ease-out) backwards;
+  }
+  .section-block.in .section-title {
+    animation: reveal-fade var(--dur-slow) var(--ease-out) var(--dur-step) backwards;
+  }
+  @keyframes index-in {
+    from {
+      opacity: 0;
+      transform: translateX(-12px);
+    }
+  }
+
+  /* Timeline: the track draws top to bottom, then the sliding indicator takes over;
+     logo tiles pop with a spring as their entry reveals. */
+  .timeline::before {
+    transform-origin: 50% 0;
+  }
+  .section-block.in .timeline::before {
+    animation: line-draw var(--dur-draw) var(--ease-out) backwards;
+  }
+  .section-block.in .tl-indicator {
+    animation: reveal-fade var(--dur-base) var(--ease-out) var(--dur-draw) backwards;
+  }
+  @keyframes line-draw {
+    from {
+      transform: scaleY(0);
+    }
+  }
+  .tl-item.in .org-tile {
+    animation: tile-pop var(--dur-slow) var(--ease-spring) calc(var(--stagger, 0ms) + var(--dur-base));
+  }
+  @keyframes tile-pop {
+    50% {
+      transform: scale(1.06);
+    }
+  }
+
+  /* Contact buttons and footer icons: one small wiggle on hover. */
+  .contact-links a:hover .icon,
+  .footer-social a:hover .icon {
+    animation: icon-wiggle calc(var(--dur-fast) * 2) var(--ease-in-out);
+  }
+  @keyframes icon-wiggle {
+    25% {
+      transform: rotate(-8deg);
+    }
+    75% {
+      transform: rotate(8deg);
+    }
+  }
+
+  /* Inline links: 1px lift on hover, on top of the underline draw. */
+  .section-text a:hover,
+  .proj-section p a:hover,
+  .breadcrumb a:hover,
+  .page-links__email:hover {
+    transform: translateY(-1px);
+  }
+
+  /* Breadcrumb: the new crumb's separator briefly brightens (overlay opacity). */
+  .breadcrumb__live .breadcrumb__sep {
+    position: relative;
+  }
+  .breadcrumb__live .breadcrumb__sep::after {
+    content: "/";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #58a6ff;
+    opacity: 0;
+    animation: sep-flash calc(var(--dur-slow) * 2) var(--ease-out) var(--dur-fast);
+  }
+  @keyframes sep-flash {
+    30% {
+      opacity: 1;
+    }
   }
 }

@@ -82,7 +82,7 @@ const since = `${MONTH_LONG[start.getUTCMonth()]} ${start.getUTCFullYear()}`;
 ---
 
 <div class="contrib" data-contrib>
-  <h3 class="contrib__title">{total.toLocaleString('en-US')} contributions since {since}</h3>
+  <h3 class="contrib__title"><span class="contrib__count" data-count={total}>{total.toLocaleString('en-US')}</span> contributions since {since}</h3>
   <div class="contrib__scroll">
     <svg
       class="contrib__graph"

@@ -22,11 +22,45 @@
       var el = en.target;
       el.style.setProperty('--stagger', (n++ * 60) + 'ms');
       el.classList.add('in');
-      if (el.matches('.contrib')) el.classList.add('is-drawn');
+      if (el.matches('.contrib')) { el.classList.add('is-drawn'); countUp(el.querySelector('[data-count]')); }
       io.unobserve(el);
     });
   }, { rootMargin: '0px 0px -8% 0px' });
-  targets.forEach(function (el) { io.observe(el); });
+  targets.forEach(function (el) {
+    // The hero contact row is part of the load sequence (CSS delays it), not the scroll reveal.
+    if (el.closest('.hero')) el.classList.add('in'); else io.observe(el);
+  });
+
+  // Contribution total counts up from 0 once the panel reveals; width is pinned first
+  // (tabular digits, right aligned) so the rest of the title never moves.
+  function countUp(c) {
+    if (!c) return;
+    var to = +c.getAttribute('data-count') || 0;
+    var dur = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--dur-count')) || 900;
+    var t0 = 0;
+    c.style.minWidth = c.getBoundingClientRect().width + 'px';
+    c.textContent = '0';
+    raf(function step(now) {
+      if (!t0) t0 = now;
+      var p = Math.min(1, (now - t0) / dur);
+      c.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))).toLocaleString('en-US');
+      if (p < 1) raf(step);
+    });
+  }
+
+  // Scroll progress bar + hero photo parallax (up to 24px), one rAF per frame.
+  var bar = document.querySelector('.site-header__progress');
+  var par = document.querySelector('.hero__tilt');
+  var sq = false;
+  function onScroll() {
+    sq = false;
+    var de = document.documentElement, y = window.scrollY, max = de.scrollHeight - window.innerHeight;
+    if (bar) bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0).toFixed(4) + ')';
+    if (par) par.style.setProperty('--py', (-Math.min(24, y * 0.1)).toFixed(1) + 'px');
+  }
+  window.addEventListener('scroll', function () { if (!sq) { sq = true; raf(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
 
   // 2. Spotlight border + hover lift: pointer position into --mx / --my, rAF throttled.
   var spot = null, sx = 0, sy = 0, queued = false;

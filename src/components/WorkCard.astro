@@ -51,7 +51,7 @@ const linkAttrs = external ? { target: '_blank', rel: 'noopener' } : {};
     </div>
     <p class="work-card__desc">{desc}</p>
     <ul class="work-card__tags">
-      {tags.map((tag) => <li class="work-card__tag">{tag}</li>)}
+      {tags.map((tag, i) => <li class="work-card__tag" style={`--i:${i}`}>{tag}</li>)}
     </ul>
     {(meta || repoLink) && (
       <div class="work-card__footer">
