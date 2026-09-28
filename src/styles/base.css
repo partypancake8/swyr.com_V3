@@ -512,6 +512,11 @@ video {
   border-bottom: 1px solid var(--border);
   border-radius: var(--radius) var(--radius) 0 0;
 }
+.section-lede {
+  margin-top: -4px;
+  font-size: 14px;
+  color: var(--fg-muted);
+}
 .section-text + .section-text {
   margin-top: 12px;
 }
