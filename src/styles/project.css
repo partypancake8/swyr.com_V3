@@ -341,23 +341,56 @@
   background: var(--bg);
   box-shadow: 0 0 0 2px #58a6ff;
 }
+/* Justified rows: every tile in a row shares one height and takes its width from
+   its aspect ratio (--a = width / height), so the row fills the content width with
+   no crops. --df / --dn: the tile's share of its desktop row and that row's tile
+   count; --tf / --tn: the same for the two-up tablet rows. Row height is capped
+   (--row-h); a capped row stays left-aligned instead of growing taller. */
 .proj-stage__row {
+  --gap: 12px;
+  --row-h: 320px;
   list-style: none;
-  display: grid;
-  gap: 12px;
-  align-items: start;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 16px var(--gap);
 }
-.proj-stage__row--4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+.proj-stage__item {
+  flex: 0 0 min(calc(var(--df) * (100% - (var(--dn) - 1) * var(--gap)) - 0.5px), calc(var(--a) * var(--row-h)));
+  min-width: 0;
 }
-.proj-stage__row--3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.proj-stage__frame :is(img, video) {
+  aspect-ratio: var(--a);
+}
+@media (max-width: 900px) {
+  .proj-stage__row {
+    --row-h: 420px;
+  }
+  .proj-stage__item {
+    flex-basis: min(calc(var(--tf) * (100% - (var(--tn) - 1) * var(--gap)) - 0.5px), calc(var(--a) * var(--row-h)));
+  }
+}
+@media (max-width: 560px) {
+  .proj-stage__item {
+    flex-basis: 100%;
+  }
 }
 .proj-stage__frame {
+  position: relative;
   overflow: hidden; /* keeps the hover zoom inside the frame; nothing is cropped at rest */
-  border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--bg-subtle);
+}
+/* The 1px border is drawn on an overlay so the media spans the full tile width:
+   a real border would take 2px off every width and give tiles of different aspect
+   slightly different heights in a justified row. */
+.proj-stage__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--border);
+  border-radius: inherit;
+  pointer-events: none;
 }
 .proj-stage__frame img,
 .proj-stage__frame video {
@@ -377,26 +410,14 @@
   font-size: 14px;
   color: var(--fg-muted);
 }
-.proj-stage__item:hover .proj-stage__frame {
+.proj-stage__item:hover .proj-stage__frame::after {
   border-color: #58a6ff;
-}
-@media (max-width: 1000px) {
-  .proj-stage__row--4,
-  .proj-stage__row--3 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (max-width: 767px) {
-  .proj-stage__row--4,
-  .proj-stage__row--3 {
-    grid-template-columns: 1fr;
-  }
 }
 @media (prefers-reduced-motion: no-preference) {
   .proj-stage__item {
     transition: var(--t-ui), transform var(--dur-fast) var(--ease-out);
   }
-  .proj-stage__frame {
+  .proj-stage__frame::after {
     transition: border-color var(--dur-fast) var(--ease-out);
   }
   .proj-stage__frame img,
