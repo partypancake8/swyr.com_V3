@@ -10,13 +10,15 @@ interface Props {
   tags: string[];
   image?: string;
   imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   /** GitHub repo name under partypancake8, for the language / stars footer. */
   repo?: string;
   /** Show a secondary "repo ↗" link (used when the card itself links elsewhere). */
   repoLink?: boolean;
   external?: boolean;
 }
-const { title, href, desc, tags, image, imageAlt = '', repo, repoLink = false, external = false } = Astro.props;
+const { title, href, desc, tags, image, imageAlt = '', imageWidth = 800, imageHeight = 600, repo, repoLink = false, external = false } = Astro.props;
 
 const LANG_COLORS: Record<string, string> = {
   Swift: '#F05138', 'C++': '#f34b7d', C: '#555555', Shell: '#89e051', Python: '#3572A5',
@@ -29,7 +31,7 @@ const linkAttrs = external ? { target: '_blank', rel: 'noopener' } : {};
 <article class:list={['work-card', { 'work-card--thumb': image, 'work-card--repo': !image }]}>
   {image && (
     <div class="work-card__thumb">
-      <img src={image} alt={imageAlt} loading="lazy" />
+      <img src={image} alt={imageAlt} width={imageWidth} height={imageHeight} loading="lazy" />
     </div>
   )}
   <div class="work-card__body">

@@ -637,7 +637,6 @@ a.tl-item__meta:hover {
 }
 .work-card__thumb {
   flex: none;
-  height: 140px;
   overflow: hidden;
   border-bottom: 1px solid var(--border);
   border-radius: 5px 5px 0 0;
@@ -645,8 +644,7 @@ a.tl-item__meta:hover {
 .work-card__thumb img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
 }
 .work-card__body {
   flex: 1 1 auto;
@@ -990,7 +988,7 @@ a.tl-item__meta:hover {
 
 @media (prefers-reduced-motion: no-preference) {
   /* Scroll reveal: hidden only when JS is present, revealed once. */
-  .js :is(.contrib, .work-card, .tl-item, .photo-strip li, .contact-links a, .proj-gallery__item, .proj-stage__tile, .proj-comp-card, .proj-specs, .proj-widget-list, .proj-cta):not(.in) {
+  .js :is(.contrib, .work-card, .tl-item, .photo-strip li, .contact-links a, .proj-gallery__item, .proj-stage__item, .proj-comp-card, .proj-specs, .proj-widget-list, .proj-cta):not(.in) {
     opacity: 0;
     transform: translateY(12px);
   }

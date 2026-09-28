@@ -40,13 +40,15 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
   </header>
 
   <!-- ── hero image ───────────────────── -->
-  <img
-    class="proj-hero-img"
-    src="/images/4square/v1-front.jpg"
-    width="1200"
-    height="1600"
-    alt="Finished 4 square build on a desk"
-  />
+  <div class="proj-hero-media">
+    <img
+      class="proj-hero-img"
+      src="/images/4square/v1-front.jpg"
+      width="1200"
+      height="1600"
+      alt="Finished 4 square build on a desk"
+    />
+  </div>
   <p class="proj-media-caption">
     finished build — 4&times; SSD1306 OLEDs in custom 3D-printed enclosure
   </p>
@@ -98,6 +100,90 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
 
   <hr class="proj-divider" />
 
+  <!-- ── build stages: prototype to finished build ── -->
+  <section class="proj-section" id="build-stages" data-crumb="build stages">
+    <p class="proj-section-label">build stages</p>
+    <ol class="proj-stages">
+      <li class="proj-stage">
+        <p class="proj-stage__label"><span class="proj-stage__dot" aria-hidden="true"></span>V0 &middot; Prototype</p>
+        <ul class="proj-stage__row proj-stage__row--4">
+        <li class="proj-stage__item">
+          <figure>
+            <div class="proj-stage__frame">
+              <img src="/images/4square/prototype.jpeg" alt="prototype wiring — protoboard mux breakout with 4× OLEDs on jumper wires" width="768" height="1024" style="aspect-ratio: 768 / 1024" loading="lazy" />
+            </div>
+          <figcaption class="proj-stage__cap">02 &mdash; prototype stage &middot; protoboard mux breakout &middot; 4&times; OLEDs on jumper wires &middot; testing before enclosure</figcaption>
+          </figure>
+        </li>
+        <li class="proj-stage__item">
+          <figure>
+            <div class="proj-stage__frame">
+              <img src="/images/4square/v0-front.jpg" alt="4 square V0 prototype, front, showing the clock face" width="1600" height="1200" style="aspect-ratio: 1600 / 1200" loading="lazy" />
+            </div>
+          </figure>
+        </li>
+        <li class="proj-stage__item">
+          <figure>
+            <div class="proj-stage__frame">
+              <img src="/images/4square/v0-desk.jpg" alt="4 square V0 prototype on the desk" width="1600" height="1200" style="aspect-ratio: 1600 / 1200" loading="lazy" />
+            </div>
+          </figure>
+        </li>
+        <li class="proj-stage__item">
+          <figure>
+            <div class="proj-stage__frame">
+              <video
+                autoplay
+                loop
+                muted
+                playsinline
+                disablepictureinpicture
+                preload="metadata"
+                width="1920"
+                height="1080"
+                style="aspect-ratio: 1920 / 1080"
+                poster="/images/4square/finished.jpeg"
+                src="/images/4square/enclosure.mp4"
+              ></video>
+            </div>
+          <figcaption class="proj-stage__cap">01 &mdash; 5-part enclosure &middot; display faceplate &middot; display mount (&times;2) &middot; back panel &middot; lid</figcaption>
+          </figure>
+        </li>
+        </ul>
+        <p class="proj-stage__caption">3D-printed enclosure</p>
+      </li>
+      <li class="proj-stage">
+        <p class="proj-stage__label"><span class="proj-stage__dot" aria-hidden="true"></span>V1 &middot; Custom PCB</p>
+        <ul class="proj-stage__row proj-stage__row--3">
+        <li class="proj-stage__item">
+          <figure>
+            <div class="proj-stage__frame">
+              <img src="/images/4square/v1-pcb.jpg" alt="4 square V1 with the lid off, showing the custom PCB" width="1200" height="1600" style="aspect-ratio: 1200 / 1600" loading="lazy" />
+            </div>
+          </figure>
+        </li>
+        <li class="proj-stage__item">
+          <figure>
+            <div class="proj-stage__frame">
+              <img src="/images/4square/v1-front.jpg" alt="4 square V1 finished, clock face" width="1200" height="1600" style="aspect-ratio: 1200 / 1600" loading="lazy" />
+            </div>
+          </figure>
+        </li>
+        <li class="proj-stage__item">
+          <figure>
+            <div class="proj-stage__frame">
+              <img src="/images/4square/v1-tickers.jpg" alt="4 square V1 finished, stock ticker screen" width="1200" height="1600" style="aspect-ratio: 1200 / 1600" loading="lazy" />
+            </div>
+          </figure>
+        </li>
+        </ul>
+        <p class="proj-stage__caption">Custom PCB, finished build</p>
+      </li>
+    </ol>
+  </section>
+
+  <hr class="proj-divider" />
+
   <!-- ── motivation ───────────────────── -->
   <section class="proj-section" id="motivation" data-crumb="motivation">
     <p class="proj-section-label">motivation</p>
@@ -110,13 +196,13 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
     </p>
     <div class="proj-gallery">
       <figure class="proj-gallery__item">
-        <img src="/images/4square/succulent.png" alt="Succulent" loading="lazy" />
+        <img src="/images/4square/succulent.png" alt="Succulent" width="3024" height="4032" loading="lazy" />
       </figure>
       <figure class="proj-gallery__item">
-        <img src="/images/4square/lego.png" alt="Lego set" loading="lazy" />
+        <img src="/images/4square/lego.png" alt="Lego set" width="570" height="570" loading="lazy" />
       </figure>
       <figure class="proj-gallery__item proj-gallery__item--wide">
-        <img src="/images/4square/keyboard.png" alt="Mechanical keyboard" loading="lazy" />
+        <img src="/images/4square/keyboard.png" alt="Mechanical keyboard" width="2048" height="1024" loading="lazy" />
       </figure>
     </div>
   </section>
@@ -191,112 +277,41 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
     <h2 class="proj-section-heading">components</h2>
     <div class="proj-comp-grid">
       <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/5477-06.jpg" alt="Adafruit Feather ESP32-S3" />
+        <img src="https://cdn-shop.adafruit.com/970x728/5477-06.jpg" alt="Adafruit Feather ESP32-S3" width="970" height="728" />
         <div class="proj-comp-footer">
           <span class="proj-comp-name">ESP32-S3</span>
           <span class="proj-comp-role">MCU</span>
         </div>
       </div>
       <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/326-04.jpg" alt='SSD1306 0.96" OLED' />
+        <img src="https://cdn-shop.adafruit.com/970x728/326-04.jpg" alt='SSD1306 0.96" OLED' width="970" height="728" />
         <div class="proj-comp-footer">
           <span class="proj-comp-name">SSD1306</span>
           <span class="proj-comp-role">4&times; Display</span>
         </div>
       </div>
       <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/2717-05.jpg" alt="TCA9548A I2C Mux" />
+        <img src="https://cdn-shop.adafruit.com/970x728/2717-05.jpg" alt="TCA9548A I2C Mux" width="970" height="728" />
         <div class="proj-comp-footer">
           <span class="proj-comp-name">TCA9548A</span>
           <span class="proj-comp-role">I&sup2;C Mux</span>
         </div>
       </div>
       <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/4885-05.jpg" alt="SHT40 Temp/Humidity" />
+        <img src="https://cdn-shop.adafruit.com/970x728/4885-05.jpg" alt="SHT40 Temp/Humidity" width="970" height="728" />
         <div class="proj-comp-footer">
           <span class="proj-comp-name">SHT4x</span>
           <span class="proj-comp-role">Temp / Humidity</span>
         </div>
       </div>
       <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/328-06.jpg" alt="LiPo 2500mAh battery" />
+        <img src="https://cdn-shop.adafruit.com/970x728/328-06.jpg" alt="LiPo 2500mAh battery" width="970" height="728" />
         <div class="proj-comp-footer">
           <span class="proj-comp-name">LiPo 2500</span>
           <span class="proj-comp-role">Battery</span>
         </div>
       </div>
     </div>
-  </section>
-
-  <hr class="proj-divider" />
-
-  <!-- ── build gallery ────────────────── -->
-  <section class="proj-section" id="build-gallery" data-crumb="build gallery">
-    <p class="proj-section-label">build gallery</p>
-    <h2 class="proj-section-heading">prototype stage</h2>
-    <div class="proj-gallery">
-      <figure class="proj-gallery__item">
-        <video
-          autoplay
-          loop
-          muted
-          playsinline
-          disablepictureinpicture
-          preload="metadata"
-          poster="/images/4square/finished.jpeg"
-          src="/images/4square/enclosure.mp4"
-        ></video>
-        <figcaption class="proj-media-caption">
-          01 &mdash; 5-part enclosure &middot; display faceplate &middot; display mount (&times;2) &middot; back panel &middot; lid
-        </figcaption>
-      </figure>
-      <figure class="proj-gallery__item">
-        <img
-          src="/images/4square/prototype.jpeg"
-          alt="prototype wiring — protoboard mux breakout with 4× OLEDs on jumper wires"
-          loading="lazy"
-        />
-        <figcaption class="proj-media-caption">
-          02 &mdash; prototype stage &middot; protoboard mux breakout &middot; 4&times; OLEDs on jumper wires &middot; testing before enclosure
-        </figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <hr class="proj-divider" />
-
-  <!-- ── build stages ─────────────────── -->
-  <section class="proj-section" id="build-stages" data-crumb="build stages">
-    <p class="proj-section-label">build stages</p>
-    <ol class="proj-stages">
-      <li class="proj-stage">
-        <p class="proj-stage__label"><span class="proj-stage__dot" aria-hidden="true"></span>V0 &middot; Prototype</p>
-        <div class="proj-stage__grid">
-          <figure class="proj-stage__tile proj-stage__tile--large">
-            <img src="/images/4square/v0-front.jpg" alt="4 square V0 prototype, front, showing the clock face" width="1600" height="1200" loading="lazy" />
-          </figure>
-          <figure class="proj-stage__tile">
-            <img src="/images/4square/v0-desk.jpg" alt="4 square V0 prototype on the desk" width="1600" height="1200" loading="lazy" />
-          </figure>
-        </div>
-        <p class="proj-media-caption">3D-printed enclosure</p>
-      </li>
-      <li class="proj-stage">
-        <p class="proj-stage__label"><span class="proj-stage__dot" aria-hidden="true"></span>V1 &middot; Custom PCB</p>
-        <div class="proj-stage__grid">
-          <figure class="proj-stage__tile proj-stage__tile--large proj-stage__tile--contain">
-            <img src="/images/4square/v1-pcb.jpg" alt="4 square V1 with the lid off, showing the custom PCB" width="1200" height="1600" loading="lazy" />
-          </figure>
-          <figure class="proj-stage__tile">
-            <img src="/images/4square/v1-front.jpg" alt="4 square V1 finished, clock face" width="1200" height="1600" loading="lazy" />
-          </figure>
-          <figure class="proj-stage__tile">
-            <img src="/images/4square/v1-tickers.jpg" alt="4 square V1 finished, stock ticker screen" width="1200" height="1600" loading="lazy" />
-          </figure>
-        </div>
-        <p class="proj-media-caption">Custom PCB, finished build</p>
-      </li>
-    </ol>
   </section>
 
   <hr class="proj-divider" />

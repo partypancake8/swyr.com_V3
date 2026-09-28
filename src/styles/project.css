@@ -79,11 +79,24 @@
 }
 
 /* media */
-.proj-hero-img {
-  max-height: 520px;
-  object-fit: cover;
+/* Hero: shown uncropped at its natural aspect inside a dark full-width panel. */
+.proj-hero-media {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+  background: #0d1117;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
-.proj-hero-img,
+.proj-hero-img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 560px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
 .proj-media {
   display: block;
   width: 100%;
@@ -212,8 +225,7 @@
 .proj-comp-card img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  height: auto;
   background: #ffffff;
   border-bottom: 1px solid var(--border);
 }
@@ -269,12 +281,15 @@
   gap: 16px;
   margin-top: 16px;
 }
+/* natural aspect, no crops; columns align at the top */
+.proj-gallery {
+  align-items: start;
+}
 .proj-gallery__item img,
 .proj-gallery__item video {
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
+  height: auto;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--bg-subtle);
@@ -282,108 +297,120 @@
 .proj-gallery__item--wide {
   grid-column: 1 / -1;
 }
-.proj-gallery__item--wide img {
-  aspect-ratio: 2 / 1;
-}
 .proj-gallery video::-webkit-media-controls {
   display: none !important;
 }
 
-/* build stages: V0 -> V1 as a horizontal timeline on desktop, stacked on mobile */
+/* build stages: V0 -> V1, stacked, each a row of tiles at natural aspect (no crops) */
 .proj-stages {
   position: relative;
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
   margin-top: 8px;
+  padding-left: 28px;
 }
 .proj-stages::before {
   content: "";
   position: absolute;
-  left: 6px;
-  right: 0;
-  top: 9px;
-  height: 2px;
+  left: 5px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
   background: var(--border);
 }
-.proj-stage {
-  position: relative;
-  min-width: 0;
+.proj-stage + .proj-stage {
+  margin-top: 32px;
 }
 .proj-stage__label {
   position: relative;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 10px;
-  padding-right: 12px;
   margin-bottom: 12px;
   font-family: var(--font-mono);
   font-size: 13px;
   font-weight: 600;
   line-height: 20px;
   color: var(--fg);
-  background: var(--bg);
 }
 .proj-stage__dot {
+  position: absolute;
+  left: -28px;
+  top: 4px;
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background: var(--bg);
   box-shadow: 0 0 0 2px #58a6ff;
 }
-/* Large tile on the left spans both rows; small 4:5 tiles stack on the right.
-   Equal 1fr rows keep both stages the same height even when V0 has one small tile. */
-.proj-stage__grid {
+.proj-stage__row {
+  list-style: none;
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 8px;
+  gap: 12px;
+  align-items: start;
 }
-.proj-stage__tile {
-  position: relative;
-  overflow: hidden;
+.proj-stage__row--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.proj-stage__row--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.proj-stage__frame {
+  overflow: hidden; /* keeps the hover zoom inside the frame; nothing is cropped at rest */
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--bg-subtle);
-  aspect-ratio: 4 / 5;
 }
-.proj-stage__tile--large {
-  grid-row: 1 / span 2;
-  aspect-ratio: auto;
-}
-.proj-stage__tile img {
-  position: absolute;
-  inset: 0;
+.proj-stage__frame img,
+.proj-stage__frame video {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
 }
-/* the PCB shot keeps the whole board in frame */
-.proj-stage__tile--contain img {
-  object-fit: contain;
+.proj-stage__cap {
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--fg-muted);
 }
-.proj-stage .proj-media-caption {
+.proj-stage__caption {
   margin-top: 8px;
+  font-size: 14px;
+  color: var(--fg-muted);
 }
-.proj-stage__tile:hover {
+.proj-stage__item:hover .proj-stage__frame {
   border-color: #58a6ff;
 }
+@media (max-width: 1000px) {
+  .proj-stage__row--4,
+  .proj-stage__row--3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .proj-stage__row--4,
+  .proj-stage__row--3 {
+    grid-template-columns: 1fr;
+  }
+}
 @media (prefers-reduced-motion: no-preference) {
-  .proj-stage__tile {
-    transition: transform 150ms ease, border-color 150ms ease;
+  .proj-stage__item {
+    transition: transform var(--dur-fast, 150ms) var(--ease-out, ease-out);
   }
-  .proj-stage__tile img {
-    transition: transform 300ms ease, opacity 400ms ease;
+  .proj-stage__frame {
+    transition: border-color var(--dur-fast, 150ms) var(--ease-out, ease-out);
   }
-  .proj-stage__tile:hover {
+  .proj-stage__frame img,
+  .proj-stage__frame video {
+    transition: transform var(--dur-slow, 400ms) var(--ease-out, ease-out), opacity var(--dur-slow, 400ms) var(--ease-out, ease-out);
+  }
+  .proj-stage__item:hover {
     transform: translateY(-2px);
   }
-  .proj-stage__tile:hover img {
+  .proj-stage__item:hover .proj-stage__frame img,
+  .proj-stage__item:hover .proj-stage__frame video {
     transform: scale(1.04);
   }
-  .js .proj-stage__tile img:not([data-loaded]) {
+  .js .proj-stage__frame :is(img, video):not([data-loaded]) {
     opacity: 0;
   }
 }
@@ -434,12 +461,7 @@
   .proj-gallery {
     gap: 8px;
   }
-  .proj-stages {
-    grid-template-columns: 1fr;
-  }
-  .proj-stages::before {
-    display: none;
-  }
+
   .proj-title {
     font-size: 28px;
   }
