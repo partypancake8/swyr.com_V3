@@ -11,7 +11,11 @@ const { title, href, desc, tags, image, imageAlt = '' } = Astro.props;
 ---
 
 <a class:list={['work-card', { 'work-card--thumb': image }]} href={href}>
-  {image && <img class="work-card__thumb" src={image} alt={imageAlt} loading="lazy" />}
+  {image && (
+    <div class="work-card__thumb">
+      <img src={image} alt={imageAlt} loading="lazy" />
+    </div>
+  )}
   <div class="work-card__body">
     <div class="work-card__header">
       <span class="work-card__title">{title}</span>

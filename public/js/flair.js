@@ -1,11 +1,20 @@
 // Motion + hover flair. Every effect is skipped under prefers-reduced-motion
 // (the CSS hides nothing in that case either, so content is always visible).
 (function () {
+  // Media fades in once it has loaded (CSS keys off [data-loaded]; harmless without motion).
+  document.querySelectorAll('img, video').forEach(function (m) {
+    var done = function () { m.setAttribute('data-loaded', ''); };
+    if (m.tagName === 'VIDEO') {
+      if (m.readyState >= 2) done(); else m.addEventListener('loadeddata', done, { once: true });
+    } else if (m.complete && m.naturalWidth) done();
+    else { m.addEventListener('load', done, { once: true }); m.addEventListener('error', done, { once: true }); }
+  });
+
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var raf = window.requestAnimationFrame;
 
   // 1. Scroll reveal: once, staggered 60 ms per item in each batch.
-  var targets = document.querySelectorAll('.section-block, .contrib, .work-card, .tl-item, .photo-strip li, .contact-links a');
+  var targets = document.querySelectorAll('.section-block, .contrib, .work-card, .tl-item, .photo-strip li, .contact-links a, .proj-gallery__item, .proj-comp-card, .proj-specs, .proj-widget-list, .proj-cta');
   var io = new IntersectionObserver(function (entries) {
     var n = 0;
     entries.forEach(function (en) {
@@ -65,12 +74,27 @@
     var tip = graph.querySelector('.contrib__tip');
     graph.addEventListener('pointerover', function (e) {
       var c = e.target;
-      if (!c.dataset || !c.dataset.tip) return;
+      if (!c.dataset || !c.dataset.tip) { tip.classList.remove('is-visible'); return; }
       tip.textContent = c.dataset.tip;
-      tip.hidden = false;
       var g = graph.getBoundingClientRect(), r = c.getBoundingClientRect();
-      tip.style.transform = 'translate(' + (r.left - g.left + r.width / 2) + 'px,' + (r.top - g.top - 8) + 'px) translate(-50%,-100%)';
+      tip.style.setProperty('--tx', (r.left - g.left + r.width / 2) + 'px');
+      tip.style.setProperty('--ty', (r.top - g.top - 8) + 'px');
+      tip.classList.add('is-visible');
     });
-    graph.addEventListener('pointerleave', function () { tip.hidden = true; });
+    graph.addEventListener('pointerleave', function () { tip.classList.remove('is-visible'); });
+  }
+
+  // Experience timeline: the entry in the middle band of the viewport is current.
+  var items = [].slice.call(document.querySelectorAll('.tl-item'));
+  if (items.length) {
+    var seen = {};
+    var tio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { seen[items.indexOf(en.target)] = en.isIntersecting; });
+      var cur = -1;
+      items.forEach(function (_, i) { if (seen[i]) cur = i; });
+      if (cur < 0) return;
+      items.forEach(function (it, i) { it.classList.toggle('is-current', i === cur); });
+    }, { rootMargin: '-30% 0px -45% 0px' });
+    items.forEach(function (it) { tio.observe(it); });
   }
 })();

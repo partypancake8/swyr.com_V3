@@ -43,6 +43,8 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
   <img
     class="proj-hero-img"
     src="/images/4square/finished.jpeg"
+    width="768"
+    height="1024"
     alt="Finished 4 square build on a desk"
   />
   <p class="proj-media-caption">
@@ -50,7 +52,7 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
   </p>
 
   <!-- ── overview ─────────────────────── -->
-  <section class="proj-section">
+  <section class="proj-section" id="overview" data-crumb="overview">
     <p class="proj-section-label">overview</p>
     <div class="proj-overview-split">
       <div class="proj-overview-text">
@@ -97,7 +99,7 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
   <hr class="proj-divider" />
 
   <!-- ── motivation ───────────────────── -->
-  <section class="proj-section">
+  <section class="proj-section" id="motivation" data-crumb="motivation">
     <p class="proj-section-label">motivation</p>
     <h2 class="proj-section-heading">people want small, intentional desk objects</h2>
     <p>
@@ -122,7 +124,7 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
   <hr class="proj-divider" />
 
   <!-- ── software ─────────────────────── -->
-  <section class="proj-section">
+  <section class="proj-section" id="software" data-crumb="software">
     <p class="proj-section-label">software</p>
     <h2 class="proj-section-heading">fully customizable 2&times;2 layout</h2>
     <p>
@@ -172,7 +174,7 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
   <hr class="proj-divider" />
 
   <!-- ── enclosure ────────────────────── -->
-  <section class="proj-section">
+  <section class="proj-section" id="enclosure" data-crumb="enclosure">
     <p class="proj-section-label">enclosure</p>
     <h2 class="proj-section-heading">5-part 3D-printed housing</h2>
     <p>
@@ -184,7 +186,7 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
   <hr class="proj-divider" />
 
   <!-- ── hardware ─────────────────────── -->
-  <section class="proj-section">
+  <section class="proj-section" id="hardware" data-crumb="hardware">
     <p class="proj-section-label">hardware</p>
     <h2 class="proj-section-heading">components</h2>
     <div class="proj-comp-grid">
@@ -229,7 +231,7 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
   <hr class="proj-divider" />
 
   <!-- ── build gallery ────────────────── -->
-  <section class="proj-section">
+  <section class="proj-section" id="build-gallery" data-crumb="build gallery">
     <p class="proj-section-label">build gallery</p>
     <h2 class="proj-section-heading">prototype stage</h2>
     <div class="proj-gallery">

@@ -4,9 +4,14 @@
 // browser scrolls in place (smooth, offset by scroll-margin-top); on sub-pages
 // it loads "/" and jumps to the section. No client router is involved.
 const path = Astro.url.pathname.replace(/\/+$/, '');
-const crumbs = path.split('/').filter(Boolean);
-const isHome = crumbs.length === 0;
-
+const segs = path.split('/').filter(Boolean);
+// Parent crumbs link back to where that group lives on the landing page.
+const parentHref: Record<string, string> = { projects: '/#work', work: '/#experience' };
+const crumbs = segs.map((seg, i) => ({
+  text: seg,
+  href: i === segs.length - 1 ? '#' : parentHref[seg] ?? '/' + segs.slice(0, i + 1).join('/'),
+  top: i === segs.length - 1,
+}));
 const links = [
   { id: 'about', label: 'About', index: '01.', icon: '<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>' },
   { id: 'experience', label: 'Experience', index: '02.', icon: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>' },
@@ -21,19 +26,18 @@ const links = [
       <a class="site-header__logo" href="/" aria-label="Sawyer Smith, home">
         <span class="logo-sprite" aria-hidden="true"></span>
       </a>
-      {!isHome && (
-        <nav class="breadcrumb" aria-label="Breadcrumb">
-          <a href="/">swyr</a>
-          {crumbs.map((c, i) => (
-            <>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <span class="breadcrumb__inner">
+          <a class="breadcrumb__crumb" href="/" data-scroll-top={segs.length === 0 ? '' : undefined}>swyr</a>
+          {crumbs.map((c) => (
+            <span class="breadcrumb__part">
               <span class="breadcrumb__sep" aria-hidden="true">/</span>
-              {i === crumbs.length - 1
-                ? <span class="breadcrumb__current" aria-current="page">{c}</span>
-                : <span>{c}</span>}
-            </>
+              <a class="breadcrumb__crumb" href={c.href} data-scroll-top={c.top ? '' : undefined}>{c.text}</a>
+            </span>
           ))}
-        </nav>
-      )}
+          <span class="breadcrumb__live" data-crumb-live></span>
+        </span>
+      </nav>
     </div>
 
     <button
@@ -44,8 +48,7 @@ const links = [
       aria-label="Open menu"
       data-nav-toggle
     >
-      <svg class="nav-toggle__open" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"/></svg>
-      <svg class="nav-toggle__close" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"/></svg>
+      <span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
 
     <nav class="site-nav" id="site-nav-panel" aria-label="Main" data-nav-panel>

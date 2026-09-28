@@ -1,60 +1,106 @@
 ---
-// GitHub contribution calendar for the last year, from src/data/contributions.json
-// (refreshed by scripts/fetch-contributions.mjs on prebuild). Static SVG, built at compile time.
+// GitHub contribution history drawn in the shape of the swyr pixel invader.
+// Each filled invader cell is one real day from src/data/contributions.json
+// (refreshed by scripts/fetch-contributions.mjs on prebuild), mapped in GitHub
+// order: column by column left to right, top to bottom, oldest first, so the
+// newest day is the bottom-right-most filled cell. Static SVG built at compile time.
 import data from '../data/contributions.json';
 
+const MATRIX = [
+  '........####..................####........',
+  '........####..................####........',
+  '........####..................####........',
+  '........####..................####........',
+  '............####..........####............',
+  '............####..........####............',
+  '............####..........####............',
+  '............####..........####............',
+  '........##########################........',
+  '........##########################........',
+  '........##########################........',
+  '........##########################........',
+  '....###########............###########....',
+  '....###########............###########....',
+  '....#########................#########....',
+  '....#########....########....#########....',
+  '#############....########....#############',
+  '#############....#########################',
+  '#############....#########################',
+  '#############..............###############',
+  '###############............###############',
+  '###############..............#############',
+  '#########################....#############',
+  '#########################....#############',
+  '####....#####....########....#####....####',
+  '####....#####....########....#####....####',
+  '####....#####................#####....####',
+  '####....#######............#######....####',
+  '####....#######............#######....####',
+  '####....##########################....####',
+  '####....##########################....####',
+  '####....##########################....####',
+  '............####..........####............',
+  '............####..........####............',
+  '............####..........####............',
+  '............####..........####............',
+  '........####..................####........',
+  '........####..................####........',
+  '........####..................####........',
+  '........####..................####........',
+];
 const LEVELS = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
-const CELL = 11;
-const GAP = 3;
+const CELL = 9;
+const GAP = 2;
 const STEP = CELL + GAP;
-const LEFT = 30;
-const TOP = 18;
 const WAVE_MS = 1200;
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const MONTH_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+const cols = MATRIX[0].length;
+const rows = MATRIX.length;
+const width = cols * STEP - GAP;
+const height = rows * STEP - GAP;
+
+// Filled cells in GitHub order (column-major, top to bottom).
+const slots: { x: number; y: number }[] = [];
+for (let x = 0; x < cols; x++) for (let y = 0; y < rows; y++) if (MATRIX[y][x] === '#') slots.push({ x, y });
+
+type Day = { date: string; count: number; level: number };
+const all = ((data as { days?: Day[] }).days ?? []).slice().sort((a, b) => a.date.localeCompare(b.date));
+const real = all.slice(-slots.length);
+// If history is shorter than the silhouette, the oldest cells are padded at level 0.
+const padding = slots.length - real.length;
 
 function ordinal(n: number) {
   const s = n % 100 >= 11 && n % 100 <= 13 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' } as Record<number, string>)[n % 10] ?? 'th';
   return n + s;
 }
-const MONTH_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-const days = (data.days ?? []) as { date: string; count: number; level: number }[];
-const firstDow = days.length ? new Date(days[0].date + 'T00:00:00Z').getUTCDay() : 0;
-const weeks: { x: number; delay: number; cells: { y: number; fill: string; tip: string }[] }[] = [];
-days.forEach((d, i) => {
-  const slot = i + firstDow;
-  const col = Math.floor(slot / 7);
-  const row = slot % 7;
-  if (!weeks[col]) weeks[col] = { x: LEFT + col * STEP, delay: 0, cells: [] };
+function tipFor(d: Day) {
   const dt = new Date(d.date + 'T00:00:00Z');
-  const when = `${MONTH_LONG[dt.getUTCMonth()]} ${ordinal(dt.getUTCDate())}`;
-  const tip = d.count ? `${d.count} contribution${d.count === 1 ? '' : 's'} on ${when}.` : `No contributions on ${when}.`;
-  weeks[col].cells.push({ y: TOP + row * STEP, fill: LEVELS[Math.max(0, Math.min(4, d.level))], tip });
-});
-weeks.forEach((w, i) => (w.delay = Math.round((i / Math.max(1, weeks.length - 1)) * WAVE_MS)));
+  const when = `${MONTH_LONG[dt.getUTCMonth()]} ${ordinal(dt.getUTCDate())}, ${dt.getUTCFullYear()}`;
+  return d.count ? `${d.count} contribution${d.count === 1 ? '' : 's'} on ${when}.` : `No contributions on ${when}.`;
+}
 
-// Month label over the first week whose first day falls in a new month.
-const monthLabels: { x: number; text: string }[] = [];
-let lastMonth = -1;
-weeks.forEach((w, col) => {
-  const idx = Math.max(0, col * 7 - firstDow);
-  const m = new Date(days[idx].date + 'T00:00:00Z').getUTCMonth();
-  if (m !== lastMonth) {
-    const prev = monthLabels[monthLabels.length - 1];
-    if (!prev || w.x - prev.x >= STEP * 3) monthLabels.push({ x: w.x, text: MONTHS[m] });
-    else prev.text = MONTHS[m];
-    lastMonth = m;
-  }
+const filled = new Map<string, { fill: string; tip: string | null }>();
+slots.forEach((s, i) => {
+  const d = i < padding ? null : real[i - padding];
+  filled.set(`${s.x},${s.y}`, d
+    ? { fill: LEVELS[Math.max(0, Math.min(4, d.level))], tip: tipFor(d) }
+    : { fill: LEVELS[0], tip: null });
 });
-if (monthLabels.length > 1 && monthLabels[1].x - monthLabels[0].x < STEP * 3) monthLabels.shift();
 
-const width = LEFT + weeks.length * STEP - GAP;
-const height = TOP + 7 * STEP - GAP;
-const total = data.total ?? days.reduce((s, d) => s + d.count, 0);
+const columns = Array.from({ length: cols }, (_, x) => ({
+  x: x * STEP,
+  delay: Math.round((x / (cols - 1)) * WAVE_MS),
+  cells: Array.from({ length: rows }, (_, y) => ({ y: y * STEP, cell: filled.get(`${x},${y}`) })),
+}));
+
+const total = real.reduce((s, d) => s + d.count, 0);
+const start = real.length ? new Date(real[0].date + 'T00:00:00Z') : new Date();
+const since = `${MONTH_LONG[start.getUTCMonth()]} ${start.getUTCFullYear()}`;
 ---
 
 <div class="contrib" data-contrib>
-  <h3 class="contrib__title">{total.toLocaleString('en-US')} contributions in the last year</h3>
+  <h3 class="contrib__title">{total.toLocaleString('en-US')} contributions since {since}</h3>
   <div class="contrib__scroll">
     <svg
       class="contrib__graph"
@@ -62,15 +108,15 @@ const total = data.total ?? days.reduce((s, d) => s + d.count, 0);
       width={width}
       height={height}
       role="img"
-      aria-label={`${total} GitHub contributions in the last year`}
+      aria-label={`${total} GitHub contributions since ${since}, drawn as the swyr pixel invader`}
     >
-      {monthLabels.map((m) => <text class="contrib__label" x={m.x} y="10">{m.text}</text>)}
-      <text class="contrib__label" x="0" y={TOP + 1 * STEP + 9}>Mon</text>
-      <text class="contrib__label" x="0" y={TOP + 3 * STEP + 9}>Wed</text>
-      <text class="contrib__label" x="0" y={TOP + 5 * STEP + 9}>Fri</text>
-      {weeks.map((w) => (
-        <g style={`--d:${w.delay}ms`}>
-          {w.cells.map((c) => <rect x={w.x} y={c.y} width={CELL} height={CELL} rx="2" fill={c.fill} data-tip={c.tip} />)}
+      {columns.map((col) => (
+        <g style={`--d:${col.delay}ms`}>
+          {col.cells.map((c) =>
+            c.cell
+              ? <rect x={col.x} y={c.y} width={CELL} height={CELL} rx="2" fill={c.cell.fill} data-tip={c.cell.tip ?? undefined} />
+              : <rect class="contrib__bg" x={col.x} y={c.y} width={CELL} height={CELL} rx="2" fill={LEVELS[0]} />
+          )}
         </g>
       ))}
     </svg>
@@ -80,5 +126,5 @@ const total = data.total ?? days.reduce((s, d) => s + d.count, 0);
     {LEVELS.map((l) => <span class="contrib__swatch" style={`background:${l}`}></span>)}
     <span>More</span>
   </div>
-  <div class="contrib__tip" role="tooltip" hidden></div>
+  <div class="contrib__tip" role="tooltip"></div>
 </div>
