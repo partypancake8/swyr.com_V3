@@ -1,45 +1,9 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import LandingNav from '../components/LandingNav.astro';
-import SiteFooter from '../components/SiteFooter.astro';
 ---
 
 <BaseLayout title="Sawyer Smith" bodyClass="is-landing">
-  <LandingNav />
-
-  <div class="landing">
-    <aside class="profile">
-      <div class="profile__avatar" aria-hidden="true">
-        <img class="logo--on-light" src="/icons/swyrlogoblack-pixel.svg" alt="" />
-        <img class="logo--on-dark" src="/icons/swyrlogowhite.svg" alt="" />
-      </div>
-
-      <slot name="profile" />
-
-      <ul class="profile__links">
-        <li>
-          <a href="https://github.com/partypancake8/" target="_blank" rel="noopener" aria-label="GitHub">
-            <span class="icon" style="--icon: url(/icons/github.svg)" aria-hidden="true"></span>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.linkedin.com/in/sawyer-smith-60918a221/" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <span class="icon" style="--icon: url(/icons/linkedin.svg)" aria-hidden="true"></span>
-          </a>
-        </li>
-        <li class="profile__email">
-          <a href="mailto:swyr@swyr.com">
-            <span class="icon" style="--icon: url(/icons/emailicon.svg)" aria-hidden="true"></span>
-            <span>swyr@swyr.com</span>
-          </a>
-        </li>
-      </ul>
-    </aside>
-
-    <main class="landing__main">
-      <slot />
-    </main>
-  </div>
-
-  <SiteFooter />
+  <main class="landing">
+    <slot />
+  </main>
 </BaseLayout>

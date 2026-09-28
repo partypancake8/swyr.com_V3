@@ -4,17 +4,22 @@ interface Props {
   href: string;
   desc: string;
   tags: string[];
+  image?: string;
+  imageAlt?: string;
 }
-const { title, href, desc, tags } = Astro.props;
+const { title, href, desc, tags, image, imageAlt = '' } = Astro.props;
 ---
 
-<a class="work-card" href={href}>
-  <div class="work-card__header">
-    <span class="work-card__title">{title}</span>
-    <span class="work-card__arrow">view &rarr;</span>
+<a class:list={['work-card', { 'work-card--thumb': image }]} href={href}>
+  {image && <img class="work-card__thumb" src={image} alt={imageAlt} loading="lazy" />}
+  <div class="work-card__body">
+    <div class="work-card__header">
+      <span class="work-card__title">{title}</span>
+      <span class="work-card__arrow">view &rarr;</span>
+    </div>
+    <p class="work-card__desc">{desc}</p>
+    <ul class="work-card__tags">
+      {tags.map((tag) => <li class="work-card__tag">{tag}</li>)}
+    </ul>
   </div>
-  <p class="work-card__desc">{desc}</p>
-  <ul class="work-card__tags">
-    {tags.map((tag) => <li class="work-card__tag">{tag}</li>)}
-  </ul>
 </a>

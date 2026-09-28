@@ -1,20 +1,17 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import LandingNav from '../components/LandingNav.astro';
-import SiteFooter from '../components/SiteFooter.astro';
 import '../styles/project.css';
 
 interface Props {
   title: string;
+  /** Kept for backwards compatibility; the nav now derives the breadcrumb from the URL. */
   breadcrumb?: string;
 }
-const { title, breadcrumb } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <BaseLayout title={title}>
-  <LandingNav breadcrumb={breadcrumb} />
-
-  <div class="proj-page">
+  <main class="proj-page">
     <slot />
 
     <aside class="page-links">
@@ -26,6 +23,5 @@ const { title, breadcrumb } = Astro.props;
       </a>
       <a class="page-links__email" href="mailto:swyr@swyr.com">swyr@swyr.com</a>
     </aside>
-  </div>
-  <SiteFooter />
+  </main>
 </BaseLayout>
