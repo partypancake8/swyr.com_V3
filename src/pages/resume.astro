@@ -1,0 +1,45 @@
+---
+// Resume: inline PDF preview (desktop) plus download / open buttons.
+// Dependency-free: the browser's own PDF viewer via <object>, with a fallback.
+import { statSync } from 'node:fs';
+import { join } from 'node:path';
+import ProjectLayout from '../layouts/ProjectLayout.astro';
+
+const PDF = '/documents/sawyer-smith-resume.pdf';
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+let updated = '';
+try {
+  const m = statSync(join(process.cwd(), 'public/documents/sawyer-smith-resume.pdf')).mtime;
+  updated = `${MONTHS[m.getMonth()]} ${m.getFullYear()}`;
+} catch {}
+---
+
+<ProjectLayout title="Resume · Sawyer Smith">
+  <header class="resume-head">
+    <div class="resume-head__text">
+      <h1 class="resume-head__title">Resume</h1>
+      <p class="resume-head__meta">{updated ? `PDF · updated ${updated}` : 'PDF'}</p>
+    </div>
+    <div class="resume-head__actions">
+      <a class="outline-btn resume-btn resume-btn--primary" href={PDF} download="Sawyer Smith Resume.pdf">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14ZM7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z" /></svg>
+        Download PDF
+      </a>
+      <a class="outline-btn resume-btn" href={PDF} target="_blank" rel="noopener">Open in new tab &#8599;</a>
+    </div>
+  </header>
+
+  <section class="resume-panel" aria-label="Resume preview">
+    <object class="resume-panel__frame" data={`${PDF}#navpanes=0&view=FitH`} type="application/pdf" aria-label="Sawyer Smith resume (PDF)">
+      <div class="resume-panel__fallback">
+        <p>This browser does not show PDFs inline.</p>
+        <a class="outline-btn resume-btn resume-btn--primary" href={PDF} download="Sawyer Smith Resume.pdf">Download PDF</a>
+      </div>
+    </object>
+  </section>
+
+  <section class="resume-mobile" aria-label="Resume download">
+    <a class="outline-btn resume-btn resume-btn--primary resume-btn--large" href={PDF} download="Sawyer Smith Resume.pdf">Download PDF</a>
+    <a class="resume-mobile__open" href={PDF} target="_blank" rel="noopener">Open &#8599;</a>
+  </section>
+</ProjectLayout>
