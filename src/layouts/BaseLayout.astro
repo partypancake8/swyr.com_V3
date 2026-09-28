@@ -1,5 +1,10 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import VariantSwitcher from '../components/VariantSwitcher.astro';
+import '../styles/base.css';
+import '../styles/themes/variant-a.css';
+import '../styles/themes/variant-b.css';
+import '../styles/themes/variant-c.css';
 
 interface Props {
   title: string;
@@ -9,23 +14,44 @@ const { title, bodyClass } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" data-body-class={bodyClass ?? ''}>
+<html lang="en" data-body-class={bodyClass ?? ''} data-variant="a">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/icons/swyrlogowhite.svg" />
-    <!-- Kick off the globe's land data download during HTML parse so continents
-         resolve in sooner. crossorigin="anonymous" matches fetch()'s default
-         (cors + same-origin credentials) so the preload is reused, not refetched. -->
-    <link rel="preload" href="/data/land.geojson" as="fetch" crossorigin="anonymous" />
+    <!-- Design variant (a | b | c): ?variant= wins, then localStorage, else "a".
+         Runs before first paint so there is no flash of the wrong theme. -->
+    <script is:inline>
+      (function () {
+        var ok = /^[abc]$/;
+        var v = null;
+        try {
+          var q = new URLSearchParams(location.search).get('variant');
+          if (q && ok.test(q)) v = q;
+        } catch (e) {}
+        try {
+          if (v) localStorage.setItem('swyr-variant', v);
+          else v = localStorage.getItem('swyr-variant');
+        } catch (e) {}
+        if (!v || !ok.test(v)) v = 'a';
+        document.documentElement.dataset.variant = v;
+        if (!window.__swyrVariantHook) {
+          window.__swyrVariantHook = true;
+          // ClientRouter replaces <html> attributes on navigation; carry the variant over.
+          document.addEventListener('astro:before-swap', function (e) {
+            e.newDocument.documentElement.dataset.variant =
+              document.documentElement.dataset.variant;
+          });
+        }
+      })();
+    </script>
     <slot name="head" />
     <ClientRouter />
   </head>
   <body class={bodyClass}>
-    <canvas id="globe-canvas" aria-hidden="true" transition:persist transition:name="globe"></canvas>
     <slot />
-    <script is:inline src="/js/globe.js"></script>
+    <VariantSwitcher />
     <script>
       // Keep body class in sync after every client-side navigation.
       // Astro's ClientRouter doesn't always propagate <body> attribute changes

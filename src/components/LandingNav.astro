@@ -9,7 +9,8 @@ const { breadcrumb } = Astro.props;
   <div class="landing__header-left">
     <div class="logo-hex">
       <a href="/">
-        <img src="/icons/swyrlogowhite.svg" alt="Swyr Logo" style="width:44px;height:44px;" />
+        <img class="logo--on-light" src="/icons/swyrlogoblack-pixel.svg" alt="Swyr Logo" width="32" height="32" />
+        <img class="logo--on-dark" src="/icons/swyrlogowhite.svg" alt="Swyr Logo" width="32" height="32" />
       </a>
     </div>
     {breadcrumb && (
@@ -21,15 +22,6 @@ const { breadcrumb } = Astro.props;
   </div>
 
   <nav class="landing__nav">
-    <button
-      class="hamburger"
-      aria-label="Toggle navigation"
-      aria-expanded="false"
-    >
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
 
     <div class="landing__nav-links">
       <a href="/#about" aria-label="About">

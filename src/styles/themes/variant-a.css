@@ -1,0 +1,37 @@
+/* Variant A: GitHub light. Single-column README layout. */
+html[data-variant="a"] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --bg-subtle: #f6f8fa;
+  --header-bg: #f6f8fa;
+  --fg: #1f2328;
+  --fg-muted: #424a53;
+  --border: #d0d7de;
+  --border-muted: #d8dee4;
+  --link: #0969da;
+  --btn-bg: #f6f8fa;
+  --btn-hover: #eaeef2;
+  --btn-border: #d0d7de;
+  --topic-bg: #ddf4ff;
+  --topic-fg: #0550ae;
+  --success: #1a7f37;
+  --accent-border: #0969da;
+  --shadow: 0 1px 0 rgba(31, 35, 40, 0.04);
+}
+
+/* Subtle gray band behind every other landing section, like repo page panels. */
+html[data-variant="a"] .landing__main .section-block:nth-of-type(even) {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-top: 32px;
+}
+html[data-variant="a"] .landing__main .section-block:nth-of-type(even) .section-heading {
+  border-bottom-color: var(--border);
+}
+@media (max-width: 480px) {
+  html[data-variant="a"] .landing__main .section-block:nth-of-type(even) {
+    padding: 16px;
+  }
+}

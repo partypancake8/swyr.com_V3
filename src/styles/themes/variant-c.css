@@ -1,0 +1,175 @@
+/* Variant C: GitHub profile layout. Follows the system color scheme
+   (A palette in light, B palette in dark). Landing page only is re-gridded;
+   project and work pages keep the base single-column README layout. */
+html[data-variant="c"] {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --bg-subtle: #f6f8fa;
+  --header-bg: #f6f8fa;
+  --fg: #1f2328;
+  --fg-muted: #424a53;
+  --border: #d0d7de;
+  --border-muted: #d8dee4;
+  --link: #0969da;
+  --btn-bg: #f6f8fa;
+  --btn-hover: #eaeef2;
+  --btn-border: #d0d7de;
+  --topic-bg: #ddf4ff;
+  --topic-fg: #0550ae;
+  --success: #1a7f37;
+  --accent-border: #0969da;
+  --shadow: 0 1px 0 rgba(31, 35, 40, 0.04);
+}
+@media (prefers-color-scheme: dark) {
+  html[data-variant="c"] {
+    --bg: #0d1117;
+    --bg-subtle: #151b23;
+    --header-bg: #010409;
+    --fg: #e6edf3;
+    --fg-muted: #b7bdc8;
+    --border: #30363d;
+    --border-muted: #21262d;
+    --link: #4493f8;
+    --btn-bg: #212830;
+    --btn-hover: #262c36;
+    --btn-border: #3d444d;
+    --topic-bg: #121d2f;
+    --topic-fg: #79c0ff;
+    --success: #3fb950;
+    --accent-border: #4493f8;
+    --shadow: none;
+  }
+  html[data-variant="c"] .logo--on-light {
+    display: none;
+  }
+  html[data-variant="c"] .logo--on-dark {
+    display: block;
+  }
+  html[data-variant="c"] .variant-switcher button[aria-pressed="true"] {
+    color: #0d1117;
+  }
+}
+
+/* ---- profile layout (landing) ---- */
+html[data-variant="c"] .landing {
+  max-width: 1280px;
+  padding-top: 32px;
+}
+html[data-variant="c"] .profile__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 296px;
+  aspect-ratio: 1;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--bg-subtle);
+}
+html[data-variant="c"] .profile__avatar img {
+  width: 52%;
+  height: auto;
+}
+html[data-variant="c"] .hero {
+  padding: 0 0 16px;
+}
+html[data-variant="c"] .hero__eyebrow {
+  display: none;
+}
+html[data-variant="c"] .hero__headline {
+  font-size: 26px;
+}
+html[data-variant="c"] .hero__subtitle {
+  font-size: 20px;
+  font-weight: 300;
+}
+html[data-variant="c"] .hero__description {
+  font-size: 16px;
+}
+html[data-variant="c"] .outline-btn {
+  width: 100%;
+}
+html[data-variant="c"] .profile__links {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+html[data-variant="c"] .profile__links a::after {
+  content: attr(aria-label);
+}
+html[data-variant="c"] .profile__links .profile__email a::after {
+  content: none;
+}
+html[data-variant="c"] .section-block:first-child {
+  padding-top: 0;
+}
+html[data-variant="c"] .section-heading {
+  font-size: 20px;
+}
+
+@media (min-width: 768px) {
+  html[data-variant="c"] .landing {
+    display: grid;
+    grid-template-columns: minmax(220px, 296px) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+  html[data-variant="c"] .profile {
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+  }
+  html[data-variant="c"] .work-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1012px) {
+  html[data-variant="c"] .landing {
+    gap: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+@media (max-width: 767px) {
+  html[data-variant="c"] .profile {
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr);
+    column-gap: 16px;
+    padding-bottom: 16px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  html[data-variant="c"] .profile__avatar {
+    width: 88px;
+    grid-row: 1;
+  }
+  html[data-variant="c"] .hero {
+    display: contents;
+  }
+  html[data-variant="c"] .hero__title {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    margin-bottom: 16px;
+  }
+  html[data-variant="c"] .hero__description,
+  html[data-variant="c"] .outline-btn,
+  html[data-variant="c"] .profile__links {
+    grid-column: 1 / -1;
+  }
+  html[data-variant="c"] .profile__links {
+    margin-top: 16px;
+  }
+}
+
+/* Align header and footer with the wider profile grid on the landing page. */
+@media (min-width: 1012px) {
+  html[data-variant="c"][data-body-class="is-landing"] .landing__header {
+    padding: 0 max(32px, calc((100vw - 1280px) / 2 + 32px));
+  }
+  html[data-variant="c"][data-body-class="is-landing"] .footer {
+    max-width: calc(1280px - 64px);
+  }
+}
