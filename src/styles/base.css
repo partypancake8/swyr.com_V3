@@ -861,6 +861,23 @@ video {
   }
 }
 
+/* repo card thumbnails: UI screenshots shown whole, centered on a dark panel */
+.work-card__thumb--fit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  padding: 12px;
+  background: #0d1117;
+}
+.work-card__thumb--fit img {
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
 /* contact buttons */
 .contact-links {
   display: flex;
@@ -1086,7 +1103,7 @@ video {
 
 @media (prefers-reduced-motion: no-preference) {
   /* Scroll reveal: hidden only when JS is present, revealed once. */
-  .js :is(.contrib, .work-card, .tl-item, .photo-strip li, .contact-links a, .proj-gallery__item, .proj-stage__item, .proj-comp-card, .proj-specs, .proj-widget-list, .proj-cta):not(.in) {
+  .js :is(.contrib, .work-card, .tl-item, .photo-strip li, .contact-links a, .proj-gallery__item, .proj-stage__item, .proj-comp-card, .proj-specs, .proj-widget-list, .proj-cta, .repo-head, .readme-panel):not(.in) {
     opacity: 0;
     transform: translateY(12px);
   }

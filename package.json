@@ -10,5 +10,8 @@
   },
   "dependencies": {
     "astro": "latest"
+  },
+  "devDependencies": {
+    "marked": "^18.0.14"
   }
 }

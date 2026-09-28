@@ -14,7 +14,7 @@
   var raf = window.requestAnimationFrame;
 
   // 1. Scroll reveal: once, staggered 60 ms per item in each batch.
-  var targets = document.querySelectorAll('.section-block, .contrib, .work-card, .tl-item, .photo-strip li, .contact-links a, .proj-gallery__item, .proj-stage__item, .proj-comp-card, .proj-specs, .proj-widget-list, .proj-cta');
+  var targets = document.querySelectorAll('.section-block, .contrib, .work-card, .tl-item, .photo-strip li, .contact-links a, .proj-gallery__item, .proj-stage__item, .proj-comp-card, .proj-specs, .proj-widget-list, .proj-cta, .repo-head, .readme-panel');
   var io = new IntersectionObserver(function (entries) {
     var n = 0;
     entries.forEach(function (en) {

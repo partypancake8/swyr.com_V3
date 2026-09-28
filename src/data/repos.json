@@ -1,5 +1,5 @@
 {
-  "fetched": "2026-09-28T21:03:04.741Z",
+  "fetched": "2026-09-28T21:09:03.358Z",
   "repos": {
     "4square_production": {
       "name": "4square_production",
@@ -7,7 +7,9 @@
       "description": "4square: four-OLED ESP32-C3 desk clock. Firmware, prebuilt demo build, flashing and build instructions.",
       "language": "C++",
       "stars": 1,
-      "visibility": "public"
+      "visibility": "public",
+      "defaultBranch": "main",
+      "topics": []
     },
     "MDLive": {
       "name": "MDLive",
@@ -15,7 +17,9 @@
       "description": "A Markdown previewer that re-renders the moment the file changes on disk. Native macOS app (Swift, WKWebView) plus a Linux port (GTK3, WebKit2GTK) sharing the same renderer.",
       "language": "Swift",
       "stars": 0,
-      "visibility": "public"
+      "visibility": "public",
+      "defaultBranch": "main",
+      "topics": []
     },
     "supercaffeinate": {
       "name": "supercaffeinate",
@@ -23,7 +27,9 @@
       "description": "Keep a Mac fully awake from the terminal or a menu bar item: no sleep, no display sleep, no screensaver, no auto-lock, with sensible lid and external display handling.",
       "language": "Shell",
       "stars": 0,
-      "visibility": "public"
+      "visibility": "public",
+      "defaultBranch": "main",
+      "topics": []
     }
   }
 }
