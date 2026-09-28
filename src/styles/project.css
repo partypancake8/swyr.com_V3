@@ -391,6 +391,11 @@
 .proj-stage .jrow {
   margin-top: 0;
 }
+.proj-stage__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 .jrow__half {
   display: contents;
   list-style: none;
@@ -415,6 +420,10 @@
     align-items: flex-start;
     width: 100%;
   }
+}
+/* A lone tile would stretch to the full column; cap it at half the row, left-aligned. */
+.jrow--single .proj-stage__item {
+  flex: 0 1 50%;
 }
 @media (max-width: 560px) {
   .jrow__half {
