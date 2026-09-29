@@ -785,7 +785,7 @@ video {
   flex: none;
   overflow: hidden;
   border-bottom: 1px solid var(--border);
-  border-radius: 5px 5px 0 0;
+  border-radius: 0;
 }
 .work-card__thumb img {
   display: block;
@@ -825,7 +825,6 @@ video {
   position: absolute;
   inset: 0;
   z-index: 1;
-  border-radius: var(--radius);
 }
 .work-card:hover .work-card__title {
   text-decoration-color: currentColor;
@@ -1091,49 +1090,6 @@ video {
   transform-origin: center;
 }
 
-/* Spotlight border + lift targets */
-.work-card,
-.contact-links a {
-  position: relative;
-  --mx: 50%;
-  --my: 50%;
-}
-.work-card::before,
-.contact-links a::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: radial-gradient(180px circle at var(--mx) var(--my), var(--accent), transparent 70%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  opacity: 0;
-  pointer-events: none;
-}
-.work-card::after,
-.contact-links a::after {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  box-shadow: 0 8px 24px rgba(1, 4, 9, 0.6);
-  opacity: 0;
-  pointer-events: none;
-  z-index: -1;
-}
-.work-card:hover,
-.contact-links a:hover {
-  border-color: var(--accent);
-}
-.work-card:hover::before,
-.contact-links a:hover::before,
-.work-card:hover::after,
-.contact-links a:hover::after {
-  opacity: 1;
-}
-
 /* Inline links: underline draws in from the left; external ones get a glyph. */
 .section-text a,
 .proj-section p a,
@@ -1236,22 +1192,6 @@ video {
     50% {
       opacity: 0.6;
     }
-  }
-
-  /* Cards: 2px lift, 150ms */
-  .work-card,
-  .contact-links a {
-    transition: var(--t-ui), transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
-  }
-  .work-card::before,
-    .contact-links a::before,
-  .work-card::after,
-    .contact-links a::after {
-    transition: opacity var(--dur-fast) var(--ease-out);
-  }
-  .work-card:hover,
-  .contact-links a:hover {
-    transform: translateY(-2px);
   }
 
   .hero__photo {
@@ -1361,13 +1301,11 @@ video {
 
   /* Icon links and the Resume button lift like cards. */
   .footer-social a,
-  .page-links a,
-  .site-nav__resume {
+  .page-links a {
     transition: var(--t-ui), transform var(--dur-fast) var(--ease-out), background-size var(--dur-base) var(--ease-out);
   }
   .footer-social a:hover,
-  .page-links a:hover,
-  .site-nav__resume:hover {
+  .page-links a:hover {
     transform: translateY(-2px);
   }
 
@@ -1625,16 +1563,7 @@ video {
 /* hero: pixel-art buttons (square corners, 3px hard green outline) */
 .hero .outline-btn {
   font-family: var(--font-pixel);
-  border: 0;
-  border-radius: 0;
   padding: 6px 12px;
-  box-shadow: 0 -3px 0 var(--accent), 0 3px 0 var(--accent), -3px 0 0 var(--accent), 3px 0 0 var(--accent);
-}
-.hero .outline-btn:hover {
-  box-shadow: 0 -3px 0 var(--accent-strong), 0 3px 0 var(--accent-strong), -3px 0 0 var(--accent-strong), 3px 0 0 var(--accent-strong);
-}
-.contact-links a {
-  border-radius: 0;
 }
 .hero .contact-links {
   gap: 14px;
@@ -1747,4 +1676,118 @@ video {
   .footer-social a:hover .icon-svg {
     animation: icon-wiggle calc(var(--dur-fast) * 2) var(--ease-in-out);
   }
+}
+
+/* ======================================
+   RETRO: hard offset shadows in a green frame
+   Cards and buttons only (section panels keep their 6px soft look): square
+   corners, a 1px accent border and a 4px zero-blur shadow; on hover they press
+   2px down-right in two hard frames, like a key.
+   ====================================== */
+:root {
+  --hard-shadow: #0f3d1a;
+  --hard-lift: 4px 4px 0 0 var(--hard-shadow);
+  --hard-press: 2px 2px 0 0 var(--hard-shadow);
+}
+.work-card,
+.outline-btn,
+.site-nav__resume {
+  border: 1px solid var(--accent);
+  border-radius: 0;
+  box-shadow: var(--hard-lift);
+}
+.work-card:hover,
+.outline-btn:hover,
+.site-nav__resume:hover {
+  border-color: var(--accent-strong);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .work-card,
+  .outline-btn,
+  .site-nav__resume {
+    transition: var(--t-ui), transform var(--dur-fast) steps(2), box-shadow var(--dur-fast) steps(2);
+  }
+  .work-card:hover,
+  .outline-btn:hover,
+  .site-nav__resume:hover {
+    transform: translate(2px, 2px);
+    box-shadow: var(--hard-press);
+  }
+}
+
+/* ====================
+   FOOTER FLAIR: marching invaders + credit line
+   ==================== */
+.footer-flair {
+  flex-basis: 100%;
+  display: grid;
+  gap: 10px;
+}
+.footer-march {
+  position: relative;
+  height: 16px;
+  overflow: hidden;
+}
+.footer-march__form {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  gap: 10px;
+  color: var(--accent);
+  opacity: 0.7;
+}
+.footer-march__inv {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+.footer-march__inv svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .footer-march__form {
+    animation: footer-march 20s steps(40) infinite alternate;
+  }
+  .footer-march__inv {
+    animation: footer-bob 1s steps(1) infinite;
+  }
+  .footer-march__inv:nth-child(even) {
+    animation-delay: -0.5s;
+  }
+  @keyframes footer-march {
+    to {
+      left: 100%;
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes footer-bob {
+    50% {
+      transform: translateY(2px);
+    }
+  }
+}
+.footer-credit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+.footer-credit .ico {
+  vertical-align: middle;
+}
+.footer-credit__heart {
+  color: #f85149;
+}
+.footer-credit__coffee {
+  color: #d29922;
+}
+.footer-credit__sep {
+  margin: 0 4px;
+  color: var(--border);
 }
