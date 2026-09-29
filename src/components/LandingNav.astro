@@ -12,9 +12,6 @@ const crumbs = segs.map((seg, i) => ({
   text: seg,
   href: i === segs.length - 1 ? '#' : parentHref[seg] ?? '/' + segs.slice(0, i + 1).join('/'),
   top: i === segs.length - 1,
-  icon: (i === segs.length - 1
-    ? segs[0] === 'resume' ? 'file' : segs[0] === 'projects' ? 'chip' : undefined
-    : undefined) as IconName | undefined,
 }));
 const links = [
   { id: 'work', label: 'Work', index: '01.', icon: 'code' as IconName },
@@ -36,7 +33,7 @@ const links = [
           {crumbs.map((c) => (
             <span class="breadcrumb__part">
               <span class="breadcrumb__sep" aria-hidden="true">/</span>
-              <a class:list={['breadcrumb__crumb', { 'breadcrumb__crumb--icon': c.icon }]} href={c.href} data-scroll-top={c.top ? '' : undefined}>{c.icon && <Icon name={c.icon} size={12} class="breadcrumb__icon" />}{c.text}</a>
+              <a class="breadcrumb__crumb" href={c.href} data-scroll-top={c.top ? '' : undefined}>{c.text}</a>
             </span>
           ))}
           <span class="breadcrumb__live" data-crumb-live></span>

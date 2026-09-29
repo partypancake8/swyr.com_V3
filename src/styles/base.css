@@ -802,6 +802,9 @@ video {
   margin-top: 16px;
 }
 .work-card {
+  /* containing block for the stretched title link: without it every card's
+     ::after overlay covers the whole section and the last card wins the hover */
+  position: relative;
   display: flex;
   flex-direction: column;
   color: var(--fg);
@@ -854,7 +857,7 @@ video {
   inset: 0;
   z-index: 1;
 }
-.work-card:is(:hover, :focus-within) .work-card__title {
+.work-card:is(:hover, :has(.work-card__link:focus-visible)) .work-card__title {
   color: var(--link-hover);
   text-decoration-color: currentColor;
 }
@@ -1652,17 +1655,6 @@ video {
   color: var(--fg-subtle);
 }
 
-/* breadcrumb: the page crumb carries a 12px pixel glyph */
-.breadcrumb a.breadcrumb__crumb--icon {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  vertical-align: bottom;
-}
-.breadcrumb__icon {
-  color: var(--fg-subtle);
-}
-
 @media (prefers-reduced-motion: no-preference) {
   :where(.ico) {
     transition: color var(--dur-ui) var(--ease-out), opacity var(--dur-ui) var(--ease-out), transform var(--dur-fast) var(--ease-out);
@@ -1676,9 +1668,6 @@ video {
   .resume-head.in .ico--line,
   .proj-cta.in .ico--line {
     animation: px-pop var(--dur-base) var(--ease-out) calc(var(--stagger, 0ms) + var(--dur-base)) backwards;
-  }
-  .breadcrumb__icon {
-    animation: px-pop var(--dur-base) var(--ease-out) var(--dur-slow) backwards;
   }
   @keyframes px-pop {
     50% {
@@ -1719,7 +1708,7 @@ video {
   border-radius: 0;
   box-shadow: var(--hard-shadow-rest);
 }
-.work-card:is(:hover, :focus-visible),
+.work-card:is(:hover, :has(.work-card__link:focus-visible)),
 .outline-btn:is(:hover, :focus-visible),
 .site-nav__resume:is(:hover, :focus-visible) {
   border-color: var(--frame-hover);
@@ -1736,7 +1725,7 @@ video {
     transition: var(--t-ui), transform var(--dur-fast) steps(2), box-shadow var(--dur-fast) steps(2),
       border-color var(--dur-fast) steps(2);
   }
-  .work-card:is(:hover, :focus-visible),
+  .work-card:is(:hover, :has(.work-card__link:focus-visible)),
   .outline-btn:is(:hover, :focus-visible),
   .site-nav__resume:is(:hover, :focus-visible) {
     transform: translate(2px, 2px);
