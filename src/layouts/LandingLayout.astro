@@ -1,8 +1,10 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+
+const { description } = Astro.props;
 ---
 
-<BaseLayout title="Sawyer Smith" bodyClass="is-landing">
+<BaseLayout title="Sawyer Smith" description={description} bodyClass="is-landing">
   <main class="landing">
     <slot />
   </main>

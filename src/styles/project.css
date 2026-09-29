@@ -342,7 +342,7 @@
   height: 12px;
   border-radius: 50%;
   background: var(--bg);
-  box-shadow: 0 0 0 2px #58a6ff;
+  box-shadow: 0 0 0 2px var(--accent);
 }
 .proj-stage__label {
   font-family: var(--font-mono);
@@ -468,7 +468,7 @@
   color: var(--fg-muted);
 }
 .proj-stage__item:hover .proj-stage__frame::after {
-  border-color: #58a6ff;
+  border-color: var(--accent);
 }
 @media (prefers-reduced-motion: no-preference) {
   .proj-stage__item {
@@ -788,12 +788,17 @@
   text-decoration: none;
 }
 .outline-btn.resume-btn--primary {
-  color: #fff;
-  background: #238636;
-  border-color: rgba(240, 246, 252, 0.1);
+  color: var(--bg);
+  font-weight: 600;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.outline-btn.resume-btn--primary .icon {
+  color: inherit;
 }
 .outline-btn.resume-btn--primary:hover {
-  background: #29903b;
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
 }
 .resume-panel {
   display: flex;
@@ -835,5 +840,15 @@
   }
   .resume-btn:hover {
     transform: translateY(-2px);
+  }
+}
+
+/* Phones: less stacked padding between the last section and the footer. */
+@media (max-width: 767px) {
+  .proj-page {
+    padding-bottom: 8px;
+  }
+  .page-links {
+    margin-top: 24px;
   }
 }

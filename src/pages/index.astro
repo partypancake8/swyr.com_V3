@@ -13,7 +13,7 @@ const photos = [
 ];
 ---
 
-<LandingLayout>
+<LandingLayout description="Robotics engineering student at the University of Michigan building embedded hardware, real-time software, and the interfaces around them.">
   <section class="hero">
     <div class="hero__tilt" data-tilt>
     <img
@@ -50,8 +50,7 @@ const photos = [
       <span class="nav-index">01.</span> <span class="section-title">Work</span>
     </h2>
     <p class="section-lede">
-      Robotics experiments, embedded systems, data pipelines, and full-stack tools. A mix of
-      personal projects and engineering work.
+      Personal projects and engineering work: embedded hardware, robotics, and software tools.
     </p>
     <div class="work-cards">
       <WorkCard
@@ -107,19 +106,28 @@ const photos = [
     <ol class="timeline">
       <li class="tl-item">
         <div class="tl-item__head">
-          <a class="tl-item__org" href="https://decyphercorp.com/" target="_blank" rel="noopener"><span class="tl-item__name">Decypher</span><span class="org-tile"><img src="/icons/companies/decypher.png" alt="Decypher" width="40" height="40" loading="lazy" /></span></a>
+          <span class="tl-item__org"><span class="tl-item__name">University of Michigan</span><span class="org-tile"><img src="/icons/companies/umich.png" alt="University of Michigan" width="40" height="40" loading="lazy" /></span></span>
+          <span class="tl-item__meta">B.S.E. Robotics Engineering &middot; final year &middot; MSI at UMSI from Winter 2027</span>
         </div>
         <p class="tl-item__body">
-          Currently I'm a software developer at Decypher.
-          I build full-stack web apps from the database and API up to the UI, working with
-          AI-assisted, spec-first tools as well as plenty of regular hands-on coding. A lot of
-          my work is shipping data integrations, building product features, and putting together
-          internal tools to get things from an idea to something people actually use.
+          I'm in my last year of the robotics engineering undergrad at the College of Engineering,
+          and in Winter 2027 I start the Master of Science in Information at UMSI through the UCAD
+          pathway. Along the way I've led and worked on multi-person robotics and human-robot
+          interaction projects: real-time experimental systems, Python automation tools, and
+          software-to-hardware integrations.
         </p>
       </li>
-      <li class="tl-note">
-        Before Decypher, I worked across robotics, automotive engineering, and software
-        development.
+      <li class="tl-item">
+        <div class="tl-item__head">
+          <a class="tl-item__org" href="https://decyphercorp.com/" target="_blank" rel="noopener"><span class="tl-item__name">Decypher</span><span class="org-tile"><img src="/icons/companies/decypher.png" alt="Decypher" width="40" height="40" loading="lazy" /></span></a>
+          <span class="tl-item__meta">Software Developer Intern &middot; Summer 2026</span>
+        </div>
+        <p class="tl-item__body">
+          This past summer I built full-stack web apps at Decypher, from the database and API up to
+          the UI, using AI-assisted, spec-first tools. Most of my work was shipping data
+          integrations, product features, and internal tools that took ideas to something people
+          actually used.
+        </p>
       </li>
       <li class="tl-item">
         <div class="tl-item__head">
@@ -127,9 +135,8 @@ const photos = [
           <a class="tl-item__meta" href="/work/sanhua">Engineering Intern &middot; US Engineering Division &middot; May–Aug 2024</a>
         </div>
         <p class="tl-item__body">
-          At Sanhua Automotive USA,
-          I built LabVIEW control software for a LIN-based water pump testbench, supported warranty
-          analysis, and collaborated with engineering and sales teams on thermal-management products.
+          Built LabVIEW control software for a LIN-based water pump testbench, supported warranty
+          analysis, and worked with engineering and sales teams on thermal-management products.
         </p>
       </li>
       <li class="tl-item">
@@ -138,19 +145,8 @@ const photos = [
           <a class="tl-item__meta" href="/work/brose">Test Release Intern &middot; Drives Division &middot; May–Aug 2023</a>
         </div>
         <p class="tl-item__body">
-          At Brose North America,
-          I ran BLDC motor validation using DYNO systems, updated test procedures, and produced
-          training materials to standardize internal workflows.
-        </p>
-      </li>
-      <li class="tl-item">
-        <div class="tl-item__head">
-          <span class="tl-item__org"><span class="tl-item__name">University of Michigan</span><span class="org-tile"><img src="/icons/companies/umich.png" alt="University of Michigan" width="40" height="40" loading="lazy" /></span></span>
-        </div>
-        <p class="tl-item__body">
-          At the University of Michigan, I've
-          led and contributed to multi-person robotics and HRI projects, including real-time
-          experimental systems, Python automation tools, and software–hardware integrations.
+          Ran BLDC motor validation on DYNO systems, updated test procedures, and produced training
+          materials that standardized internal workflows.
         </p>
       </li>
     </ol>
@@ -162,17 +158,10 @@ const photos = [
       <span class="nav-index">03.</span> <span class="section-title">About</span>
     </h2>
     <p class="section-text">
-      I'm a robotics engineer focused on front end and backend software, new coding tools, and
-      human-centered technology experiences. I enjoy taking ideas from idea to
-      launch with thoughtful design, modern front-end engineering, and
-      clean user experiences.
-    </p>
-    <p class="section-text">
-      I'm Sawyer Smith, a robotics engineer studying at the University of Michigan College of
-      Engineering. I focus on building interactive systems that combine real-time software,
-      robotics, and intuitive user experiences. I enjoy taking projects from concept to
-      deployment, designing clean architectures, and creating products that feel fast,
-      responsive, and thoughtfully engineered.
+      I'm a robotics engineering student at the University of Michigan who builds interactive
+      systems: real-time software, embedded hardware, and the interfaces people use to work with
+      them. I care about taking a project from concept to something deployed, with clean
+      architecture and a front end that feels fast and considered.
     </p>
     <ul class="photo-strip">
       {photos.map((p) => (
@@ -186,9 +175,8 @@ const photos = [
       <span class="nav-index">04.</span> <span class="section-title">Contact</span>
     </h2>
     <p class="section-text">
-      I'm always open to discussing new opportunities, collaborations, or side projects.
-      Feel free to reach out! Check out my
-      <a href="/documents/sawyer-smith-resume.pdf" target="_blank" rel="noopener">resume</a>!
+      Open to new opportunities, collaborations, and side projects. Reach out, or take a look at
+      my <a href="/documents/sawyer-smith-resume.pdf" target="_blank" rel="noopener">resume</a>!
     </p>
     <div class="contact-links">
       <a class="outline-btn" href="https://github.com/partypancake8/" target="_blank" rel="noopener">
