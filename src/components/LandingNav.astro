@@ -13,7 +13,7 @@ const crumbs = segs.map((seg, i) => ({
   href: i === segs.length - 1 ? '#' : parentHref[seg] ?? '/' + segs.slice(0, i + 1).join('/'),
   top: i === segs.length - 1,
   icon: (i === segs.length - 1
-    ? segs[0] === 'resume' ? 'px-doc' : segs[0] === 'projects' ? 'px-chip' : undefined
+    ? segs[0] === 'resume' ? 'file' : segs[0] === 'projects' ? 'chip' : undefined
     : undefined) as IconName | undefined,
 }));
 const links = [

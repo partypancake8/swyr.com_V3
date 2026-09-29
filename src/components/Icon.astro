@@ -1,10 +1,9 @@
 ---
 // The site's one icon set, drawn for swyr.com. Inline SVG, currentColor, no requests.
-//  - Pixel family: hand-placed cells on an 8x8 grid (the tiny invader is 6x6),
-//    rendered as merged <rect> runs with crispEdges. The viewBox is padded so each
-//    cell lands on whole device pixels at 16, 20 and 24px.
-//  - Line family: 24-unit viewBox, 1.5 stroke, round caps and joins.
-// Usage: <Icon name="px-star" size={16} /> ; pass `label` to make it meaningful
+// Smooth line family: 24-unit viewBox, 1.5 stroke, round caps and joins (plus the
+// filled GitHub mark). The only pixel art on the site is the swyrbot and the footer
+// invaders, which live outside this component.
+// Usage: <Icon name="star" size={16} /> ; pass `label` to make it meaningful
 // (role="img"), otherwise it is decorative and aria-hidden.
 
 interface Props {
@@ -13,138 +12,6 @@ interface Props {
   class?: string;
   label?: string;
 }
-
-const PIXEL = {
-  'px-grad-cap': [
-    '...##...',
-    '.######.',
-    '########',
-    '.######.',
-    '..####.#',
-    '..####.#',
-    '.......#',
-    '......##',
-  ],
-  'px-briefcase': [
-    '........',
-    '..####..',
-    '..#..#..',
-    '########',
-    '########',
-    '###..###',
-    '########',
-    '########',
-  ],
-  'px-chip': [
-    '..#..#..',
-    '.######.',
-    '##....##',
-    '.#.##.#.',
-    '.#.##.#.',
-    '##....##',
-    '.######.',
-    '..#..#..',
-  ],
-  'px-coffee': [
-    '..#.#...',
-    '.#.#....',
-    '........',
-    '######..',
-    '########',
-    '######.#',
-    '########',
-    '.####...',
-  ],
-  'px-envelope': [
-    '........',
-    '########',
-    '##....##',
-    '#.#..#.#',
-    '#..##..#',
-    '#......#',
-    '########',
-    '........',
-  ],
-  'px-doc': [
-    '.#####..',
-    '.#...##.',
-    '.#....#.',
-    '.#.##.#.',
-    '.#....#.',
-    '.#.##.#.',
-    '.#....#.',
-    '.######.',
-  ],
-  'px-star': [
-    '...##...',
-    '...##...',
-    '########',
-    '.######.',
-    '..####..',
-    '.######.',
-    '.##..##.',
-    '.#....#.',
-  ],
-  'px-heart': [
-    '........',
-    '.##..##.',
-    '########',
-    '########',
-    '########',
-    '.######.',
-    '..####..',
-    '...##...',
-  ],
-  'px-sparkle': [
-    '...#..#.',
-    '...#.###',
-    '..###.#.',
-    '#######.',
-    '..###...',
-    '...#....',
-    '...#....',
-    '........',
-  ],
-  'px-wrench': [
-    '.....#.#',
-    '.....###',
-    '....###.',
-    '...##...',
-    '..##....',
-    '.##.....',
-    '##......',
-    '#.......',
-  ],
-  'px-camera': [
-    '........',
-    '..###...',
-    '########',
-    '###..###',
-    '##.##.##',
-    '##.##.##',
-    '###..###',
-    '########',
-  ],
-  'px-rocket': [
-    '...##...',
-    '..####..',
-    '..#..#..',
-    '..####..',
-    '..####..',
-    '.######.',
-    '##.##.##',
-    '...##...',
-  ],
-  // 6-wide mini of the swyr invader: antennae, head band, eyes, body, feet.
-  'px-invader': [
-    '.#..#.',
-    '######',
-    '#.##.#',
-    '######',
-    '#....#',
-    '.#..#.',
-  ],
-} as const;
 
 const LINE = {
   'arrow-up-right': '<path d="M7 17 17 7M8.5 7H17v8.5"/>',
@@ -168,45 +35,30 @@ const LINE = {
   briefcase: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 12.5h18"/>',
   user: '<circle cx="12" cy="8" r="3.75"/><path d="M4.5 20c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5"/>',
   file: '<path d="M14 3.5H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-10Z"/><path d="M14 3.5v5h5M9 13h6M9 16.5h4"/>',
+  'grad-cap': '<path d="M2.5 9.5 12 5l9.5 4.5L12 14Z"/><path d="M6.5 11.8v4.2c0 1.6 2.5 3 5.5 3s5.5-1.4 5.5-3v-4.2M21.5 9.5v5"/>',
+  chip: '<rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/><rect x="9.75" y="9.75" width="4.5" height="4.5" rx=".75"/><path d="M9.5 3.5v3M14.5 3.5v3M9.5 17.5v3M14.5 17.5v3M3.5 9.5h3M3.5 14.5h3M17.5 9.5h3M17.5 14.5h3"/>',
+  coffee: '<path d="M4.5 9.5h12v4.5a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5Z"/><path d="M16.5 11h1.25a2.5 2.5 0 0 1 0 5H16M8.5 3.5c-.8 1 .8 2 0 3.25M12.5 3.5c-.8 1 .8 2 0 3.25"/>',
+  heart: '<path d="M12 19.5s-7.5-4.4-7.5-10a4.25 4.25 0 0 1 7.5-2.7 4.25 4.25 0 0 1 7.5 2.7c0 5.6-7.5 10-7.5 10Z"/>',
+  sparkle: '<path d="M11 4.5c.6 4 2.5 5.9 6.5 6.5-4 .6-5.9 2.5-6.5 6.5-.6-4-2.5-5.9-6.5-6.5 4-.6 5.9-2.5 6.5-6.5Z"/><path d="M18.5 3v3.5M16.75 4.75h3.5"/>',
+  wrench: '<path d="M14.5 3.75a4.75 4.75 0 0 0-4.3 6.75l-6 6a1.9 1.9 0 0 0 2.7 2.7l6-6a4.75 4.75 0 0 0 6.75-4.3l-2.9 2.35-2.55-.45-.45-2.55Z"/>',
+  camera: '<path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2.25l1.5-2.25h5.5L16.25 7h2.25A1.5 1.5 0 0 1 20 8.5V18a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18Z"/><circle cx="12" cy="13" r="3.5"/>',
+  rocket: '<path d="M12 3c2.9 2.2 4.5 5.4 4.5 9.4V16h-9v-3.6C7.5 8.4 9.1 5.2 12 3Z"/><circle cx="12" cy="10" r="1.6"/><path d="M7.5 12.5 5 15.25V18.5l2.5-2.25M16.5 12.5l2.5 2.75V18.5l-2.5-2.25M10.5 19v2M13.5 19v2"/>',
+  star: '<path d="m12 3.75 2.55 5.2 5.7.83-4.12 4.02.97 5.68L12 16.8l-5.1 2.68.97-5.68-4.12-4.02 5.7-.83Z"/>',
 } as const;
 
 // GitHub's published mark (their brand asset for linking to GitHub), filled.
 const GITHUB =
   'M12 0C5.37 0 0 5.37 0 12C0 17.31 3.435 21.795 8.205 23.385C8.805 23.49 9.03 23.13 9.03 22.815C9.03 22.53 9.015 21.585 9.015 20.58C6 21.135 5.22 19.845 4.98 19.17C4.845 18.825 4.26 17.76 3.75 17.475C3.33 17.25 2.73 16.695 3.735 16.68C4.68 16.665 5.355 17.55 5.58 17.91C6.66 19.725 8.385 19.215 9.075 18.9C9.18 18.12 9.495 17.595 9.84 17.295C7.17 16.995 4.38 15.96 4.38 11.37C4.38 10.065 4.845 8.985 5.61 8.145C5.49 7.845 5.07 6.615 5.73 4.965C5.73 4.965 6.735 4.65 9.03 6.195C9.99 5.925 11.01 5.79 12.03 5.79C13.05 5.79 14.07 5.925 15.03 6.195C17.325 4.635 18.33 4.965 18.33 4.965C18.99 6.615 18.57 7.845 18.45 8.145C19.215 8.985 19.68 10.05 19.68 11.37C19.68 15.975 16.875 16.995 14.205 17.295C14.64 17.67 15.015 18.39 15.015 19.515C15.015 21.12 15 22.41 15 22.815C15 23.13 15.225 23.505 15.825 23.385C18.2073 22.581 20.2775 21.05 21.744 19.0076C23.2106 16.9653 23.9996 14.5144 24 12C24 5.37 18.63 0 12 0Z';
 
-export type IconName = keyof typeof PIXEL | keyof typeof LINE | 'github';
+export type IconName = keyof typeof LINE | 'github';
 
 const { name, size = 16, class: cls, label } = Astro.props;
 const a11y = label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': 'true', focusable: 'false' };
 
-let kind: 'px' | 'line' | 'mark';
-let viewBox = '0 0 24 24';
+let kind: 'line' | 'mark';
+const viewBox = '0 0 24 24';
 let body = '';
-if (name in PIXEL) {
-  kind = 'px';
-  const grid = PIXEL[name as keyof typeof PIXEL] as readonly string[];
-  const w = grid[0].length;
-  const h = grid.length;
-  const n = Math.max(w, h);
-  // Pad the grid so every cell is a whole number of CSS pixels when that costs
-  // at most 20% of the box (16 -> 2px cells, 20 -> 2px + 1 cell pad, 24 -> 3px).
-  const cell = Math.max(1, Math.floor(size / n));
-  const span = (size - cell * n) / size <= 0.2 ? size / cell : n;
-  const ox = (span - w) / 2;
-  const oy = (span - h) / 2;
-  viewBox = `${-ox} ${-oy} ${span} ${span}`;
-  const rects: string[] = [];
-  grid.forEach((row, y) => {
-    for (let x = 0; x < w; x++) {
-      if (row[x] !== '#') continue;
-      let e = x;
-      while (e + 1 < w && row[e + 1] === '#') e++;
-      rects.push(`<rect x="${x}" y="${y}" width="${e - x + 1}" height="1"/>`);
-      x = e;
-    }
-  });
-  body = rects.join('');
-} else if (name === 'github') {
+if (name === 'github') {
   kind = 'mark';
   body = `<path d="${GITHUB}"/>`;
 } else {
@@ -216,9 +68,6 @@ if (name in PIXEL) {
 const classes = ['ico', `ico--${kind}`, `ico-${name}`, cls].filter(Boolean).join(' ');
 ---
 
-{kind === 'px' && (
-  <svg class={classes} width={size} height={size} viewBox={viewBox} fill="currentColor" shape-rendering="crispEdges" {...a11y} set:html={body} />
-)}
 {kind === 'line' && (
   <svg class={classes} width={size} height={size} viewBox={viewBox} fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" {...a11y} set:html={body} />
 )}

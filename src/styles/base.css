@@ -38,12 +38,17 @@
   --accent: #3fb950;
   --accent-strong: #56d364;
   --accent-dim: rgba(63, 185, 80, 0.15);
-  --link: var(--accent);
+  --fg-subtle: #9198a1; /* section icons, index numbers */
+  /* Accent restraint: green lives on the swyrbot, the contribution cells, the
+     footer invaders, focus rings, the active-section underline, the timeline's
+     active dot, and hover states. Everything else is neutral at rest. */
+  --link: var(--fg);
+  --link-hover: var(--accent);
   --btn-bg: #212830;
   --btn-hover: #262c36;
   --btn-border: #3d444d;
-  --topic-bg: var(--accent-dim);
-  --topic-fg: var(--accent-strong);
+  --topic-bg: var(--border-muted);
+  --topic-fg: var(--fg-muted);
   --success: var(--accent);
   --accent-border: var(--accent);
 
@@ -112,6 +117,15 @@ a {
 a:hover {
   text-decoration-color: currentColor;
 }
+/* Prose links (no class): readable text color with a quiet underline at rest,
+   green on hover. */
+a:not([class]) {
+  text-decoration-color: #6e7681;
+}
+a:not([class]):hover {
+  color: var(--link-hover);
+  text-decoration-color: currentColor;
+}
 /* Focus ring: always present but transparent, so focusing only changes
    outline-color (which transitions) instead of snapping an outline in. */
 :where(a, button, [role="button"], summary) {
@@ -122,7 +136,7 @@ a:focus-visible,
 button:focus-visible,
 [role="button"]:focus-visible,
 summary:focus-visible {
-  outline-color: var(--link);
+  outline-color: var(--accent);
 }
 
 img,
@@ -211,7 +225,7 @@ video {
 .breadcrumb__crumb[aria-current="page"],
 .breadcrumb__current {
   font-weight: 600;
-  color: var(--accent);
+  color: var(--fg);
 }
 .breadcrumb__sep {
   margin: 0 6px;
@@ -281,7 +295,7 @@ video {
   font-family: var(--font-mono);
   font-size: 0.8em;
   font-weight: 400;
-  color: var(--fg-muted);
+  color: var(--fg-subtle);
 }
 
 .nav-toggle {
@@ -716,7 +730,7 @@ video {
   }
 }
 .tl-item:hover .tl-item__org {
-  color: var(--link);
+  color: var(--link-hover);
 }
 .tl-item__meta {
   text-decoration: none;
@@ -840,7 +854,8 @@ video {
   inset: 0;
   z-index: 1;
 }
-.work-card:hover .work-card__title {
+.work-card:is(:hover, :focus-within) .work-card__title {
+  color: var(--link-hover);
   text-decoration-color: currentColor;
 }
 .work-card__pill {
@@ -897,7 +912,7 @@ video {
   color: var(--fg-muted);
 }
 .work-card__repo-link:hover {
-  color: var(--link);
+  color: var(--link-hover);
 }
 .work-card__tag,
 .proj-tag {
@@ -957,7 +972,7 @@ video {
   right: 0;
   bottom: -1px;
   height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  background: #484f58;
   transform-origin: 0 50%;
   transform: scaleX(0);
   pointer-events: none;
@@ -1049,7 +1064,7 @@ video {
   color: var(--fg-muted);
 }
 .footer-social a:hover {
-  color: var(--link);
+  color: var(--link-hover);
 }
 .footer-social .icon {
   width: 18px;
@@ -1545,7 +1560,7 @@ video {
 
 /* ======================================
    ICONS (src/components/Icon.astro)
-   Pixel family: 8x8 cells, crisp; line family: 1.5 stroke.
+   Smooth line family, 1.5 stroke (the only pixel art is the swyrbot and invaders).
    16px in text, 20px in headers, 6 to 8px from their label.
    ====================================== */
 .ico {
@@ -1553,9 +1568,6 @@ video {
   flex: none;
   vertical-align: middle;
   overflow: visible;
-}
-.ico--px {
-  image-rendering: pixelated;
 }
 .outline-btn .icon-svg,
 .footer-social .icon-svg,
@@ -1567,18 +1579,18 @@ video {
   color: inherit;
 }
 
-/* section header boxes: pixel icon, then the index and title */
+/* section header boxes: line icon, then the index and title */
 .section-heading__icon {
   align-self: center;
-  color: var(--accent);
+  color: var(--fg-subtle);
 }
 .section-text__icon {
   margin-right: 8px;
   vertical-align: -2px;
-  color: var(--accent);
+  color: var(--fg-subtle);
 }
 
-/* hero: pixel-art buttons (square corners, 3px hard green outline) */
+/* hero: pixel-typeface buttons (the hard-shadow frame is in the RETRO block) */
 .hero .outline-btn {
   font-family: var(--font-pixel);
   padding: 6px 12px;
@@ -1594,7 +1606,7 @@ video {
 /* timeline labels */
 .tl-item__icon {
   margin-right: -3px; /* the org row has a 10px gap; icons sit 7px from their label */
-  color: var(--accent);
+  color: var(--fg-subtle);
 }
 .tl-item__date {
   display: inline-flex;
@@ -1637,7 +1649,7 @@ video {
   gap: 0 6px;
 }
 .contrib__icon {
-  color: var(--accent);
+  color: var(--fg-subtle);
 }
 
 /* breadcrumb: the page crumb carries a 12px pixel glyph */
@@ -1648,7 +1660,7 @@ video {
   vertical-align: bottom;
 }
 .breadcrumb__icon {
-  color: var(--accent);
+  color: var(--fg-subtle);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1656,13 +1668,13 @@ video {
     transition: color var(--dur-ui) var(--ease-out), opacity var(--dur-ui) var(--ease-out), transform var(--dur-fast) var(--ease-out);
   }
   /* Pixel icons pop once as their section or card reveals. */
-  .section-block.in > .section-heading .ico--px,
-  .section-block.in > .section-text .ico--px,
-  .tl-item.in .ico--px,
-  .work-card.in .ico--px,
-  .contrib.in .ico--px,
-  .resume-head.in .ico--px,
-  .proj-cta.in .ico--px {
+  .section-block.in > .section-heading .ico--line,
+  .section-block.in > .section-text .ico--line,
+  .tl-item.in .ico--line,
+  .work-card.in .ico--line,
+  .contrib.in .ico--line,
+  .resume-head.in .ico--line,
+  .proj-cta.in .ico--line {
     animation: px-pop var(--dur-base) var(--ease-out) calc(var(--stagger, 0ms) + var(--dur-base)) backwards;
   }
   .breadcrumb__icon {
@@ -1688,39 +1700,46 @@ video {
 }
 
 /* ======================================
-   RETRO: hard offset shadows in a green frame
+   RETRO: hard offset shadows, neutral at rest, green on interaction
    Cards and buttons only (section panels keep their 6px soft look): square
-   corners, a 1px accent border and a 4px zero-blur shadow; on hover they press
-   2px down-right in two hard frames, like a key.
+   corners, a 1px neutral border and a 4px zero-blur neutral shadow. On hover or
+   keyboard focus they press 2px down-right in two hard frames, like a key, and
+   the frame, shadow and icon turn green. Tune everything with the four tokens.
    ====================================== */
 :root {
-  --hard-shadow: #0f3d1a;
-  --hard-lift: 4px 4px 0 0 var(--hard-shadow);
-  --hard-press: 2px 2px 0 0 var(--hard-shadow);
+  --frame-rest: var(--border);
+  --frame-hover: var(--accent);
+  --hard-shadow-rest: 4px 4px 0 0 #010409;
+  --hard-shadow-hover: 2px 2px 0 0 #0f3d1a;
 }
 .work-card,
 .outline-btn,
 .site-nav__resume {
-  border: 1px solid var(--accent);
+  border: 1px solid var(--frame-rest);
   border-radius: 0;
-  box-shadow: var(--hard-lift);
+  box-shadow: var(--hard-shadow-rest);
 }
-.work-card:hover,
-.outline-btn:hover,
-.site-nav__resume:hover {
-  border-color: var(--accent-strong);
+.work-card:is(:hover, :focus-visible),
+.outline-btn:is(:hover, :focus-visible),
+.site-nav__resume:is(:hover, :focus-visible) {
+  border-color: var(--frame-hover);
+  box-shadow: var(--hard-shadow-hover);
+}
+.outline-btn:is(:hover, :focus-visible) :is(.icon, .icon-svg, .ico),
+.site-nav__resume:is(:hover, :focus-visible) :is(.icon, .icon-svg, .ico) {
+  color: var(--accent-strong);
 }
 @media (prefers-reduced-motion: no-preference) {
   .work-card,
   .outline-btn,
   .site-nav__resume {
-    transition: var(--t-ui), transform var(--dur-fast) steps(2), box-shadow var(--dur-fast) steps(2);
+    transition: var(--t-ui), transform var(--dur-fast) steps(2), box-shadow var(--dur-fast) steps(2),
+      border-color var(--dur-fast) steps(2);
   }
-  .work-card:hover,
-  .outline-btn:hover,
-  .site-nav__resume:hover {
+  .work-card:is(:hover, :focus-visible),
+  .outline-btn:is(:hover, :focus-visible),
+  .site-nav__resume:is(:hover, :focus-visible) {
     transform: translate(2px, 2px);
-    box-shadow: var(--hard-press);
   }
 }
 
