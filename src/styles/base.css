@@ -414,6 +414,20 @@ video {
   color: var(--accent);
   filter: drop-shadow(6px 6px 0 #0f3d1a);
 }
+/* The animated swyrbot (public/js/swyrbot.js): integer cells, the base pose sits
+   where the static SVG was; the stage is 2 cells wider on the left for the dance. */
+.hero__bot {
+  --cell: 5;
+  display: block;
+  margin-left: -10px;
+  image-rendering: pixelated;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.hero__bot[hidden],
+.hero__logo[hidden] {
+  display: none;
+}
 .hero__photo {
   display: block;
   width: 100%;
@@ -967,6 +981,10 @@ video {
   }
   .hero__logo {
     width: 140px;
+  }
+  .hero__bot {
+    --cell: 3;
+    margin-left: -6px;
   }
   .photo-strip {
     overflow-x: auto;
@@ -1636,15 +1654,6 @@ video {
 @media (prefers-reduced-motion: no-preference) {
   :where(.ico) {
     transition: color var(--dur-ui) var(--ease-out), opacity var(--dur-ui) var(--ease-out), transform var(--dur-fast) var(--ease-out);
-  }
-  /* The hero invader bobs in two hard frames. */
-  .hero__logo {
-    animation: invader-bob 1.2s steps(2) infinite;
-  }
-  @keyframes invader-bob {
-    50% {
-      transform: translateY(-6px);
-    }
   }
   /* Pixel icons pop once as their section or card reveals. */
   .section-block.in > .section-heading .ico--px,
