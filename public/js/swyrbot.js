@@ -15,7 +15,6 @@
   });
   // Stage: base cols -2..43 (room for the wave and the dance shear), rows 0..39.
   var BW = 42, BH = 40, OR = 0, OC = 2, W = 46, H = 40, SHADOW = 6;
-  function inS(r, c) { return r >= 12 && r <= 28 && c >= 13 && c <= 28; }
 
   // named parts, as masks over base coordinates
   var PART = {
@@ -25,10 +24,10 @@
     upper: function (r, c) { return r <= 31; }
   };
   function mv(part, dy, dx) { return ['move', part, dy, dx]; }
-  var BREATH = mv('upper', 1, 0), PULSE = ['pulse'];
+  var BREATH = mv('upper', 1, 0);
 
   function put(g, r, c, v) { if (r >= 0 && r < H && c >= 0 && c < W) g[r * W + c] = v; }
-  // cell values: 0 empty, 1 body, 3 body inside the S zone, 2 pulse highlight
+  // cell values: 0 empty, 1 body (one color everywhere, S included)
   var OPS = {
     move: function (g, part, dy, dx) {
       var m = PART[part], cells = [], r, c, v;
@@ -51,13 +50,12 @@
         for (c = 0; c < W; c++) if (g[r * W + c]) put(o, r, c + dx, g[r * W + c]);
       }
       return o;
-    },
-    pulse: function (g) { return g.map(function (v) { return v === 3 ? 2 : v; }); }
+    }
   };
 
   var BASE_GRID = new Uint8Array(W * H);
   for (var r = 0; r < BH; r++) for (var c = 0; c < BW; c++)
-    if (BASE[r][c] === '#') BASE_GRID[(r + OR) * W + c + OC] = inS(r, c) ? 3 : 1;
+    if (BASE[r][c] === '#') BASE_GRID[(r + OR) * W + c + OC] = 1;
 
   function resolve(f) {
     var g = BASE_GRID.slice();
@@ -66,8 +64,8 @@
   }
   var up = function (n) { return mv('armR', -n, 0); };
   var CLIPS = {
-    // breathes down one row and back; the S pulses once every 3 s
-    idle: { fps: 4, frames: [{}, {}, {}, { ops: [PULSE] }, {}, {}, { ops: [BREATH] }, { ops: [BREATH] }, { ops: [BREATH] }, { ops: [BREATH] }, { ops: [BREATH] }, { ops: [BREATH] }] },
+    // breathes down one row and back, nothing else
+    idle: { fps: 4, frames: [{}, {}, {}, {}, {}, {}, { ops: [BREATH] }, { ops: [BREATH] }, { ops: [BREATH] }, { ops: [BREATH] }, { ops: [BREATH] }, { ops: [BREATH] }] },
     // right arm rises over 3 frames, waves, then lowers
     wave: { fps: 8, frames: [{}, { ops: [up(4)] }, { ops: [up(8)] }, { ops: [up(12)] },
       { ops: [up(12), mv('armTopR', 0, 2)] }, { ops: [up(12), mv('armTopR', 0, -2)] },
@@ -82,7 +80,7 @@
   Object.keys(CLIPS).forEach(function (k) { CLIPS[k].grids = CLIPS[k].frames.map(resolve); });
 
   var cs = getComputedStyle(document.documentElement);
-  var PAL = { 1: cs.getPropertyValue('--accent').trim() || '#3fb950', 3: cs.getPropertyValue('--accent-strong').trim() || '#56d364', 2: '#aff5b4' };
+  var BODY = cs.getPropertyValue('--accent').trim() || '#3fb950';
 
   var cell = 0, dpr = 1;
   function size() {
@@ -99,14 +97,12 @@
   var shown = null;
   function draw(g) {
     shown = g;
-    var s = cell * dpr, o = SHADOW * dpr, r, c, v;
+    var s = cell * dpr, o = SHADOW * dpr, r, c;
     ctx.clearRect(0, 0, cv.width, cv.height);
     ctx.fillStyle = '#0f3d1a'; // hard offset shadow, zero blur
     for (r = 0; r < H; r++) for (c = 0; c < W; c++) if (g[r * W + c]) ctx.fillRect(c * s + o, r * s + o, s, s);
-    for (r = 0; r < H; r++) for (c = 0; c < W; c++) {
-      v = g[r * W + c];
-      if (v) { ctx.fillStyle = PAL[v]; ctx.fillRect(c * s, r * s, s, s); }
-    }
+    ctx.fillStyle = BODY;
+    for (r = 0; r < H; r++) for (c = 0; c < W; c++) if (g[r * W + c]) ctx.fillRect(c * s, r * s, s, s);
   }
 
   size();
