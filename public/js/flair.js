@@ -1,5 +1,6 @@
-// Motion + hover flair. Every effect is skipped under prefers-reduced-motion
+// Motion + hover flair. Every effect is skipped while <html data-motion="off">
 // (the CSS hides nothing in that case either, so content is always visible).
+// Motion is on by default; the footer toggle flips the attribute at runtime.
 (function () {
   // Media fades in once it has loaded (CSS keys off [data-loaded]; harmless without motion).
   document.querySelectorAll('img, video').forEach(function (m) {
@@ -10,7 +11,23 @@
     else { m.addEventListener('load', done, { once: true }); m.addEventListener('error', done, { once: true }); }
   });
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var root = document.documentElement;
+  function motionOn() { return root.getAttribute('data-motion') !== 'off'; }
+  var started = false;
+  function onMotion() {
+    if (motionOn()) { if (!started) { started = true; startMotion(); } else if (window.__swyrFlairScroll) window.__swyrFlairScroll(); }
+    else {
+      // Stop: the bar and parallax return to rest; CSS drops every motion rule.
+      var b = document.querySelector('.site-header__progress'), p = document.querySelector('.hero__tilt'), t = document.querySelector('[data-tilt]');
+      if (b) b.style.transform = '';
+      if (p) p.style.removeProperty('--py');
+      if (t) { t.style.removeProperty('--rx'); t.style.removeProperty('--ry'); }
+    }
+  }
+  new MutationObserver(onMotion).observe(root, { attributes: true, attributeFilter: ['data-motion'] });
+  onMotion();
+
+  function startMotion() {
   var raf = window.requestAnimationFrame;
 
   // 1. Scroll reveal: once, staggered 60 ms per item in each batch.
@@ -54,6 +71,7 @@
   var sq = false;
   function onScroll() {
     sq = false;
+    if (!motionOn()) return;
     var de = document.documentElement, y = window.scrollY, max = de.scrollHeight - window.innerHeight;
     if (bar) bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0).toFixed(4) + ')';
     if (par) par.style.setProperty('--py', (-Math.min(24, y * 0.1)).toFixed(1) + 'px');
@@ -61,10 +79,12 @@
   window.addEventListener('scroll', function () { if (!sq) { sq = true; raf(onScroll); } }, { passive: true });
   window.addEventListener('resize', onScroll);
   onScroll();
+  window.__swyrFlairScroll = onScroll;
 
   // 2. Spotlight border + hover lift: pointer position into --mx / --my, rAF throttled.
   var spot = null, sx = 0, sy = 0, queued = false;
   document.addEventListener('pointermove', function (e) {
+    if (!motionOn()) return;
     spot = e.target.closest && e.target.closest('.work-card, .contact-links a');
     if (!spot) return;
     sx = e.clientX; sy = e.clientY;
@@ -85,6 +105,7 @@
   if (tilt && window.matchMedia('(hover: hover)').matches) {
     var tx = 0, ty = 0, tq = false;
     tilt.addEventListener('pointermove', function (e) {
+      if (!motionOn()) return;
       tx = e.clientX; ty = e.clientY;
       if (tq) return;
       tq = true;
@@ -153,5 +174,6 @@
     items.forEach(function (it) { bio.observe(it); });
     window.addEventListener('scroll', function () { if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) choose(); }, { passive: true });
     window.addEventListener('resize', place);
+  }
   }
 })();

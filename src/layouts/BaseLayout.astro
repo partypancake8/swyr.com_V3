@@ -20,7 +20,16 @@ const { title, description, bodyClass } = Astro.props;
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="icon" type="image/svg+xml" href="/icons/swyrlogowhite.svg" />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>
+      // Motion is on by default regardless of the OS setting; the footer toggle
+      // stores an explicit opt-out in localStorage "swyr-motion".
+      (function () {
+        var d = document.documentElement, m = 'on';
+        d.classList.add('js');
+        try { if (localStorage.getItem('swyr-motion') === 'off') m = 'off'; } catch (e) {}
+        d.setAttribute('data-motion', m);
+      })();
+    </script>
     <slot name="head" />
   </head>
   <body class={bodyClass}>

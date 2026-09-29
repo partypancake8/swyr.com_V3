@@ -114,12 +114,14 @@
   if (svg) svg.setAttribute('hidden', ''); // SVGElement has no .hidden property
   window.addEventListener('resize', function () { size(); if (shown) draw(shown); });
 
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { draw(BASE_GRID); return; }
+  // Motion follows <html data-motion> (on by default); the footer toggle flips it live.
+  var root = document.documentElement, running = false;
+  function motionOn() { return root.getAttribute('data-motion') !== 'off'; }
 
   // player: one clip at a time; one-shots return to idle, the next request queues
   var cur = 'idle', fi = 0, i = 0, t0 = 0, queue = null, last = 'dance';
   function play(name) {
-    if (!CLIPS[name] || name === 'idle') return;
+    if (!CLIPS[name] || name === 'idle' || !motionOn()) return;
     if (cur !== 'idle') { queue = name; return; }
     cur = name; i = 0; t0 = 0; last = name;
   }
@@ -135,10 +137,17 @@
     n = cur === 'idle' ? n % clip.grids.length : n;
     fi = n;
     if (clip.grids[n] !== shown) draw(clip.grids[n]);
-    requestAnimationFrame(tick);
+    requestAnimationFrame(tickGate);
   }
-  draw(CLIPS.idle.grids[0]);
-  requestAnimationFrame(tick);
+  function tickGate(t) { if (!motionOn()) { running = false; draw(BASE_GRID); return; } tick(t); }
+  function run() {
+    if (running) return;
+    running = true; cur = 'idle'; queue = null; t0 = 0;
+    draw(CLIPS.idle.grids[0]);
+    requestAnimationFrame(tickGate);
+  }
+  new MutationObserver(function () { if (motionOn()) run(); }).observe(root, { attributes: true, attributeFilter: ['data-motion'] });
+  if (motionOn()) run(); else draw(BASE_GRID);
 
   function next() { play(last === 'wave' ? 'dance' : 'wave'); }
   cv.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') next(); });

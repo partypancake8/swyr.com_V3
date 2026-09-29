@@ -46,7 +46,7 @@ const linkAttrs = external ? { target: '_blank', rel: 'noopener' } : {};
       )}
       <a class="work-card__title work-card__link" href={href} {...linkAttrs}>{title}</a>
       {pill && <span class="work-card__pill">Public</span>}
-      {!pill && <span class="work-card__arrow" aria-hidden="true">view<Icon name="arrow-up-right" size={12} /></span>}
+      {href && <span class="work-card__arrow" aria-hidden="true">view<Icon name="arrow-up-right" size={12} /></span>}
     </div>
     <p class="work-card__desc">{desc}</p>
     <ul class="work-card__tags">

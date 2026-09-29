@@ -463,37 +463,36 @@
 .proj-stage__item:hover .proj-stage__frame::after {
   border-color: var(--accent);
 }
-@media (prefers-reduced-motion: no-preference) {
-  .proj-stage__item {
-    transition: var(--t-ui), transform var(--dur-fast) steps(2);
-  }
-  .proj-stage__frame {
-    transition: box-shadow var(--dur-fast) steps(2);
-  }
-  .proj-stage__frame::after {
-    transition: border-color var(--dur-fast) steps(2);
-  }
-  .proj-stage__frame img,
-  .proj-stage__frame video {
-    transition: transform var(--dur-slow) var(--ease-out), opacity var(--dur-slow) var(--ease-out);
-  }
-  .proj-stage__item:is(:hover, :focus-visible) {
-    transform: translate(2px, 2px);
-  }
-  .proj-cta-link {
-    transition: var(--t-ui), transform var(--dur-fast) steps(2), box-shadow var(--dur-fast) steps(2),
+/* motion on (data-motion on <html>; was prefers-reduced-motion: no-preference) */
+:root[data-motion="on"] .proj-stage__item {
+  transition: var(--t-ui), transform var(--dur-fast) steps(2);
+}
+:root[data-motion="on"] .proj-stage__frame {
+  transition: box-shadow var(--dur-fast) steps(2);
+}
+:root[data-motion="on"] .proj-stage__frame::after {
+  transition: border-color var(--dur-fast) steps(2);
+}
+:root[data-motion="on"] .proj-stage__frame img,
+:root[data-motion="on"] .proj-stage__frame video {
+  transition: transform var(--dur-slow) var(--ease-out), opacity var(--dur-slow) var(--ease-out);
+}
+:root[data-motion="on"] .proj-stage__item:is(:hover, :focus-visible) {
+  transform: translate(2px, 2px);
+}
+:root[data-motion="on"] .proj-cta-link {
+  transition: var(--t-ui), transform var(--dur-fast) steps(2), box-shadow var(--dur-fast) steps(2),
       border-color var(--dur-fast) steps(2);
-  }
-  .proj-cta-link:is(:hover, :focus-visible) {
-    transform: translate(2px, 2px);
-  }
-  .proj-stage__item:hover .proj-stage__frame img,
-  .proj-stage__item:hover .proj-stage__frame video {
-    transform: scale(1.04);
-  }
-  .js .proj-stage__frame :is(img, video):not([data-loaded]) {
-    opacity: 0;
-  }
+}
+:root[data-motion="on"] .proj-cta-link:is(:hover, :focus-visible) {
+  transform: translate(2px, 2px);
+}
+:root[data-motion="on"] .proj-stage__item:hover .proj-stage__frame img,
+:root[data-motion="on"] .proj-stage__item:hover .proj-stage__frame video {
+  transform: scale(1.04);
+}
+:root[data-motion="on"].js .proj-stage__frame :is(img, video):not([data-loaded]) {
+  opacity: 0;
 }
 
 /* contact links at the foot of every detail page */
@@ -830,8 +829,6 @@
     padding: 12px;
   }
 }
-@media (prefers-reduced-motion: no-preference) {
-}
 
 /* Phones: less stacked padding between the last section and the footer. */
 @media (max-width: 767px) {
@@ -874,13 +871,12 @@
 .repo-head__icon {
   color: var(--fg-subtle);
 }
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .proj-section-label__icon {
-      animation: px-pop linear both;
-      animation-timeline: view();
-      animation-range: entry 60% entry 100%;
-    }
+/* motion on (data-motion on <html>; was prefers-reduced-motion: no-preference) */
+@supports (animation-timeline: view()) {
+  :root[data-motion="on"] .proj-section-label__icon {
+    animation: px-pop linear both;
+    animation-timeline: view();
+    animation-range: entry 60% entry 100%;
   }
 }
 

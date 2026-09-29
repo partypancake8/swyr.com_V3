@@ -6,7 +6,26 @@
   if (!header || header.dataset.navReady) return;
   header.dataset.navReady = '1';
 
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  // Motion follows <html data-motion> (on by default), not the OS setting.
+  var reduce = { get matches() { return document.documentElement.getAttribute('data-motion') === 'off'; } };
+
+  /* ---------- motion toggle (footer) ---------- */
+  var mt = document.getElementById('motion-toggle');
+  function syncToggle() {
+    if (!mt) return;
+    var on = !reduce.matches;
+    mt.setAttribute('aria-pressed', String(on));
+    mt.textContent = 'Motion: ' + (on ? 'on' : 'off');
+  }
+  if (mt) {
+    syncToggle();
+    mt.addEventListener('click', function () {
+      var next = reduce.matches ? 'on' : 'off';
+      document.documentElement.setAttribute('data-motion', next);
+      try { if (next === 'off') localStorage.setItem('swyr-motion', 'off'); else localStorage.removeItem('swyr-motion'); } catch (e) {}
+      syncToggle();
+    });
+  }
   var toggle = header.querySelector('[data-nav-toggle]');
   var panel = header.querySelector('[data-nav-panel]');
 
