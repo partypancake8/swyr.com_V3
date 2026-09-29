@@ -18,13 +18,6 @@
   font-display: swap;
   src: url(/fonts/silkscreen-latin.woff2) format("woff2");
 }
-@font-face {
-  font-family: "Silkscreen";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(/fonts/silkscreen-700-latin.woff2) format("woff2");
-}
 
 :root {
   color-scheme: dark;
@@ -41,7 +34,7 @@
   --fg-subtle: #9198a1; /* section icons, index numbers */
   /* Accent restraint: green lives on the swyrbot, the contribution cells, the
      footer invaders, focus rings, the active-section underline, the timeline's
-     active dot, and hover states. Everything else is neutral at rest. */
+     active marker, and hover states. Everything else is neutral at rest. */
   --link: var(--fg);
   --link-hover: var(--accent);
   --btn-bg: #212830;
@@ -471,10 +464,11 @@ video {
 }
 .hero__headline {
   font-family: var(--font-pixel);
-  font-size: 44px;
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: 0.02em;
+  font-size: 30px;
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
   color: var(--fg);
 }
 .hero__subtitle {
@@ -643,7 +637,7 @@ video {
 .tl-note + .tl-item {
   margin-top: 8px;
 }
-/* static hollow marker; the moving indicator sits above it */
+/* each entry's own static hollow marker; the active entry's marker fills in (no travelling element) */
 .tl-item::before {
   content: "";
   position: absolute;
@@ -758,40 +752,9 @@ video {
   height: 2px;
   background: var(--border);
 }
-/* The single active indicator: a lit line from the top of the timeline to the
-   active entry (scaleY) and a green dot on it (translateY). Positioned by flair.js. */
-.tl-indicator {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 16px;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-.tl-indicator__line {
-  position: absolute;
-  left: 7px;
-  top: 6px;
-  width: 2px;
-  height: 1px;
+.tl-item.is-active::before {
   background: var(--accent);
-  transform-origin: 50% 0;
-  transform: scaleY(0);
-}
-.tl-indicator__dot {
-  position: absolute;
-  left: 2px;
-  top: 0;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-dim);
-  opacity: 0;
-}
-.tl-indicator.is-on .tl-indicator__dot {
-  opacity: 1;
+  box-shadow: 0 0 0 2px var(--accent);
 }
 
 /* work cards: GitHub-repo-style project grid, 3-up on desktop */
@@ -995,7 +958,7 @@ video {
     grid-row: 2;
   }
   .hero__headline {
-    font-size: 28px;
+    font-size: 22px;
   }
   .hero__logo {
     width: 140px;
@@ -1320,10 +1283,9 @@ video {
   transition: opacity var(--dur-fast) var(--ease-out);
 }
 
-/* Timeline: one indicator slides between entries; hover fades an inset background. */
-:root[data-motion="on"] .tl-indicator__dot,
-:root[data-motion="on"] .tl-indicator__line {
-  transition: transform var(--dur-slide) var(--ease-out), opacity var(--dur-base) var(--ease-out);
+/* Timeline: the active entry's marker fills with a soft eased fade; hover fades an inset background. */
+:root[data-motion="on"] .tl-item::before {
+  transition: background-color var(--dur-slow) var(--ease-out), box-shadow var(--dur-slow) var(--ease-out);
 }
 :root[data-motion="on"] .tl-item::after {
   transition: opacity var(--dur-base) var(--ease-out);
@@ -1492,16 +1454,13 @@ video {
   }
 }
 
-/* Timeline: the track draws top to bottom, then the sliding indicator takes over;
+/* Timeline: the track draws top to bottom;
      logo tiles pop with a spring as their entry reveals. */
 :root[data-motion="on"] .timeline::before {
   transform-origin: 50% 0;
 }
 :root[data-motion="on"] .section-block.in .timeline::before {
   animation: line-draw var(--dur-draw) var(--ease-out) backwards;
-}
-:root[data-motion="on"] .section-block.in .tl-indicator {
-  animation: reveal-fade var(--dur-base) var(--ease-out) var(--dur-draw) backwards;
 }
 @keyframes line-draw {
   from {

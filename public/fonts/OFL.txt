@@ -1,5 +1,5 @@
-silkscreen-latin.woff2, silkscreen-700-latin.woff2 (Silkscreen)
-================================================
+silkscreen-latin.woff2 (Silkscreen)
+==================================
 
 Copyright 2001 The Silkscreen Project Authors (https://github.com/googlefonts/silkscreen)
 

@@ -139,41 +139,30 @@
     graph.addEventListener('pointerleave', function () { tip.classList.remove('is-visible'); });
   }
 
-  // Experience timeline: ONE indicator (dot + lit line) slides to the active entry.
-  // Active = the entry crossing a band at 35-45% of the viewport, held for 80 ms
-  // (debounced so it never flickers); at the bottom of the page the last entry wins.
-  var wrap = document.querySelector('.timeline-wrap');
-  if (wrap) {
-    var ind = wrap.querySelector('.tl-indicator');
-    var dot = ind.querySelector('.tl-indicator__dot');
-    var line = ind.querySelector('.tl-indicator__line');
-    var items = [].slice.call(wrap.querySelectorAll('.tl-item'));
+  // Experience timeline: the active entry's own marker fills in (CSS fades it); no
+  // travelling element. Active = the entry crossing a band at 35-45% of the viewport,
+  // held for 80 ms (debounced so it never flickers); at the bottom of the page the last entry wins.
+  var tlItems = [].slice.call(document.querySelectorAll('.timeline .tl-item'));
+  if (tlItems.length) {
     var inBand = [], active = -1, pending = -1, holdTimer = 0;
-    function place() {
-      if (active < 0) return;
-      // offsetTop is layout-only, so reveal transforms on the entries never move the indicator.
-      var mark = parseFloat(getComputedStyle(items[active], '::before').top) || 16;
-      var y = items[active].offsetTop + mark + 5; // center of the entry's hollow marker
-      dot.style.transform = 'translateY(' + (y - 6) + 'px)';
-      line.style.transform = 'scaleY(' + Math.max(0, y - 6) + ')';
-      ind.classList.add('is-on');
+    function mark() {
+      tlItems.forEach(function (it, i) { it.classList.toggle('is-active', i === active); });
     }
     function choose() {
       var next = -1;
-      for (var i = 0; i < items.length; i++) if (inBand[i]) { next = i; break; }
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) next = items.length - 1;
+      for (var i = 0; i < tlItems.length; i++) if (inBand[i]) { next = i; break; }
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) next = tlItems.length - 1;
       if (next < 0 || next === active || next === pending) return;
       pending = next;
       clearTimeout(holdTimer);
-      holdTimer = setTimeout(function () { active = pending; pending = -1; place(); }, 80);
+      holdTimer = setTimeout(function () { active = pending; pending = -1; mark(); }, 80);
     }
     var bio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { inBand[items.indexOf(en.target)] = en.isIntersecting; });
+      entries.forEach(function (en) { inBand[tlItems.indexOf(en.target)] = en.isIntersecting; });
       choose();
     }, { rootMargin: '-35% 0px -55% 0px' });
-    items.forEach(function (it) { bio.observe(it); });
+    tlItems.forEach(function (it) { bio.observe(it); });
     window.addEventListener('scroll', function () { if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) choose(); }, { passive: true });
-    window.addEventListener('resize', place);
   }
   }
 })();
