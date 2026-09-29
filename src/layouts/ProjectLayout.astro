@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import '../styles/project.css';
+import Icon from '../components/Icon.astro';
 
 interface Props {
   title: string;
@@ -16,12 +17,12 @@ const { title } = Astro.props;
 
     <aside class="page-links">
       <a href="https://github.com/partypancake8/" target="_blank" rel="noopener" aria-label="GitHub">
-        <span class="icon" style="--icon: url(/icons/github.svg)" aria-hidden="true"></span>
+        <Icon name="github" size={18} class="icon-svg" />
       </a>
       <a href="https://www.linkedin.com/in/sawyer-smith-60918a221/" target="_blank" rel="noopener" aria-label="LinkedIn">
-        <span class="icon" style="--icon: url(/icons/linkedin.svg)" aria-hidden="true"></span>
+        <Icon name="linkedin" size={18} class="icon-svg" />
       </a>
-      <a class="page-links__email" href="mailto:swyr@swyr.com">swyr@swyr.com</a>
+      <a class="page-links__email" href="mailto:swyr@swyr.com"><Icon name="mail" />swyr@swyr.com</a>
     </aside>
   </main>
 </BaseLayout>

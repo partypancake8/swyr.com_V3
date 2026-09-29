@@ -2,6 +2,7 @@
 // GitHub-repo-style project card. The title link is stretched over the whole
 // card; secondary links (repo) sit above that overlay so they stay clickable.
 import repoData from '../data/repos.json';
+import Icon from './Icon.astro';
 
 interface Props {
   title: string;
@@ -41,17 +42,15 @@ const linkAttrs = external ? { target: '_blank', rel: 'noopener' } : {};
   <div class="work-card__body">
     <div class="work-card__header">
       {pill && (
-        <svg class="work-card__repo-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-          <path fill="currentColor" d="M3 2.5A1.5 1.5 0 0 1 4.5 1h8.25a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75H11v-1.5h1V2.5H4.5a.5.5 0 0 0-.5.5v7.05c.16-.03.33-.05.5-.05H9V11.5H4.5a.5.5 0 0 0 0 1H6V14H4.5A2 2 0 0 1 2.5 12V3A1.5 1.5 0 0 1 3 2.5Zm4 9.5h3v3.25a.25.25 0 0 1-.4.2L8.8 14.8a.5.5 0 0 0-.6 0l-.8.65a.25.25 0 0 1-.4-.2Z" />
-        </svg>
+        <Icon name="book" class="work-card__repo-icon" />
       )}
       <a class="work-card__title work-card__link" href={href} {...linkAttrs}>{title}</a>
       {pill && <span class="work-card__pill">Public</span>}
-      {!pill && <span class="work-card__arrow" aria-hidden="true">view &rarr;</span>}
+      {!pill && <span class="work-card__arrow" aria-hidden="true">view<Icon name="arrow-up-right" size={12} /></span>}
     </div>
     <p class="work-card__desc">{desc}</p>
     <ul class="work-card__tags">
-      {tags.map((tag, i) => <li class="work-card__tag" style={`--i:${i}`}>{tag}</li>)}
+      {tags.map((tag, i) => <li class="work-card__tag" style={`--i:${i}`}><Icon name="tag" size={12} class="work-card__tag-icon" />{tag}</li>)}
     </ul>
     {(meta || repoLink) && (
       <div class="work-card__footer">
@@ -63,12 +62,12 @@ const linkAttrs = external ? { target: '_blank', rel: 'noopener' } : {};
         )}
         {meta && (
           <span class="work-card__stars" aria-label={`${meta.stars} stars`}>
-            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 .25a.75.75 0 0 1 .67.42l1.88 3.8 4.2.61a.75.75 0 0 1 .41 1.28l-3.04 2.96.72 4.18a.75.75 0 0 1-1.09.79L8 12.31l-3.75 1.98a.75.75 0 0 1-1.09-.79l.72-4.18L.84 6.36a.75.75 0 0 1 .41-1.28l4.2-.61L7.33.67A.75.75 0 0 1 8 .25Zm0 2.45L6.62 5.5a.75.75 0 0 1-.57.41l-3.08.45 2.23 2.17a.75.75 0 0 1 .22.66l-.53 3.07 2.76-1.45a.75.75 0 0 1 .7 0l2.76 1.45-.53-3.07a.75.75 0 0 1 .22-.66l2.23-2.17-3.08-.45a.75.75 0 0 1-.57-.41Z" /></svg>
+            <Icon name="px-star" class="work-card__star" />
             {meta.stars}
           </span>
         )}
         {repoLink && repo && (
-          <a class="work-card__repo-link" href={meta?.url ?? `https://github.com/partypancake8/${repo}`} target="_blank" rel="noopener">repo&nbsp;&#8599;</a>
+          <a class="work-card__repo-link" href={meta?.url ?? `https://github.com/partypancake8/${repo}`} target="_blank" rel="noopener"><Icon name="github" size={12} />repo</a>
         )}
       </div>
     )}

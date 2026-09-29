@@ -3,6 +3,7 @@
 // Section links always use absolute "/#id" hrefs: on the landing page the
 // browser scrolls in place (smooth, offset by scroll-margin-top); on sub-pages
 // it loads "/" and jumps to the section. No client router is involved.
+import Icon, { type IconName } from './Icon.astro';
 const path = Astro.url.pathname.replace(/\/+$/, '');
 const segs = path.split('/').filter(Boolean);
 // Parent crumbs link back to where that group lives on the landing page.
@@ -11,12 +12,15 @@ const crumbs = segs.map((seg, i) => ({
   text: seg,
   href: i === segs.length - 1 ? '#' : parentHref[seg] ?? '/' + segs.slice(0, i + 1).join('/'),
   top: i === segs.length - 1,
+  icon: (i === segs.length - 1
+    ? segs[0] === 'resume' ? 'px-doc' : segs[0] === 'projects' ? 'px-chip' : undefined
+    : undefined) as IconName | undefined,
 }));
 const links = [
-  { id: 'work', label: 'Work', index: '01.', icon: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>' },
-  { id: 'experience', label: 'Experience', index: '02.', icon: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>' },
-  { id: 'about', label: 'About', index: '03.', icon: '<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>' },
-  { id: 'contact', label: 'Contact', index: '04.', icon: '<rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/>' },
+  { id: 'work', label: 'Work', index: '01.', icon: 'code' as IconName },
+  { id: 'experience', label: 'Experience', index: '02.', icon: 'briefcase' as IconName },
+  { id: 'about', label: 'About', index: '03.', icon: 'user' as IconName },
+  { id: 'contact', label: 'Contact', index: '04.', icon: 'mail' as IconName },
 ];
 ---
 
@@ -32,7 +36,7 @@ const links = [
           {crumbs.map((c) => (
             <span class="breadcrumb__part">
               <span class="breadcrumb__sep" aria-hidden="true">/</span>
-              <a class="breadcrumb__crumb" href={c.href} data-scroll-top={c.top ? '' : undefined}>{c.text}</a>
+              <a class:list={['breadcrumb__crumb', { 'breadcrumb__crumb--icon': c.icon }]} href={c.href} data-scroll-top={c.top ? '' : undefined}>{c.icon && <Icon name={c.icon} size={12} class="breadcrumb__icon" />}{c.text}</a>
             </span>
           ))}
           <span class="breadcrumb__live" data-crumb-live></span>
@@ -57,14 +61,14 @@ const links = [
         {links.map((l) => (
           <li>
             <a class="site-nav__link" href={`/#${l.id}`} data-section-link={l.id}>
-              <svg class="site-nav__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={l.icon} />
+              <Icon name={l.icon} class="site-nav__icon" />
               <span><span class="nav-index">{l.index}</span> {l.label}</span>
             </a>
           </li>
         ))}
         <li>
           <a class="site-nav__link site-nav__resume" href="/resume" aria-current={path === '/resume' ? 'page' : undefined}>
-            <svg class="site-nav__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <Icon name="file" class="site-nav__icon" />
             <span>Resume</span>
           </a>
         </li>

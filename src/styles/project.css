@@ -93,7 +93,7 @@
   width: auto;
   max-width: 100%;
   height: auto;
-  max-height: 480px;
+  max-height: 640px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
@@ -420,13 +420,6 @@
     align-items: flex-start;
     width: 100%;
   }
-}
-/* A lone tile would stretch to the full column; cap it by height instead (320px
-   tall at its natural aspect, no crop), left-aligned. The caption wraps within it. */
-.jrow--single .proj-stage__item {
-  flex: 0 0 auto;
-  width: calc(320px * var(--a));
-  max-width: 100%;
 }
 @media (max-width: 560px) {
   .jrow__half {
@@ -850,5 +843,46 @@
   }
   .page-links {
     margin-top: 24px;
+  }
+}
+
+/* icons on detail pages */
+.proj-section-label,
+.proj-cta-heading,
+.resume-head__title,
+.repo-head__branch,
+.proj-meta-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.proj-meta-link,
+.repo-head__branch {
+  display: inline-flex;
+}
+.proj-cta-heading,
+.resume-head__title {
+  gap: 8px;
+}
+.proj-section-label__icon,
+.proj-cta-heading__icon,
+.resume-head__icon {
+  color: var(--accent);
+}
+.page-links__email {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.repo-head__icon {
+  color: var(--accent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .proj-section-label__icon {
+      animation: px-pop linear both;
+      animation-timeline: view();
+      animation-range: entry 60% entry 100%;
+    }
   }
 }

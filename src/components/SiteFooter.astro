@@ -1,16 +1,17 @@
 ---
+import Icon from './Icon.astro';
 ---
 
 <footer class="footer">
   <div class="footer-social">
     <a href="https://github.com/partypancake8/" target="_blank" rel="noopener" aria-label="GitHub">
-      <span class="icon" style="--icon: url(/icons/github.svg)" aria-hidden="true"></span>
+      <Icon name="github" size={18} class="icon-svg" />
     </a>
     <a href="https://www.linkedin.com/in/sawyer-smith-60918a221/" target="_blank" rel="noopener" aria-label="LinkedIn">
-      <span class="icon" style="--icon: url(/icons/linkedin.svg)" aria-hidden="true"></span>
+      <Icon name="linkedin" size={18} class="icon-svg" />
     </a>
     <a href="mailto:swyr@swyr.com?subject=Hello%20Sawyer&body=Hi%20Sawyer%2C%20I%20found%20your%20website..." aria-label="Email">
-      <span class="icon" style="--icon: url(/icons/emailicon.svg)" aria-hidden="true"></span>
+      <Icon name="mail" size={18} class="icon-svg" />
     </a>
   </div>
   <div class="footer-contact">

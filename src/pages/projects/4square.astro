@@ -1,5 +1,6 @@
 ---
 import ProjectLayout from '../../layouts/ProjectLayout.astro';
+import Icon from '../../components/Icon.astro';
 ---
 
 <ProjectLayout title="4 square · build log" breadcrumb="4 square">
@@ -34,7 +35,7 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
           href="https://github.com/partypancake8/oled2x2x"
           target="_blank"
           rel="noopener"
-        >oled2x2x&nbsp;&#8599;</a>
+        ><Icon name="github" size={12} />oled2x2x</a>
       </div>
     </div>
   </header>
@@ -43,9 +44,9 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
   <div class="proj-hero-media">
     <img
       class="proj-hero-img"
-      src="/images/4square/v1-front.jpg"
-      width="1200"
-      height="1600"
+      src="/images/4square/v1-early-front.jpg"
+      width="1600"
+      height="1200"
       alt="Finished 4 square build on a desk"
     />
   </div>
@@ -102,7 +103,7 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
 
   <!-- ── build stages: prototype, V0, V1 ── -->
   <section class="proj-section" id="build-stages" data-crumb="build stages">
-    <p class="proj-section-label">build stages</p>
+    <p class="proj-section-label"><Icon name="px-camera" class="proj-section-label__icon" />build stages</p>
     <ol class="proj-stages">
       <li class="proj-stage">
         <div class="proj-stage__head">
@@ -110,8 +111,31 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
           <p class="proj-stage__label">Prototype</p>
           <p class="proj-stage__note">protoboard and first enclosure prints</p>
         </div>
-        <div class="jrow jrow--single">
+        <div class="jrow">
           <ul class="jrow__half">
+            <li class="proj-stage__item" style="--a: 0.75">
+              <figure>
+                <div class="proj-stage__frame">
+                  <img src="/images/4square/proto-oled-pcbs.jpg" alt="Four OLED carrier boards and the ESP32 before wiring" width="768" height="1024" loading="lazy" />
+                </div>
+              </figure>
+            </li>
+            <li class="proj-stage__item" style="--a: 0.75">
+              <figure>
+                <div class="proj-stage__frame">
+                  <img src="/images/4square/proto-boards.jpg" alt="Two protoboards wired together, held over the desk" width="768" height="1024" loading="lazy" />
+                </div>
+              </figure>
+            </li>
+          </ul>
+          <ul class="jrow__half">
+            <li class="proj-stage__item" style="--a: 0.75">
+              <figure>
+                <div class="proj-stage__frame">
+                  <img src="/images/4square/proto-wired.jpg" alt="First enclosure face with the four OLEDs showing test patterns" width="768" height="1024" loading="lazy" />
+                </div>
+              </figure>
+            </li>
             <li class="proj-stage__item" style="--a: 0.75">
               <figure>
                 <div class="proj-stage__frame">
@@ -208,6 +232,13 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
                   </div>
                 </figure>
               </li>
+              <li class="proj-stage__item" style="--a: 1.03394">
+                <figure>
+                  <div class="proj-stage__frame">
+                    <img src="/images/4square/v1-dark.jpg" alt="4 square in the dark, OLEDs glowing" width="792" height="766" loading="lazy" />
+                  </div>
+                </figure>
+              </li>
             </ul>
           </div>
         </div>
@@ -260,7 +291,7 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
 
   <!-- ── software ─────────────────────── -->
   <section class="proj-section" id="software" data-crumb="software">
-    <p class="proj-section-label">software</p>
+    <p class="proj-section-label"><Icon name="px-chip" class="proj-section-label__icon" />software</p>
     <h2 class="proj-section-heading">fully customizable 2&times;2 layout</h2>
     <p>
       Each of the four screens is independently assigned a widget. Swap them in config,
@@ -310,7 +341,7 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
 
   <!-- ── enclosure ────────────────────── -->
   <section class="proj-section" id="enclosure" data-crumb="enclosure">
-    <p class="proj-section-label">enclosure</p>
+    <p class="proj-section-label"><Icon name="px-wrench" class="proj-section-label__icon" />enclosure</p>
     <h2 class="proj-section-heading">5-part 3D-printed housing</h2>
     <p>
       Designed in Fusion 360. The enclosure splits into a display faceplate, two display
@@ -322,7 +353,7 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
 
   <!-- ── hardware ─────────────────────── -->
   <section class="proj-section" id="hardware" data-crumb="hardware">
-    <p class="proj-section-label">hardware</p>
+    <p class="proj-section-label"><Icon name="px-chip" class="proj-section-label__icon" />hardware</p>
     <h2 class="proj-section-heading">components</h2>
     <div class="proj-comp-grid">
       <div class="proj-comp-card">
@@ -368,7 +399,7 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
   <!-- ── open source CTA ───────────────── -->
   <section class="proj-section">
     <div class="proj-cta">
-      <p class="proj-cta-heading">build your own. it&rsquo;s fully open source.</p>
+      <p class="proj-cta-heading"><Icon name="px-rocket" size={20} class="proj-cta-heading__icon" />build your own. it&rsquo;s fully open source.</p>
       <p>
         Everything is open source. Fork it, swap out screens, change the layout, add new
         data sources, and make it yours.

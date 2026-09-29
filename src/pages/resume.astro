@@ -6,6 +6,7 @@
 import { readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import ProjectLayout from '../layouts/ProjectLayout.astro';
+import Icon from '../components/Icon.astro';
 
 const PDF = '/documents/sawyer-smith-resume.pdf';
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -23,15 +24,15 @@ try {
 <ProjectLayout title="Resume · Sawyer Smith">
   <header class="resume-head">
     <div class="resume-head__text">
-      <h1 class="resume-head__title">Resume</h1>
+      <h1 class="resume-head__title"><Icon name="px-doc" size={24} class="resume-head__icon" />Resume</h1>
       <p class="resume-head__meta">{updated ? `PDF · updated ${updated}` : 'PDF'}</p>
     </div>
     <div class="resume-head__actions">
       <a class="outline-btn resume-btn resume-btn--primary" href={PDF} download="Sawyer Smith Resume.pdf">
-        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14ZM7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z" /></svg>
+        <Icon name="download" />
         Download PDF
       </a>
-      <a class="outline-btn resume-btn" href={PDF} target="_blank" rel="noopener">Open in new tab &#8599;</a>
+      <a class="outline-btn resume-btn" href={PDF} target="_blank" rel="noopener"><Icon name="external" />Open in new tab</a>
     </div>
   </header>
 
@@ -49,7 +50,7 @@ try {
     ))}
     {pages.length === 0 && (
       <div class="resume-panel__fallback">
-        <a class="outline-btn resume-btn resume-btn--primary" href={PDF} download="Sawyer Smith Resume.pdf">Download PDF</a>
+        <a class="outline-btn resume-btn resume-btn--primary" href={PDF} download="Sawyer Smith Resume.pdf"><Icon name="download" />Download PDF</a>
       </div>
     )}
   </section>

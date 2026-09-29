@@ -1569,3 +1569,150 @@ video {
     }
   }
 }
+
+/* ======================================
+   ICONS (src/components/Icon.astro)
+   Pixel family: 8x8 cells, crisp; line family: 1.5 stroke.
+   16px in text, 20px in headers, 6 to 8px from their label.
+   ====================================== */
+.ico {
+  display: inline-block;
+  flex: none;
+  vertical-align: middle;
+  overflow: visible;
+}
+.ico--px {
+  image-rendering: pixelated;
+}
+.outline-btn .icon-svg,
+.footer-social .icon-svg,
+.page-links .icon-svg {
+  color: var(--fg-muted);
+}
+.footer-social a:hover .icon-svg,
+.outline-btn:hover .icon-svg {
+  color: inherit;
+}
+
+/* section header boxes: pixel icon, then the index and title */
+.section-heading__icon {
+  align-self: center;
+  color: var(--accent);
+}
+.section-text__icon {
+  margin-right: 8px;
+  vertical-align: -2px;
+  color: var(--accent);
+}
+
+/* hero: a tiny invader after the subtitle */
+.hero__invader {
+  margin-left: 6px;
+  vertical-align: -1px;
+  color: var(--accent);
+}
+
+/* timeline labels */
+.tl-item__icon {
+  margin-right: -3px; /* the org row has a 10px gap; icons sit 7px from their label */
+  color: var(--accent);
+}
+.tl-item__date {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  vertical-align: bottom;
+}
+.tl-item__date-icon {
+  position: relative;
+  top: -0.5px;
+}
+
+/* work cards */
+.work-card__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.work-card__tag-icon {
+  opacity: 0.8;
+}
+.work-card__arrow,
+.work-card__repo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.work-card__stars {
+  gap: 6px;
+}
+.work-card__star {
+  color: #e3b341;
+}
+
+/* contribution graph header */
+.contrib__title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0 6px;
+}
+.contrib__icon {
+  color: var(--accent);
+}
+
+/* breadcrumb: the page crumb carries a 12px pixel glyph */
+.breadcrumb a.breadcrumb__crumb--icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  vertical-align: bottom;
+}
+.breadcrumb__icon {
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :where(.ico) {
+    transition: color var(--dur-ui) var(--ease-out), opacity var(--dur-ui) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  /* The hero invader bobs 2px on a slow loop. */
+  .hero__invader {
+    animation: invader-bob 3s var(--ease-in-out) infinite;
+  }
+  @keyframes invader-bob {
+    50% {
+      transform: translateY(-2px);
+    }
+  }
+  /* Pixel icons pop once as their section or card reveals. */
+  .section-block.in > .section-heading .ico--px,
+  .section-block.in > .section-text .ico--px,
+  .tl-item.in .ico--px,
+  .work-card.in .ico--px,
+  .contrib.in .ico--px,
+  .resume-head.in .ico--px,
+  .proj-cta.in .ico--px {
+    animation: px-pop var(--dur-base) var(--ease-out) calc(var(--stagger, 0ms) + var(--dur-base)) backwards;
+  }
+  .breadcrumb__icon {
+    animation: px-pop var(--dur-base) var(--ease-out) var(--dur-slow) backwards;
+  }
+  @keyframes px-pop {
+    50% {
+      transform: scale(1.15);
+    }
+  }
+  /* Card "view" arrow nudges toward the corner on hover. */
+  .work-card:hover .work-card__arrow .ico {
+    transform: translate(2px, -2px);
+  }
+  .work-card__repo-link:hover .ico {
+    transform: translateY(-1px);
+  }
+  /* Contact buttons and footer: the same one-shot wiggle the old mask icons had. */
+  .contact-links a:hover .icon-svg,
+  .footer-social a:hover .icon-svg {
+    animation: icon-wiggle calc(var(--dur-fast) * 2) var(--ease-in-out);
+  }
+}

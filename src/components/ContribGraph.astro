@@ -5,6 +5,7 @@
 // order: column by column left to right, top to bottom, oldest first, so the
 // newest day is the bottom-right-most filled cell. Static SVG built at compile time.
 import data from '../data/contributions.json';
+import Icon from './Icon.astro';
 
 // 21 x 20: the 42 x 40 pixel logo downsampled 2x2, with the S hand-fixed
 // so each stroke is one cell wide and reads cleanly at this size.
@@ -82,7 +83,7 @@ const since = `${MONTH_LONG[start.getUTCMonth()]} ${start.getUTCFullYear()}`;
 ---
 
 <div class="contrib" data-contrib>
-  <h3 class="contrib__title"><span class="contrib__count" data-count={total}>{total.toLocaleString('en-US')}</span> contributions since {since}</h3>
+  <h3 class="contrib__title"><Icon name="px-sparkle" class="contrib__icon" /><span class="contrib__count" data-count={total}>{total.toLocaleString('en-US')}</span> contributions since {since}</h3>
   <div class="contrib__scroll">
     <svg
       class="contrib__graph"
