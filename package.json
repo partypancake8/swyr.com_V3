@@ -7,6 +7,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "resume:pdf": "typst compile --font-path src/resume/fonts src/resume/sawyer-smith-resume.typ public/documents/sawyer-smith-resume.pdf",
     "resume:render": "node scripts/render-resume.mjs"
   },
   "dependencies": {
