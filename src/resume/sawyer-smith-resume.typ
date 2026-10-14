@@ -49,7 +49,7 @@ Birmingham, MI • +1 (248) 550-8616 •
 
 #v(0.5em)
 *University of Michigan – College of Engineering*, Ann Arbor, MI \
-*B.S.E. Robotics Engineering* – #emph[Expected December 2026] #h(1fr) GPA: 3.44 \
+*B.S.E. Robotics Engineering* – #emph[Expected Winter 2027] #h(1fr) GPA: 3.34 \
 Relevant Coursework: Mechatronics, Data Structures, Robot Operating Systems, HRI, OOP
 
 // ---------------------------------------------------------------- experience
@@ -68,6 +68,7 @@ Relevant Coursework: Mechatronics, Data Structures, Robot Operating Systems, HRI
   [Designed and implemented LabVIEW control software for a water-pump testbench with LIN-based feedback and control.],
   [Assisted in customer warranty analysis and functional testing for thermal management products.],
   [Researched competitor patents and products to benchmark design and performance trends in the EV cooling market.],
+  [Created 3D-printed display models for trade shows and internal testing.],
   [Collaborated across engineering and sales teams to ensure accurate technical communication with clients.],
 )
 
@@ -89,4 +90,4 @@ Relevant Coursework: Mechatronics, Data Structures, Robot Operating Systems, HRI
 // ---------------------------------------------------------------- skills
 #section[SKILLS]
 
-Python, JavaScript/TypeScript, C++, MATLAB, LabVIEW, SQL, HTML/CSS, Git, ROS, Fusion 360, 3D Printing, AutoCAD, Technical Drawing, Data Visualization, Microsoft 365
+Python, C++, MATLAB, LabVIEW, HTML/CSS, Git, ROS, Fusion 360, 3D Printing, AutoCAD, Technical Drawing, Microsoft 365, Data Visualization
