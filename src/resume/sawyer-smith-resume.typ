@@ -49,7 +49,7 @@ Birmingham, MI • +1 (248) 550-8616 •
 
 #v(0.5em)
 *University of Michigan – College of Engineering*, Ann Arbor, MI \
-*B.S.E. Robotics Engineering* – #emph[Expected Winter 2027] #h(1fr) GPA: 3.34 \
+*B.S.E. Robotics Engineering* – #emph[Expected December 2026] #h(1fr) GPA: 3.34 \
 Relevant Coursework: Mechatronics, Data Structures, Robot Operating Systems, HRI, OOP
 
 // ---------------------------------------------------------------- experience
