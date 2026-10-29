@@ -1,9 +1,9 @@
 // Live GitHub star counts for the work cards. The build-time number from
 // repos.json is the rendered fallback; this replaces it with the current count.
 // Unauthenticated API (60 requests/hour/IP), so each result is cached in
-// sessionStorage for 10 minutes. Any failure leaves the fallback untouched.
+// sessionStorage for one minute, and the HTTP cache is bypassed. Any failure leaves the fallback untouched.
 (function () {
-  var TTL = 10 * 60 * 1000;
+  var TTL = 60 * 1000;
   var KEY = 'swyr-stars:';
 
   function readCache(repo) {
@@ -48,7 +48,8 @@
       if (cached !== null) { show(card, repo, cached); return; }
       if (!window.fetch) return;
       fetch('https://api.github.com/repos/partypancake8/' + encodeURIComponent(repo), {
-        headers: { Accept: 'application/vnd.github+json' }
+        headers: { Accept: 'application/vnd.github+json' },
+        cache: 'no-store'
       })
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (d) {
@@ -62,4 +63,6 @@
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
   else run();
+  // A back-forward cache restore skips DOMContentLoaded; refresh then too.
+  window.addEventListener('pageshow', function (e) { if (e.persisted) run(); });
 })();
