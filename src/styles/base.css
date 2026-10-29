@@ -1574,3 +1574,52 @@ video {
   margin: 0 4px;
   color: var(--border);
 }
+
+/* 4square: justified gallery rows. Each item carries style="flex: <w/h>" so items
+   in a row share one height and take width by aspect ratio. No crops. */
+div.proj-gallery--row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 16px;
+}
+.proj-gallery--row .proj-gallery__item {
+  flex-basis: 0%;
+  min-width: 0;
+  margin: 0;
+}
+.proj-gallery--row .proj-gallery__item :is(img, video) {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 560px) {
+  div.proj-gallery--row {
+    flex-direction: column;
+  }
+  .proj-gallery--row .proj-gallery__item {
+    width: 100%;
+  }
+}
+.proj-hero-anim {
+  margin-top: 16px;
+}
+.proj-hero-anim .proj-gallery__item video {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #14161a;
+}
+.proj-hero-actions {
+  margin: 16px 0;
+}
+div.proj-gallery--row + p {
+  margin-top: 16px;
+}
+
+/* Live GitHub star counts: the number crossfades when stars.js updates it. */
+:root[data-motion="on"] .work-card__star-count {
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+.work-card__star-count.is-swapping {
+  opacity: 0;
+}

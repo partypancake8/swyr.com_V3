@@ -3,18 +3,22 @@ import ProjectLayout from '../../layouts/ProjectLayout.astro';
 import Icon from '../../components/Icon.astro';
 ---
 
-<ProjectLayout title="4 square · build log" breadcrumb="4 square">
+<ProjectLayout title="4square · build log" breadcrumb="4square">
   <!-- ── hero ─────────────────────────── -->
   <header class="proj-hero">
     <p class="proj-eyebrow">project build log</p>
-    <h1 class="proj-title">4 square</h1>
-    <p class="proj-tagline">A modular desk display where every screen is yours to configure.</p>
+    <h1 class="proj-title">4square</h1>
+    <p class="proj-tagline">A four-screen desk clock on a custom PCB, in a printed case with a clear acrylic back.</p>
     <ul class="proj-tags">
       <li class="proj-tag">embedded</li>
+      <li class="proj-tag">custom PCB</li>
+      <li class="proj-tag">code CAD</li>
+      <li class="proj-tag">ESP32-C3</li>
       <li class="proj-tag">open source</li>
-      <li class="proj-tag">3D printed</li>
-      <li class="proj-tag">ESP32-S3</li>
     </ul>
+    <p class="proj-hero-actions">
+      <a class="outline-btn" href="https://github.com/partypancake8/4square_production" target="_blank" rel="noopener"><Icon name="github" size={16} />View on GitHub</a>
+    </p>
     <div class="proj-meta">
       <div class="proj-meta-item">
         <span class="proj-meta-label">Type</span>
@@ -22,20 +26,20 @@ import Icon from '../../components/Icon.astro';
       </div>
       <div class="proj-meta-item">
         <span class="proj-meta-label">Date</span>
-        <span class="proj-meta-value">April 2026</span>
+        <span class="proj-meta-value">2026</span>
       </div>
       <div class="proj-meta-item">
         <span class="proj-meta-label">Status</span>
-        <span class="proj-meta-value proj-meta-value--green">complete</span>
+        <span class="proj-meta-value proj-meta-value--green">complete, iterating</span>
       </div>
       <div class="proj-meta-item">
         <span class="proj-meta-label">Source</span>
         <a
           class="proj-meta-link"
-          href="https://github.com/partypancake8/oled2x2x"
+          href="https://github.com/partypancake8/4square_production"
           target="_blank"
           rel="noopener"
-        ><Icon name="github" size={12} />oled2x2x</a>
+        ><Icon name="github" size={12} />4square_production</a>
       </div>
     </div>
   </header>
@@ -47,12 +51,33 @@ import Icon from '../../components/Icon.astro';
       src="/images/4square/v1-early-front.jpg"
       width="1600"
       height="1200"
-      alt="Finished 4 square build on a desk"
+      alt="Finished 4square build on a desk"
     />
   </div>
   <p class="proj-media-caption">
-    finished build · 4&times; SSD1306 OLEDs in custom 3D-printed enclosure
+    V1 &middot; custom PCB &middot; 4&times; SSD1306 OLEDs &middot; printed shell
   </p>
+
+  <!-- ── exploded animation ───────────── -->
+  <div class="proj-gallery--row proj-hero-anim">
+    <figure class="proj-gallery__item" style="flex: 1">
+      <video
+        autoplay
+        loop
+        muted
+        playsinline
+        disablepictureinpicture
+        preload="auto"
+        width="888"
+        height="680"
+        poster="/images/4square/4square-exploded-still.webp"
+        src="/videos/4square-exploded.mp4"
+      >
+        <img src="/images/4square/4square-exploded.gif" alt="Animated exploded view of the 4square case" width="888" height="680" />
+      </video>
+      <figcaption class="proj-stage__cap">exploded view &middot; screws, acrylic back, standoff frame, PCB, retainer, screens, shell</figcaption>
+    </figure>
+  </div>
 
   <!-- ── overview ─────────────────────── -->
   <section class="proj-section" id="overview" data-crumb="overview">
@@ -61,39 +86,53 @@ import Icon from '../../components/Icon.astro';
       <div class="proj-overview-text">
         <h2 class="proj-section-heading">what is this?</h2>
         <p>
-          Four 128&times;64 OLED screens, each independently programmable. Runs on an Adafruit
-          Feather ESP32-S3 with WiFi, NTP time sync, battery gauge, and a temperature sensor,
-          all housed in a custom 3D-printed enclosure.
+          4square is a small desk clock: four 128&times;64 OLED panels in a 2&times;2 grid,
+          hours top left, minutes top right, weekday and date along the bottom. It started as
+          four screen modules on jumper wires and a protoboard, and it is now a 74&times;74 mm
+          board I designed in KiCad, inside a case I wrote in code with build123d, with a
+          laser-cut acrylic back so you can see the board. Behind the screens there is a
+          real-time clock, a temperature and humidity sensor, a light sensor for auto-dimming,
+          three RGB status LEDs, four buttons and an EEPROM that keeps the settings.
         </p>
         <p>
-          Every screen is a &ldquo;widget&rdquo; slot. Swap them out in config, no code changes
-          needed. If it&rsquo;s a number, a word, or an icon, it fits on a screen.
+          OLEDs burn in when the same pixels stay lit, and a clock lights the same digits for months,
+          so the firmware is written around panel lifetime. Every pixel goes through one function that
+          shifts the image and caps the brightness, and a layout prover on my laptop checks every
+          screen before the flash script will flash the board.
         </p>
       </div>
       <aside class="proj-specs">
         <div class="proj-spec-row">
           <span class="proj-spec-label">MCU</span>
-          <span class="proj-spec-value">ESP32-S3 (WiFi + BLE)</span>
+          <span class="proj-spec-value">ESP32-C3 SuperMini</span>
         </div>
         <div class="proj-spec-row">
           <span class="proj-spec-label">Displays</span>
-          <span class="proj-spec-value">4&times; SSD1306 128&times;64 OLED</span>
+          <span class="proj-spec-value">4&times; 0.96 in SSD1306 128&times;64 OLED</span>
         </div>
         <div class="proj-spec-row">
-          <span class="proj-spec-label">Mux</span>
-          <span class="proj-spec-value">TCA9548A I&sup2;C</span>
+          <span class="proj-spec-label">Clock</span>
+          <span class="proj-spec-value">DS3231 RTC</span>
         </div>
         <div class="proj-spec-row">
           <span class="proj-spec-label">Sensors</span>
-          <span class="proj-spec-value">SHT40 temp / humidity</span>
+          <span class="proj-spec-value">SHT31 temp / humidity, light sensor</span>
+        </div>
+        <div class="proj-spec-row">
+          <span class="proj-spec-label">Memory</span>
+          <span class="proj-spec-value">24LC256 EEPROM</span>
+        </div>
+        <div class="proj-spec-row">
+          <span class="proj-spec-label">Board</span>
+          <span class="proj-spec-value">custom 74&times;74 mm, 2-layer, KiCad, rev N</span>
+        </div>
+        <div class="proj-spec-row">
+          <span class="proj-spec-label">Case</span>
+          <span class="proj-spec-value">rev 5 PETG prints + rev 6 laser-cut acrylic back</span>
         </div>
         <div class="proj-spec-row">
           <span class="proj-spec-label">Power</span>
-          <span class="proj-spec-value">LiPo 2500 mAh</span>
-        </div>
-        <div class="proj-spec-row">
-          <span class="proj-spec-label">Enclosure</span>
-          <span class="proj-spec-value">5-part FDM, Fusion 360</span>
+          <span class="proj-spec-value">USB-C</span>
         </div>
       </aside>
     </div>
@@ -102,7 +141,7 @@ import Icon from '../../components/Icon.astro';
   <hr class="proj-divider" />
 
   <!-- ── build stages: prototype, V0, V1 ── -->
-  <section class="proj-section" id="build-stages" data-crumb="build stages">
+  <section class="proj-section" id="build" data-crumb="build">
     <p class="proj-section-label"><Icon name="camera" class="proj-section-label__icon" />build stages</p>
     <ol class="proj-stages">
       <li class="proj-stage">
@@ -139,9 +178,9 @@ import Icon from '../../components/Icon.astro';
             <li class="proj-stage__item" style="--a: 0.75">
               <figure>
                 <div class="proj-stage__frame">
-                  <img src="/images/4square/prototype.jpeg" alt="prototype wiring: protoboard mux breakout with 4× OLEDs on jumper wires" width="768" height="1024" loading="lazy" />
+                  <img src="/images/4square/prototype.jpeg" alt="Prototype wiring: protoboard mux breakout with four OLEDs on jumper wires" width="768" height="1024" loading="lazy" />
                 </div>
-              <figcaption class="proj-stage__cap">02 &middot; prototype stage &middot; protoboard mux breakout &middot; 4&times; OLEDs on jumper wires &middot; testing before enclosure</figcaption>
+              <figcaption class="proj-stage__cap">protoboard I&sup2;C mux breakout &middot; 4&times; OLEDs on jumper wires &middot; testing before the enclosure</figcaption>
               </figure>
             </li>
           </ul>
@@ -151,14 +190,14 @@ import Icon from '../../components/Icon.astro';
         <div class="proj-stage__head">
           <span class="proj-stage__dot" aria-hidden="true"></span>
           <p class="proj-stage__label">V0</p>
-          <p class="proj-stage__note">3D-printed enclosure</p>
+          <p class="proj-stage__note">the original build, hand-wired in a 3D-printed enclosure</p>
         </div>
         <div class="jrow">
           <ul class="jrow__half">
             <li class="proj-stage__item" style="--a: 0.75">
               <figure>
                 <div class="proj-stage__frame">
-                  <img src="/images/4square/finished.jpeg" alt="4 square V0, the original 3D-printed build, finished" width="768" height="1024" loading="lazy" />
+                  <img src="/images/4square/finished.jpeg" alt="4square V0, the original 3D-printed build, finished" width="768" height="1024" loading="lazy" />
                 </div>
               </figure>
             </li>
@@ -178,7 +217,7 @@ import Icon from '../../components/Icon.astro';
                     src="/images/4square/enclosure.mp4"
                   ></video>
                 </div>
-              <figcaption class="proj-stage__cap">01 &middot; 5-part enclosure &middot; display faceplate &middot; display mount (&times;2) &middot; back panel &middot; lid</figcaption>
+              <figcaption class="proj-stage__cap">V0 enclosure &middot; display faceplate &middot; display mounts &middot; back panel &middot; lid</figcaption>
               </figure>
             </li>
           </ul>
@@ -188,7 +227,7 @@ import Icon from '../../components/Icon.astro';
         <div class="proj-stage__head">
           <span class="proj-stage__dot" aria-hidden="true"></span>
           <p class="proj-stage__label">V1</p>
-          <p class="proj-stage__note">Custom PCB, finished build</p>
+          <p class="proj-stage__note">custom PCB, new case, finished build</p>
         </div>
         <div class="proj-stage__rows">
           <div class="jrow">
@@ -196,21 +235,21 @@ import Icon from '../../components/Icon.astro';
               <li class="proj-stage__item" style="--a: 0.75">
                 <figure>
                   <div class="proj-stage__frame">
-                    <img src="/images/4square/v1-pcb.jpg" alt="4 square V1 with the lid off, showing the custom PCB" width="1200" height="1600" loading="lazy" />
+                    <img src="/images/4square/v1-pcb.jpg" alt="4square V1 with the back off, showing the custom PCB" width="1200" height="1600" loading="lazy" />
                   </div>
                 </figure>
               </li>
               <li class="proj-stage__item" style="--a: 0.75">
                 <figure>
                   <div class="proj-stage__frame">
-                    <img src="/images/4square/v1-front.jpg" alt="4 square V1 finished, clock face" width="1200" height="1600" loading="lazy" />
+                    <img src="/images/4square/v1-front.jpg" alt="4square V1 finished, clock face" width="1200" height="1600" loading="lazy" />
                   </div>
                 </figure>
               </li>
               <li class="proj-stage__item" style="--a: 0.75">
                 <figure>
                   <div class="proj-stage__frame">
-                    <img src="/images/4square/v1-tickers.jpg" alt="4 square V1 finished, stock ticker screen" width="1200" height="1600" loading="lazy" />
+                    <img src="/images/4square/v1-tickers.jpg" alt="4square V1 finished, showing a four-panel page" width="1200" height="1600" loading="lazy" />
                   </div>
                 </figure>
               </li>
@@ -221,21 +260,21 @@ import Icon from '../../components/Icon.astro';
               <li class="proj-stage__item" style="--a: 1.33333">
                 <figure>
                   <div class="proj-stage__frame">
-                    <img src="/images/4square/v1-early-front.jpg" alt="4 square V1, front, showing the clock face" width="1600" height="1200" loading="lazy" />
+                    <img src="/images/4square/v1-early-front.jpg" alt="4square V1, front, showing the clock face" width="1600" height="1200" loading="lazy" />
                   </div>
                 </figure>
               </li>
               <li class="proj-stage__item" style="--a: 1.33333">
                 <figure>
                   <div class="proj-stage__frame">
-                    <img src="/images/4square/v1-early-desk.jpg" alt="4 square V1 on the desk" width="1600" height="1200" loading="lazy" />
+                    <img src="/images/4square/v1-early-desk.jpg" alt="4square V1 on the desk" width="1600" height="1200" loading="lazy" />
                   </div>
                 </figure>
               </li>
               <li class="proj-stage__item" style="--a: 1.03394">
                 <figure>
                   <div class="proj-stage__frame">
-                    <img src="/images/4square/v1-dark.jpg" alt="4 square in the dark, OLEDs glowing" width="792" height="766" loading="lazy" />
+                    <img src="/images/4square/v1-dark.jpg" alt="4square in the dark, OLEDs glowing" width="792" height="766" loading="lazy" />
                   </div>
                 </figure>
               </li>
@@ -248,169 +287,185 @@ import Icon from '../../components/Icon.astro';
 
   <hr class="proj-divider" />
 
-  <!-- ── motivation ───────────────────── -->
-  <section class="proj-section" id="motivation" data-crumb="motivation">
-    <p class="proj-section-label">motivation</p>
-    <h2 class="proj-section-heading">people want small, intentional desk objects</h2>
+  <!-- ── custom PCB ───────────────────── -->
+  <section class="proj-section" id="pcb" data-crumb="pcb">
+    <p class="proj-section-label"><Icon name="chip" class="proj-section-label__icon" />custom pcb</p>
+    <h2 class="proj-section-heading">replacing the jumper wires with one board</h2>
     <p>
-      Succulents, Lego sets, mechanical keyboards: people curate their personal spaces
-      carefully. There&rsquo;s no good answer for a small, useful, <em>customizable</em> display
-      object that&rsquo;s also genuinely functional. This fills that niche: it looks cool, tells
-      you things you actually care about, and reflects who you are.
+      The prototype and V0 were four screen modules, a mux breakout and an ESP32 joined by
+      jumper wires and protoboard. It worked, but the wiring was fragile, it filled the case, and every rebuild meant rewiring.
+      I replaced all of it with one carrier board. The four screens plug into the front, everything
+      else sits on the back, and the board matches the inside of the case at 74&times;74 mm, which
+      keeps the walls 2 mm thick all round.
     </p>
-    <div class="jrow">
-      <ul class="jrow__half">
-        <li class="proj-stage__item" style="--a: 0.75">
-          <figure>
-            <div class="proj-stage__frame">
-              <img src="/images/4square/succulent.png" alt="Succulent" width="3024" height="4032" loading="lazy" />
-            </div>
-          </figure>
-        </li>
-        <li class="proj-stage__item" style="--a: 1">
-          <figure>
-            <div class="proj-stage__frame">
-              <img src="/images/4square/lego.png" alt="Lego set" width="570" height="570" loading="lazy" />
-            </div>
-          </figure>
-        </li>
-      </ul>
-      <ul class="jrow__half">
-        <li class="proj-stage__item" style="--a: 2">
-          <figure>
-            <div class="proj-stage__frame">
-              <img src="/images/4square/keyboard.png" alt="Mechanical keyboard" width="2048" height="1024" loading="lazy" />
-            </div>
-          </figure>
-        </li>
-      </ul>
+    <p>
+      The board is generated from code: the schematic and placement are scripts, KiCad checks the
+      result, and an autorouter lays the copper, so every revision rebuilds from scratch.
+      It went through revisions A to N over about a week in July. Rev C was the first square
+      layout, rev D moved the power chain onto a centre spine, rev E added the four buttons,
+      rev F settled on 74&times;74 mm with even margins around the screens, rev G turned the
+      back into a &ldquo;kit&rdquo; you look at through the clear back, with axial resistors
+      laid out as a labelled ladder, rev I added the DS3231 clock, the temperature sensor and
+      the light sensor, and rev L moved to cheaper LEDs and labelled every part. An audit of rev L found blockers, and rev N fixed all of them: it passes DRC at
+      JLCPCB&rsquo;s manufacturing limits with 74 footprints on two layers, and JLCPCB assembles the
+      surface-mount parts. The first batch was ordered from that design as rev O.
+    </p>
+    <div class="proj-gallery proj-gallery--row">
+      <figure class="proj-gallery__item" style="flex: 0.75">
+        <img src="/images/4square/v1-pcb.jpg" alt="The assembled custom PCB inside the case with the back off" width="1200" height="1600" loading="lazy" />
+        <figcaption class="proj-stage__cap">the assembled board in the case</figcaption>
+      </figure>
+      <figure class="proj-gallery__item" style="flex: 1">
+        <img src="/images/4square/pcb-back-full.webp" alt="KiCad render of the whole back of the board, edges and corner mounting holes included: resistor ladder, status LEDs, mux, RTC, EEPROM socket, coin cell and the ESP32-C3 module" width="1800" height="1800" loading="lazy" />
+        <figcaption class="proj-stage__cap">KiCad render of the back &middot; the resistor ladder, LEDs, mux, RTC and EEPROM</figcaption>
+      </figure>
     </div>
+    <ul class="proj-widget-list">
+    <li class="proj-widget-item">
+      <span class="proj-widget-name">ESP32-C3</span>
+      <span class="proj-widget-desc">SuperMini module, its own USB-C on the bottom edge</span>
+    </li>
+    <li class="proj-widget-item">
+      <span class="proj-widget-name">Screens</span>
+      <span class="proj-widget-desc">four OLED sockets behind an I&sup2;C mux</span>
+    </li>
+    <li class="proj-widget-item">
+      <span class="proj-widget-name">DS3231</span>
+      <span class="proj-widget-desc">real-time clock with a coin-cell backup</span>
+    </li>
+    <li class="proj-widget-item">
+      <span class="proj-widget-name">SHT31</span>
+      <span class="proj-widget-desc">temperature and humidity, under the vent</span>
+    </li>
+    <li class="proj-widget-item">
+      <span class="proj-widget-name">Light</span>
+      <span class="proj-widget-desc">phototransistor for auto-dimming</span>
+    </li>
+    <li class="proj-widget-item">
+      <span class="proj-widget-name">24LC256</span>
+      <span class="proj-widget-desc">EEPROM for settings, in a socket</span>
+    </li>
+    <li class="proj-widget-item">
+      <span class="proj-widget-name">LEDs</span>
+      <span class="proj-widget-desc">three RGB status LEDs</span>
+    </li>
+    <li class="proj-widget-item">
+      <span class="proj-widget-name">Buttons</span>
+      <span class="proj-widget-desc">MODE, SET, UP, DOWN on the side edges</span>
+    </li>
+    </ul>
   </section>
 
   <hr class="proj-divider" />
 
-  <!-- ── software ─────────────────────── -->
-  <section class="proj-section" id="software" data-crumb="software">
-    <p class="proj-section-label"><Icon name="chip" class="proj-section-label__icon" />software</p>
-    <h2 class="proj-section-heading">fully customizable 2&times;2 layout</h2>
+  <!-- ── case CAD ─────────────────────── -->
+  <section class="proj-section" id="case" data-crumb="case">
+    <p class="proj-section-label"><Icon name="wrench" class="proj-section-label__icon" />case</p>
+    <h2 class="proj-section-heading">case CAD in build123d</h2>
     <p>
-      Each of the four screens is independently assigned a widget. Swap them in config,
-      no code changes needed.
+      The V1 case is code CAD: every part is a build123d Python script, so a change to the board becomes a changed number and a rebuild instead of an afternoon of
+      redrawing.
+      The printed set is rev 5, three PETG parts: a front shell that holds the four screens
+      just below the face, and a retainer split into two halves that clamps the screens from
+      behind. The back is rev 6, a 3 mm laser-cut acrylic panel that keeps the board visible,
+      with two finger notches, a slotted vent over the temperature sensor and a printed
+      standoff frame behind it. Four M3&times;16 self-tapping screws hold the whole stack together.
+    </p>
+    <div class="proj-gallery proj-gallery--row">
+      <figure class="proj-gallery__item" style="flex: 1.30588">
+        <img src="/images/4square/4square-exploded-still.webp" alt="Exploded render of the case: screws, acrylic back, standoff frame, PCB, retainer, screens and shell" width="888" height="680" loading="lazy" />
+        <figcaption class="proj-stage__cap">exploded still</figcaption>
+      </figure>
+      <figure class="proj-gallery__item" style="flex: 1.33333">
+        <img src="/images/4square/case-screens-on.webp" alt="The assembled clock with the four screens lit showing the clock face" width="1200" height="900" loading="lazy" />
+        <figcaption class="proj-stage__cap">assembled &middot; screens lit with the clock face</figcaption>
+      </figure>
+      <figure class="proj-gallery__item" style="flex: 1.33333">
+        <img src="/images/4square/case-acrylic-engraving.webp" alt="Render of the rev 6 acrylic back with the engraved text and vent slots" width="1200" height="900" loading="lazy" />
+        <figcaption class="proj-stage__cap">rev 6 acrylic back &middot; engraved on the inner face</figcaption>
+      </figure>
+    </div>
+    <p>
+      The engraving reads &ldquo;SAWYER&rdquo; and &ldquo;SMITH&rdquo; on either side of the
+      USB-C opening, with &ldquo;4SQUARE V1&rdquo; in the middle, in newstroke, the same font
+      as the board&rsquo;s own silkscreen, pulled straight out of KiCad. It is engraved on the
+      inner face so the surface you touch stays smooth. A laser marks whichever face is up, so the panel is cut inner face up and the DXF is drawn
+      mirrored to match: in the file the text reads backwards and the vent sits top left. Once the
+      panel is turned over and assembled, the text reads normally from outside.
+    </p>
+  </section>
+
+  <hr class="proj-divider" />
+
+  <!-- ── firmware ─────────────────────── -->
+  <section class="proj-section" id="firmware" data-crumb="firmware">
+    <p class="proj-section-label"><Icon name="chip" class="proj-section-label__icon" />firmware</p>
+    <h2 class="proj-section-heading">buttons, pages and burn-in protection</h2>
+    <p>
+      There is no menu. Each button owns a page, and pressing it again cycles that page. A long
+      press on MODE toggles the status LEDs, and a long press on SET opens the one settings page:
+      light sensitivity, temperature unit, and a daily screens-off window. Settings live in a
+      wear-levelled ring on the EEPROM, so they survive a power cut.
     </p>
     <ul class="proj-widget-list">
       <li class="proj-widget-item">
-        <span class="proj-widget-name">Clock</span>
-        <span class="proj-widget-desc">NTP-synced, timezone-aware</span>
+        <span class="proj-widget-name">MODE &middot; clock</span>
+        <span class="proj-widget-desc">hour, minute, weekday, date in several digit styles</span>
       </li>
       <li class="proj-widget-item">
-        <span class="proj-widget-name">Date</span>
-        <span class="proj-widget-desc">day, month, year display</span>
+        <span class="proj-widget-name">SET &middot; readings</span>
+        <span class="proj-widget-desc">temperature, humidity, light, uptime</span>
       </li>
       <li class="proj-widget-item">
-        <span class="proj-widget-name">Battery</span>
-        <span class="proj-widget-desc">percentage + bar graph</span>
+        <span class="proj-widget-name">UP &middot; stopwatch</span>
+        <span class="proj-widget-desc">start or resume from any page</span>
       </li>
       <li class="proj-widget-item">
-        <span class="proj-widget-name">Indoor temp</span>
-        <span class="proj-widget-desc">live SHT40 reading</span>
-      </li>
-      <li class="proj-widget-item">
-        <span class="proj-widget-name">Stock price</span>
-        <span class="proj-widget-desc">any ticker via API</span>
-      </li>
-      <li class="proj-widget-item">
-        <span class="proj-widget-name">Countdown</span>
-        <span class="proj-widget-desc">days to any event</span>
-      </li>
-      <li class="proj-widget-item">
-        <span class="proj-widget-name">Spotify</span>
-        <span class="proj-widget-desc">now playing track</span>
-      </li>
-      <li class="proj-widget-item">
-        <span class="proj-widget-name">Server ping</span>
-        <span class="proj-widget-desc">host latency monitor</span>
+        <span class="proj-widget-name">DOWN &middot; animations</span>
+        <span class="proj-widget-desc">48&times;48 animations at 8 fps</span>
       </li>
     </ul>
-    <div class="proj-callout">
-      Every screen is independently programmable. If it&rsquo;s a number, a word,
-      or an icon, it fits on a screen.
-    </div>
-  </section>
-
-  <hr class="proj-divider" />
-
-  <!-- ── enclosure ────────────────────── -->
-  <section class="proj-section" id="enclosure" data-crumb="enclosure">
-    <p class="proj-section-label"><Icon name="wrench" class="proj-section-label__icon" />enclosure</p>
-    <h2 class="proj-section-heading">5-part 3D-printed housing</h2>
     <p>
-      Designed in Fusion 360. The enclosure splits into a display faceplate, two display
-      mounts, a back panel, and a snap-fit lid: everything replaceable and remixable.
+      The stopwatch is the newest face; it replaced the stock ticker in October. It shows minutes top left
+      and seconds top right in the clock&rsquo;s outline digits, the state bottom left, hours
+      bottom right. UP starts or resumes it from anywhere, DOWN on it pauses and then clears, and
+      it keeps counting while you look at other pages.
     </p>
-  </section>
-
-  <hr class="proj-divider" />
-
-  <!-- ── hardware ─────────────────────── -->
-  <section class="proj-section" id="hardware" data-crumb="hardware">
-    <p class="proj-section-label"><Icon name="chip" class="proj-section-label__icon" />hardware</p>
-    <h2 class="proj-section-heading">components</h2>
-    <div class="proj-comp-grid">
-      <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/5477-06.jpg" alt="Adafruit Feather ESP32-S3" width="970" height="728" />
-        <div class="proj-comp-footer">
-          <span class="proj-comp-name">ESP32-S3</span>
-          <span class="proj-comp-role">MCU</span>
-        </div>
-      </div>
-      <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/326-04.jpg" alt='SSD1306 0.96" OLED' width="970" height="728" />
-        <div class="proj-comp-footer">
-          <span class="proj-comp-name">SSD1306</span>
-          <span class="proj-comp-role">4&times; Display</span>
-        </div>
-      </div>
-      <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/2717-05.jpg" alt="TCA9548A I2C Mux" width="970" height="728" />
-        <div class="proj-comp-footer">
-          <span class="proj-comp-name">TCA9548A</span>
-          <span class="proj-comp-role">I&sup2;C Mux</span>
-        </div>
-      </div>
-      <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/4885-05.jpg" alt="SHT40 Temp/Humidity" width="970" height="728" />
-        <div class="proj-comp-footer">
-          <span class="proj-comp-name">SHT4x</span>
-          <span class="proj-comp-role">Temp / Humidity</span>
-        </div>
-      </div>
-      <div class="proj-comp-card">
-        <img src="https://cdn-shop.adafruit.com/970x728/328-06.jpg" alt="LiPo 2500mAh battery" width="970" height="728" />
-        <div class="proj-comp-footer">
-          <span class="proj-comp-name">LiPo 2500</span>
-          <span class="proj-comp-role">Battery</span>
-        </div>
-      </div>
+    <p>
+      Burn-in is the main way a clock on OLEDs fails, so the protection is built into the drawing
+      path instead of left to each face. Drawing code only gets a canvas in RAM. One function copies
+      that canvas to the panel, and on the way it shifts the image along a path that visits every
+      offset evenly and applies a brightness cap; the light sensor dims it further at night. Because
+      no face can write to a panel directly, every face gets the shift and the cap. The second
+      safeguard is a layout prover that runs on my laptop: it compiles the same drawing code
+      that ships and checks every screen the firmware can draw for overlapping elements, ink
+      outside the safe area and the lit-pixel budget. If any check fails, the flash script refuses to flash.
+    </p>
+    <div class="proj-callout">
+      The same source builds two ways. The demo build has no radio code at all and keeps time from the clock chip; it is the version I show people. The full build adds WiFi and over-the-air
+      updates for running it at home.
     </div>
   </section>
 
   <hr class="proj-divider" />
 
-  <!-- ── open source CTA ───────────────── -->
-  <section class="proj-section">
+  <!-- ── source ───────────────────────── -->
+  <section class="proj-section" id="source" data-crumb="source">
+    <p class="proj-section-label"><Icon name="rocket" class="proj-section-label__icon" />source</p>
     <div class="proj-cta">
-      <p class="proj-cta-heading"><Icon name="rocket" size={20} class="proj-cta-heading__icon" />build your own. it&rsquo;s fully open source.</p>
+      <p class="proj-cta-heading">firmware, demo image and build notes on GitHub</p>
       <p>
-        Everything is open source. Fork it, swap out screens, change the layout, add new
-        data sources, and make it yours.
+        The repo has the firmware source, a prebuilt demo image you can flash with one command,
+        the layout prover, and hardware notes with the board summary and pin map. It is MIT
+        licensed.
       </p>
       <a
         class="proj-cta-link"
-        href="https://github.com/partypancake8/oled2x2x"
+        href="https://github.com/partypancake8/4square_production"
         target="_blank"
         rel="noopener"
       >
-        github.com/partypancake8/oled2x2x &rarr;
+        github.com/partypancake8/4square_production &rarr;
       </a>
     </div>
   </section>

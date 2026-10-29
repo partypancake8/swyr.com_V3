@@ -2,12 +2,14 @@
 
 ### [Install on macOS](#macos) &nbsp;·&nbsp; [Install on Linux](#linux)
 
-A small Markdown previewer that re-renders the moment the file changes on disk.
+A small Markdown previewer with simple editing that re-renders the moment the file changes on disk.
 
 It was built for working next to AI coding agents. When Claude Code or Codex
-edits a `.md` file, you see the new version straight away without touching
-anything. There is no editor, no vault, and no server. It opens a file and shows
-it.
+edits a `.md` file, you see the new version straight away. There is no vault
+and no server. It opens a file and shows it. If something needs fixing, click
+anywhere in the page and type, like a Google Doc, and the change is autosaved
+straight back to the Markdown file. Editing is Mac only for now. The Linux port
+is still viewer only.
 
 <table>
   <tr>
@@ -24,6 +26,18 @@ it.
 
 - Re-renders on every save, including atomic saves where the editor writes a
   temp file and renames it over the original
+- Click into the rendered page and type to edit it in place. Edits autosave
+  about a second after you stop typing, and only the lines of the blocks you
+  touched change in the file, so the rest of your Markdown stays byte for byte
+  what it was. Math and Mermaid diagrams are kept as they are
+- A Format menu for simple edits: bold, italic, strikethrough, inline code,
+  Heading 1 to 3, body text, bulleted and numbered lists, and links. Each one
+  toggles, so Bold on bold text takes it off and Body Text turns a heading back
+  into a paragraph, and the result is written back as plain Markdown. With
+  nothing selected, formatting acts on the word under the cursor, or on what
+  you type next when the cursor is at a word boundary
+- The standard Edit menu: undo, redo, cut, copy, paste (always as plain text)
+  and select all
 - Keeps your scroll position across refreshes, so the page does not jump
 - Syntax highlighting for fenced code blocks
 - GitHub style tables, task lists, footnotes, definition lists, strikethrough
@@ -75,6 +89,14 @@ mdlive README.md
 | Copy file path | `Ctrl+L` |
 | Print | `Ctrl+P` |
 | Settings | `Ctrl+,` |
+| Undo, redo (Mac) | `Ctrl+Z`, `Ctrl+Shift+Z` |
+| Cut, copy, paste (Mac) | `Ctrl+X`, `Ctrl+C`, `Ctrl+V` |
+| Bold, italic (Mac) | `Ctrl+B`, `Ctrl+I` |
+| Inline code (Mac) | `Ctrl+Shift+C` |
+| Heading 1, 2, 3, body text (Mac) | `Ctrl+Cmd+1`, `Ctrl+Cmd+2`, `Ctrl+Cmd+3`, `Ctrl+Cmd+0` |
+| Bulleted list, numbered list (Mac) | `Ctrl+Shift+8`, `Ctrl+Shift+7` |
+| Link (Mac) | `Ctrl+K` |
+| Version history (Mac) | `Ctrl+Alt+Y` (`⌥⌘Y` on the Mac) |
 
 ## macOS
 
@@ -95,7 +117,37 @@ Install to `/Applications` and launch it by name. Running `open -a` against the
 raw DerivedData path fails with Launch Services error -600.
 
 The shortcuts match the table above with Command in place of Control, so Open is
-`⌘O` and the outline is `⌥⌘1`.
+`⌘O` and the outline is `⌥⌘1`. The rows marked Mac are the Edit and Format
+menus, which only the Mac app has, since the Linux port is a read-only preview.
+The heading keys keep both modifiers, so Heading 1 is `⌃⌘1` and body text is
+`⌃⌘0`. Strikethrough has no default key. Every Format shortcut can be remapped
+in the Shortcuts settings tab.
+
+### Version History
+
+MDLive keeps a log of every change to every file it has open, a bit like
+Google Docs. File > Version History… (`⌥⌘Y`) opens a sidebar on the right that
+lists the versions of the current file, newest first and grouped by day. Each
+row shows the time and where the change came from:
+
+- **Opened**: the file as it was when MDLive opened it (recorded the first time,
+  and again whenever the file on disk differs from the newest version).
+- **You**: an autosave of your edits. Saves less than two minutes apart are
+  grouped into one version.
+- **Outside change**: another program changed the file while it was open.
+- **Restored**: a Restore from the sidebar.
+
+Click a row to see that version, read only, with a bar on top that says when it
+is from. **Restore** writes it back to the file right away (the version it
+replaced stays in the list, so a restore can be undone the same way), and
+**Back to current** returns to the live file. Closing the sidebar also returns
+to it.
+
+The log lives in `~/Library/Application Support/MDLive/history/`, one folder per
+file (named by the SHA-256 of its path) with an `index.json` and one `.md`
+snapshot per version. Each file keeps its newest 200 versions and the whole log
+stays under 500 MB, dropping the oldest versions first. Set `MDLIVE_HISTORY_DIR`
+to keep it somewhere else (the tests and headless gates do).
 
 The Mac build is ad hoc signed for local use. Developer ID signing and
 notarization are not set up, so the Sparkle update plumbing is wired in but
@@ -149,6 +201,10 @@ MDLIVE_SELFTEST=/tmp/out.json MDLIVE_OPEN="$PWD/sample/hello.md" \
 
 `web-tests/run.sh` drives the same harness against `sample/mermaid.md` and asserts
 that each valid diagram produced an `svg` and the broken one shows its error line.
+It also runs `web-tests/edit-test.sh`, which types into a paragraph, a list item,
+a code block, a table cell, a heading and a footnote of `sample/kitchen-sink.md`
+through `MDLIVE_EDIT_SELFTEST` and checks that the autosaved file changed only in
+those lines, and that just clicking in never rewrites the file.
 
 `sample/` holds the fixtures, including `kitchen-sink.md`, which exercises every
 supported element.

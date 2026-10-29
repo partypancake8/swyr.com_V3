@@ -33,7 +33,7 @@ const meta = repo ? (repoData as { repos: Record<string, { url: string; language
 const linkAttrs = external ? { target: '_blank', rel: 'noopener' } : {};
 ---
 
-<article class:list={['work-card', { 'work-card--thumb': image, 'work-card--repo': pill }]}>
+<article class:list={['work-card', { 'work-card--thumb': image, 'work-card--repo': pill }]} data-repo={repo}>
   {image && (
     <div class:list={['work-card__thumb', { 'work-card__thumb--fit': imageFit }]}>
       <img src={image} alt={imageAlt} width={imageWidth} height={imageHeight} loading="lazy" />
@@ -63,7 +63,7 @@ const linkAttrs = external ? { target: '_blank', rel: 'noopener' } : {};
         {meta && (
           <span class="work-card__stars" aria-label={`${meta.stars} stars`}>
             <Icon name="star" class="work-card__star" />
-            {meta.stars}
+            <span class="work-card__star-count" data-stars>{meta.stars}</span>
           </span>
         )}
         {repoLink && repo && (

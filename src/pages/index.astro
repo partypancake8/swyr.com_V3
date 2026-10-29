@@ -56,16 +56,17 @@ const photos = [
     </p>
     <div class="work-cards">
       <WorkCard
-        title="4 square"
+        title="4square"
         href="/projects/4square"
-        desc="Four 128×64 OLEDs, each independently programmable. Feather ESP32-S3 with WiFi, NTP, battery gauge, and a 3D-printed enclosure."
-        tags={["embedded", "ESP32-S3", "3D printed", "open source"]}
+        desc="Four 0.96 in OLEDs on a custom 74 x 74 mm board with an ESP32-C3 SuperMini, a real-time clock and room sensors, in a printed case with a laser-cut acrylic back."
+        tags={["embedded", "custom PCB", "ESP32-C3", "open source"]}
         image="/images/4square/v1-early-front.jpg"
         imageWidth={1600}
         imageHeight={1200}
-        imageAlt="4 square desk display"
+        imageAlt="4square desk display"
         repo="4square_production"
         repoLink
+        pill
       />
       <WorkCard
         title="MDLive"
@@ -111,7 +112,7 @@ const photos = [
           <span class="tl-item__when"><span class="tl-item__date"><Icon name="calendar" size={12} class="tl-item__date-icon" />Jan 2027 – Apr 2028</span></span>
         </div>
         <p class="tl-item__body">
-          Starting the Master of Science in Information at UMSI in January 2027 through the UCAD pathway. I chose it to keep learning user experience design and to build on my software development and product management skills, so I can bring engineering and human-centered design together in the products I work on.
+          I start the Master of Science in Information at UMSI in January 2027 through the UCAD pathway. I chose it to keep studying user experience design and to build on my software development and product management skills, so I can combine engineering and human-centered design in the products I work on.
         </p>
       </li>
       <li class="tl-item tl-item--current">
@@ -122,10 +123,10 @@ const photos = [
           <span class="tl-item__when"><span class="tl-pill">Current</span><span class="tl-item__date"><Icon name="calendar" size={12} class="tl-item__date-icon" />Aug 2022 – Dec 2026</span></span>
         </div>
         <p class="tl-item__body">
-          This is my last semester of the robotics engineering undergrad at the College of Engineering; I graduate in December 2026.
-          Along the way I've led and worked on multi-person robotics and human-robot interaction
-          projects: real-time experimental systems, Python automation tools, and
-          software-to-hardware integrations.
+          I'm in my last semester of the robotics engineering undergrad at the College of Engineering and graduate in December 2026.
+          I've led and worked on team robotics and human-robot interaction projects, including
+          real-time experimental systems, Python automation tools and software-to-hardware
+          integrations.
         </p>
       </li>
       <li class="tl-item">
@@ -137,9 +138,9 @@ const photos = [
         </div>
         <p class="tl-item__body">
           This past summer I built full-stack web apps at Decypher, from the database and API up to
-          the UI, using AI-assisted, spec-first tools. Most of my work was shipping data
-          integrations, product features, and internal tools that took ideas to something people
-          actually used.
+          the UI, working spec first with AI-assisted tools. Most of my work was shipping data
+          integrations, product features and internal tools, taking each from an idea to something
+          people used.
         </p>
       </li>
       <li class="tl-item">
@@ -150,7 +151,7 @@ const photos = [
           <span class="tl-item__when"><span class="tl-item__date"><Icon name="calendar" size={12} class="tl-item__date-icon" />May – Aug 2024</span></span>
         </div>
         <p class="tl-item__body">
-          Built LabVIEW control software for a LIN-based water pump testbench and helped with warranty analysis and functional testing on thermal-management products. I also benchmarked competitor patents and products in the EV cooling market, made 3D-printed display models for trade shows, and worked with engineering and sales on client communication.
+          Built LabVIEW control software for a LIN-based water pump testbench and supported warranty analysis and functional testing on thermal-management products. I also benchmarked competitor patents and products in the EV cooling market, made 3D-printed display models for trade shows, and worked with engineering and sales on client communication.
         </p>
       </li>
       <li class="tl-item">
@@ -174,8 +175,8 @@ const photos = [
     <p class="section-text">
       I'm a robotics engineering student at the University of Michigan who builds interactive
       systems: real-time software, embedded hardware, and the interfaces people use to work with
-      them. I care about taking a project from concept to something deployed, with clean
-      architecture and a front end that feels fast and considered.
+      them. I like taking a project from concept to deployment, with a clean architecture and a front end
+      that responds quickly.
     </p>
     <ul class="photo-strip">
       {photos.map((p) => (
