@@ -29,7 +29,10 @@ const photos = [
       <span class="hero__headline">Sawyer Smith</span>
       <span class="hero__subtitle">I like to make things!</span>
     </h1>
-    <a class="outline-btn" href="#work">See my work</a>
+    <div class="hero__actions">
+      <a class="outline-btn" href="#projects">See my projects</a>
+      <a class="outline-btn" href="#contact">Contact me</a>
+    </div>
     <div class="contact-links hero__links">
       <a class="outline-btn" href="https://github.com/partypancake8/" target="_blank" rel="noopener">
         <Icon name="github" class="icon-svg" /> GitHub
@@ -44,9 +47,9 @@ const photos = [
     </div>
   </section>
 
-  <section id="work" class="section-block" data-crumb="work">
+  <section id="projects" class="section-block" data-crumb="projects">
     <h2 class="section-heading">
-      <Icon name="chip" size={20} class="section-heading__icon" /><span class="nav-index">01.</span> <span class="section-title">Work</span>
+      <Icon name="chip" size={20} class="section-heading__icon" /><span class="section-title">Projects</span>
     </h2>
     <p class="section-lede">
       Personal projects and engineering work: embedded hardware, robotics, and software tools.
@@ -97,23 +100,26 @@ const photos = [
 
   <section id="experience" class="section-block" data-crumb="experience">
     <h2 class="section-heading">
-      <Icon name="briefcase" size={20} class="section-heading__icon" /><span class="nav-index">02.</span> <span class="section-title">Experience</span>
+      <Icon name="briefcase" size={20} class="section-heading__icon" /><span class="section-title">Experience</span>
     </h2>
-    <div class="timeline-wrap">
     <ol class="timeline">
       <li class="tl-item">
+        <a class="tl-item__logo" href="https://www.si.umich.edu/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><span class="org-tile"><img src="/icons/companies/umsi.png" alt="University of Michigan School of Information" width="40" height="40" loading="lazy" /></span></a>
         <div class="tl-item__head">
-          <a class="tl-item__org" href="https://www.si.umich.edu/" target="_blank" rel="noopener"><Icon name="grad-cap" class="tl-item__icon" /><span class="tl-item__name">University of Michigan School of Information</span><span class="org-tile"><img src="/icons/companies/umsi.png" alt="University of Michigan School of Information" width="40" height="40" loading="lazy" /></span></a>
-          <span class="tl-item__meta">M.S. in Information &middot; UCAD pathway &middot; <span class="tl-item__date"><Icon name="calendar" size={12} class="tl-item__date-icon" />starting Winter 2027</span></span>
+          <a class="tl-item__org" href="https://www.si.umich.edu/" target="_blank" rel="noopener"><span class="tl-item__name">University of Michigan School of Information</span><Icon name="grad-cap" size={14} class="tl-item__icon" /></a>
+          <span class="tl-item__meta">M.S. in Information &middot; UCAD pathway</span>
+          <span class="tl-item__when"><span class="tl-item__date"><Icon name="calendar" size={12} class="tl-item__date-icon" />Jan 2027 – Apr 2028</span></span>
         </div>
         <p class="tl-item__body">
-          Starting the Master of Science in Information at UMSI in Winter 2027 through the UCAD pathway.
+          Starting the Master of Science in Information at UMSI in January 2027 through the UCAD pathway. I chose it to keep learning user experience design and to build on my software development and product management skills, so I can bring engineering and human-centered design together in the products I work on.
         </p>
       </li>
-      <li class="tl-item">
+      <li class="tl-item tl-item--current">
+        <a class="tl-item__logo" href="https://robotics.umich.edu/academics/undergraduate/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><span class="org-tile"><img src="/icons/companies/umich.png" alt="University of Michigan" width="40" height="40" loading="lazy" /></span></a>
         <div class="tl-item__head">
-          <a class="tl-item__org" href="https://robotics.umich.edu/academics/undergraduate/" target="_blank" rel="noopener"><Icon name="grad-cap" class="tl-item__icon" /><span class="tl-item__name">University of Michigan</span><span class="org-tile"><img src="/icons/companies/umich.png" alt="University of Michigan" width="40" height="40" loading="lazy" /></span></a>
-          <span class="tl-item__meta">B.S.E. Robotics Engineering &middot; <span class="tl-item__date"><Icon name="calendar" size={12} class="tl-item__date-icon" />graduating Dec 2026</span></span>
+          <a class="tl-item__org" href="https://robotics.umich.edu/academics/undergraduate/" target="_blank" rel="noopener"><span class="tl-item__name">University of Michigan</span><Icon name="grad-cap" size={14} class="tl-item__icon" /></a>
+          <span class="tl-item__meta">B.S.E. Robotics Engineering</span>
+          <span class="tl-item__when"><span class="tl-pill">Current</span><span class="tl-item__date"><Icon name="calendar" size={12} class="tl-item__date-icon" />Aug 2022 – Dec 2026</span></span>
         </div>
         <p class="tl-item__body">
           This is my last semester of the robotics engineering undergrad at the College of Engineering; I graduate in December 2026.
@@ -123,9 +129,11 @@ const photos = [
         </p>
       </li>
       <li class="tl-item">
+        <a class="tl-item__logo" href="https://decyphercorp.com/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><span class="org-tile"><img src="/icons/companies/decypher.png" alt="Decypher" width="40" height="40" loading="lazy" /></span></a>
         <div class="tl-item__head">
-          <a class="tl-item__org" href="https://decyphercorp.com/" target="_blank" rel="noopener"><Icon name="briefcase" class="tl-item__icon" /><span class="tl-item__name">Decypher</span><span class="org-tile"><img src="/icons/companies/decypher.png" alt="Decypher" width="40" height="40" loading="lazy" /></span></a>
-          <span class="tl-item__meta">Software Developer Intern &middot; <span class="tl-item__date"><Icon name="calendar" size={12} class="tl-item__date-icon" />Summer 2026</span></span>
+          <a class="tl-item__org" href="https://decyphercorp.com/" target="_blank" rel="noopener"><span class="tl-item__name">Decypher</span><Icon name="briefcase" size={14} class="tl-item__icon" /></a>
+          <span class="tl-item__meta">Software Developer Intern</span>
+          <span class="tl-item__when"><span class="tl-item__date"><Icon name="calendar" size={12} class="tl-item__date-icon" />May – Aug 2026</span></span>
         </div>
         <p class="tl-item__body">
           This past summer I built full-stack web apps at Decypher, from the database and API up to
@@ -135,32 +143,33 @@ const photos = [
         </p>
       </li>
       <li class="tl-item">
+        <a class="tl-item__logo" href="https://www.sanhuausa.com/us/en/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><span class="org-tile"><img src="/icons/companies/sanhua.png" alt="Sanhua Automotive USA" width="40" height="40" loading="lazy" /></span></a>
         <div class="tl-item__head">
-          <a class="tl-item__org" href="https://www.sanhuausa.com/us/en/" target="_blank" rel="noopener"><Icon name="briefcase" class="tl-item__icon" /><span class="tl-item__name">Sanhua Automotive USA</span><span class="org-tile"><img src="/icons/companies/sanhua.png" alt="Sanhua Automotive USA" width="40" height="40" loading="lazy" /></span></a>
-          <a class="tl-item__meta" href="/work/sanhua">Engineering Intern &middot; US Engineering Division &middot; <span class="tl-item__date"><Icon name="calendar" size={12} class="tl-item__date-icon" />May–Aug 2024</span></a>
+          <a class="tl-item__org" href="https://www.sanhuausa.com/us/en/" target="_blank" rel="noopener"><span class="tl-item__name">Sanhua Automotive USA</span><Icon name="briefcase" size={14} class="tl-item__icon" /></a>
+          <a class="tl-item__meta" href="/work/sanhua">Engineering Intern &middot; US Engineering Division</a>
+          <span class="tl-item__when"><span class="tl-item__date"><Icon name="calendar" size={12} class="tl-item__date-icon" />May – Aug 2024</span></span>
         </div>
         <p class="tl-item__body">
-          Built LabVIEW control software for a LIN-based water pump testbench, supported warranty
-          analysis, and worked with engineering and sales teams on thermal-management products.
+          Built LabVIEW control software for a LIN-based water pump testbench and helped with warranty analysis and functional testing on thermal-management products. I also benchmarked competitor patents and products in the EV cooling market, made 3D-printed display models for trade shows, and worked with engineering and sales on client communication.
         </p>
       </li>
       <li class="tl-item">
+        <a class="tl-item__logo" href="https://www.brose.com/us-en/brose-in-the-us-and-canada/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><span class="org-tile"><img src="/icons/companies/brose.png" alt="Brose North America" width="40" height="40" loading="lazy" /></span></a>
         <div class="tl-item__head">
-          <a class="tl-item__org" href="https://www.brose.com/us-en/brose-in-the-us-and-canada/" target="_blank" rel="noopener"><Icon name="briefcase" class="tl-item__icon" /><span class="tl-item__name">Brose North America</span><span class="org-tile"><img src="/icons/companies/brose.png" alt="Brose North America" width="40" height="40" loading="lazy" /></span></a>
-          <a class="tl-item__meta" href="/work/brose">Test Release Intern &middot; Drives Division &middot; <span class="tl-item__date"><Icon name="calendar" size={12} class="tl-item__date-icon" />May–Aug 2023</span></a>
+          <a class="tl-item__org" href="https://www.brose.com/us-en/brose-in-the-us-and-canada/" target="_blank" rel="noopener"><span class="tl-item__name">Brose North America</span><Icon name="briefcase" size={14} class="tl-item__icon" /></a>
+          <a class="tl-item__meta" href="/work/brose">Test Release Intern &middot; Drives Division</a>
+          <span class="tl-item__when"><span class="tl-item__date"><Icon name="calendar" size={12} class="tl-item__date-icon" />May – Aug 2023</span></span>
         </div>
         <p class="tl-item__body">
-          Ran BLDC motor validation on DYNO systems, updated test procedures, and produced training
-          materials that standardized internal workflows.
+          Ran BLDC motor validation on DYNO systems and updated legacy test procedures. I coordinated with the electronics, design and acoustics teams to keep test outputs and data in sync, ran controller validation checks with Goepel diagnostic equipment, and made a training video and documentation on DYNO testing for onboarding.
         </p>
       </li>
     </ol>
-    </div>
   </section>
 
   <section id="about" class="section-block" data-crumb="about">
     <h2 class="section-heading">
-      <Icon name="heart" size={20} class="section-heading__icon" /><span class="nav-index">03.</span> <span class="section-title">About</span>
+      <Icon name="heart" size={20} class="section-heading__icon" /><span class="section-title">About</span>
     </h2>
     <p class="section-text">
       I'm a robotics engineering student at the University of Michigan who builds interactive
@@ -177,7 +186,7 @@ const photos = [
 
   <section id="contact" class="section-block section-block--contact" data-crumb="contact">
     <h2 class="section-heading">
-      <Icon name="mail" size={20} class="section-heading__icon" /><span class="nav-index">04.</span> <span class="section-title">Contact</span>
+      <Icon name="mail" size={20} class="section-heading__icon" /><span class="section-title">Contact</span>
     </h2>
     <p class="section-text section-text--icon">
       <Icon name="mail" class="section-text__icon" />Open to new opportunities, collaborations, and side projects. Reach out, or take a look at

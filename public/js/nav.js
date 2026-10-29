@@ -1,5 +1,5 @@
-// Site header: mobile menu, scrolled state, live breadcrumb + active nav link
-// (one IntersectionObserver is the single source of truth), and JS-driven smooth
+// Site header: scrolled state, live breadcrumb (one IntersectionObserver is the
+// single source of truth for the current section), and JS-driven smooth
 // scrolling for in-page anchors so Safari and Chrome behave the same.
 (function () {
   var header = document.querySelector('[data-site-header]');
@@ -26,38 +26,6 @@
       syncToggle();
     });
   }
-  var toggle = header.querySelector('[data-nav-toggle]');
-  var panel = header.querySelector('[data-nav-panel]');
-
-  /* ---------- mobile menu ---------- */
-  function setOpen(open, focusToggle) {
-    header.classList.toggle('is-open', open);
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    if (!open && focusToggle) toggle.focus();
-  }
-  toggle.addEventListener('click', function () {
-    var open = toggle.getAttribute('aria-expanded') !== 'true';
-    setOpen(open);
-    if (open) {
-      var first = panel.querySelector('a');
-      if (first) first.focus({ preventScroll: true });
-    }
-  });
-  panel.addEventListener('click', function (e) {
-    if (e.target.closest('a')) setOpen(false);
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && header.classList.contains('is-open')) setOpen(false, true);
-  });
-  document.addEventListener('click', function (e) {
-    if (header.classList.contains('is-open') && !header.contains(e.target)) setOpen(false);
-  });
-  var mq = window.matchMedia('(min-width: 768px)');
-  var onMq = function () { if (mq.matches) setOpen(false); };
-  if (mq.addEventListener) mq.addEventListener('change', onMq);
-  else if (mq.addListener) mq.addListener(onMq);
-
   /* ---------- smooth scroll (JS, eased, same in every browser) ---------- */
   var scrollAnim = 0;
   function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
@@ -131,21 +99,11 @@
     if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
   }, { passive: true });
 
-  /* ---------- live breadcrumb + active nav link ---------- */
-  var links = [].slice.call(header.querySelectorAll('[data-section-link]'));
-  var indicator = header.querySelector('.site-nav__indicator');
+  /* ---------- live breadcrumb ---------- */
   var live = header.querySelector('[data-crumb-live]');
   var sections = [].slice.call(document.querySelectorAll('main [data-crumb][id]'));
   var inBand = {};
   var current;
-
-  function moveIndicator() {
-    if (!indicator) return;
-    var a = current && header.querySelector('[data-section-link="' + current + '"]');
-    if (!a || !a.offsetWidth) { indicator.style.opacity = '0'; return; }
-    indicator.style.opacity = '1';
-    indicator.style.transform = 'translateX(' + a.offsetLeft + 'px) scaleX(' + a.offsetWidth + ')';
-  }
 
   function crumbHTML(label) {
     return '<span class="breadcrumb__sep" aria-hidden="true">/</span><span class="breadcrumb__current">' + label + '</span>';
@@ -201,13 +159,6 @@
     var id = next ? next.id : null;
     if (id === current) return;
     current = id;
-    links.forEach(function (a) {
-      var on = a.dataset.sectionLink === current;
-      a.classList.toggle('is-active', on);
-      if (on) a.setAttribute('aria-current', 'location');
-      else a.removeAttribute('aria-current');
-    });
-    moveIndicator();
     setCrumb(next);
   }
 
@@ -218,7 +169,6 @@
     }, { rootMargin: '-80px 0px -55% 0px' });
     sections.forEach(function (s) { io.observe(s); });
     window.addEventListener('popstate', pickActive);
-    window.addEventListener('resize', moveIndicator);
   }
   if (live) live.classList.add('is-empty');
   onScroll();

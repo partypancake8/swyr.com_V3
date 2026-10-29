@@ -31,7 +31,7 @@
   var raf = window.requestAnimationFrame;
 
   // 1. Scroll reveal: once, staggered 60 ms per item in each batch.
-  var targets = document.querySelectorAll('.section-block, .contrib, .work-card, .tl-item, .photo-strip li, .contact-links a, .proj-gallery__item, .proj-stage__item, .proj-comp-card, .proj-specs, .proj-widget-list, .proj-cta, .repo-head, .readme-panel, .resume-head, .resume-page');
+  var targets = document.querySelectorAll('.section-block, .work-card, .tl-item, .photo-strip li, .contact-links a, .proj-gallery__item, .proj-stage__item, .proj-comp-card, .proj-specs, .proj-widget-list, .proj-cta, .repo-head, .readme-panel, .resume-head, .resume-page');
   var io = new IntersectionObserver(function (entries) {
     var n = 0;
     entries.forEach(function (en) {
@@ -39,7 +39,6 @@
       var el = en.target;
       el.style.setProperty('--stagger', (n++ * 60) + 'ms');
       el.classList.add('in');
-      if (el.matches('.contrib')) { el.classList.add('is-drawn'); countUp(el.querySelector('[data-count]')); }
       io.unobserve(el);
     });
   }, { rootMargin: '0px 0px -8% 0px' });
@@ -47,6 +46,16 @@
     // The hero contact row is part of the load sequence (CSS delays it), not the scroll reveal.
     if (el.closest('.hero')) el.classList.add('in'); else io.observe(el);
   });
+  // The contribution panel is always visible (no reveal); only its total counts up once.
+  var contribCount = document.querySelector('.contrib [data-count]');
+  if (contribCount) {
+    var cio = new IntersectionObserver(function (entries) {
+      if (!entries.some(function (en) { return en.isIntersecting; })) return;
+      cio.disconnect();
+      countUp(contribCount);
+    }, { rootMargin: '0px 0px -8% 0px' });
+    cio.observe(contribCount);
+  }
 
   // Contribution total counts up from 0 once the panel reveals; width is pinned first
   // (tabular digits, right aligned) so the rest of the title never moves.
@@ -137,32 +146,6 @@
       tip.classList.add('is-visible');
     });
     graph.addEventListener('pointerleave', function () { tip.classList.remove('is-visible'); });
-  }
-
-  // Experience timeline: the active entry's own marker fills in (CSS fades it); no
-  // travelling element. Active = the entry crossing a band at 35-45% of the viewport,
-  // held for 80 ms (debounced so it never flickers); at the bottom of the page the last entry wins.
-  var tlItems = [].slice.call(document.querySelectorAll('.timeline .tl-item'));
-  if (tlItems.length) {
-    var inBand = [], active = -1, pending = -1, holdTimer = 0;
-    function mark() {
-      tlItems.forEach(function (it, i) { it.classList.toggle('is-active', i === active); });
-    }
-    function choose() {
-      var next = -1;
-      for (var i = 0; i < tlItems.length; i++) if (inBand[i]) { next = i; break; }
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) next = tlItems.length - 1;
-      if (next < 0 || next === active || next === pending) return;
-      pending = next;
-      clearTimeout(holdTimer);
-      holdTimer = setTimeout(function () { active = pending; pending = -1; mark(); }, 80);
-    }
-    var bio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { inBand[tlItems.indexOf(en.target)] = en.isIntersecting; });
-      choose();
-    }, { rootMargin: '-35% 0px -55% 0px' });
-    tlItems.forEach(function (it) { bio.observe(it); });
-    window.addEventListener('scroll', function () { if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) choose(); }, { passive: true });
   }
   }
 })();

@@ -33,8 +33,8 @@
   --accent-dim: rgba(63, 185, 80, 0.15);
   --fg-subtle: #9198a1; /* section icons, index numbers */
   /* Accent restraint: green lives on the swyrbot, the contribution cells, the
-     footer invaders, focus rings, the active-section underline, the timeline's
-     active marker, and hover states. Everything else is neutral at rest. */
+     footer invaders, focus rings, the timeline's Current
+     pill, and hover states. Everything else is neutral at rest. */
   --link: var(--fg);
   --link-hover: var(--accent);
   --btn-bg: #212830;
@@ -59,7 +59,6 @@
   --dur-slide: 350ms;
   --dur-ui: 180ms;
   --dur-step: 80ms; /* hero entrance stagger */
-  --dur-draw: 700ms; /* timeline line draw */
   --dur-count: 900ms; /* contribution count-up (read by flair.js) */
   --dur-drift: 6s; /* thumbnail Ken Burns drift */
   /* the shared interactive transition list; specific rules append to it */
@@ -230,162 +229,31 @@ video {
   display: none;
 }
 
-.site-nav__list {
-  position: relative;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+.site-nav {
+  flex: none;
 }
-.site-nav__link {
+.site-nav__resume {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 10px;
-  border-radius: var(--radius);
+  padding: 5px 12px;
   color: var(--fg);
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
   white-space: nowrap;
-}
-.site-nav__link:hover {
-  background: var(--btn-hover);
-  text-decoration-color: transparent;
-}
-.site-nav__link.is-active {
-  color: var(--fg);
   background: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  border-radius: var(--radius);
 }
-/* Sliding underline: a 1px-wide bar scaled to the active link's width. */
-.site-nav__indicator {
-  position: absolute;
-  left: 0;
-  bottom: -13px;
-  width: 1px;
-  height: 2px;
-  background: var(--accent);
-  border-radius: 2px;
-  transform-origin: 0 0;
-  opacity: 0;
-  pointer-events: none;
+.site-nav__resume:hover {
+  background: var(--btn-hover);
+  border-color: var(--accent);
+  text-decoration-color: transparent;
 }
 .site-nav__icon {
   flex: none;
   color: var(--fg-muted);
-}
-.site-nav__resume {
-  margin-left: 8px;
-  background: var(--btn-bg);
-  border: 1px solid var(--btn-border);
-  padding: 5px 12px;
-}
-.site-nav__resume:hover {
-  border-color: var(--accent);
-}
-.nav-index {
-  font-family: var(--font-mono);
-  font-size: 0.8em;
-  font-weight: 400;
-  color: var(--fg-subtle);
-}
-
-.nav-toggle {
-  display: none;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  color: var(--fg);
-  background: transparent;
-  border: 1px solid var(--btn-border);
-  border-radius: var(--radius);
-  cursor: pointer;
-}
-.nav-toggle:hover {
-  background: var(--btn-hover);
-}
-/* Three bars that morph into an X */
-.nav-toggle__bars {
-  position: relative;
-  width: 16px;
-  height: 12px;
-}
-.nav-toggle__bars span {
-  position: absolute;
-  left: 0;
-  width: 16px;
-  height: 1.5px;
-  border-radius: 1px;
-  background: currentColor;
-  transform-origin: center;
-}
-.nav-toggle__bars span:nth-child(1) { top: 0; }
-.nav-toggle__bars span:nth-child(2) { top: 5.25px; }
-.nav-toggle__bars span:nth-child(3) { top: 10.5px; }
-.site-header.is-open .nav-toggle__bars span:nth-child(1) {
-  transform: translateY(5.25px) rotate(45deg);
-}
-.site-header.is-open .nav-toggle__bars span:nth-child(2) {
-  opacity: 0;
-  transform: scaleX(0.2);
-}
-.site-header.is-open .nav-toggle__bars span:nth-child(3) {
-  transform: translateY(-5.25px) rotate(-45deg);
-}
-
-/* Tablet: icons + short labels would crowd, so drop the 0x. prefixes. */
-@media (min-width: 768px) and (max-width: 900px) {
-  .site-nav .nav-index {
-    display: none;
-  }
-  .site-nav__link {
-    padding: 6px 8px;
-  }
-}
-
-@media (max-width: 767px) {
-  .nav-toggle {
-    display: inline-flex;
-  }
-  .site-nav {
-    position: absolute;
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(-8px);
-    pointer-events: none;
-    top: 100%;
-    left: 0;
-    right: 0;
-    padding: 8px var(--gutter) 16px;
-    background: var(--header-bg);
-    border-bottom: 1px solid var(--border);
-    box-shadow: 0 12px 24px rgba(1, 4, 9, 0.6);
-  }
-  .site-header.is-open .site-nav {
-    visibility: visible;
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-  }
-  .site-nav__list {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 2px;
-  }
-  .site-nav__link {
-    display: flex;
-    padding: 10px 12px;
-    font-size: 16px;
-  }
-  .site-nav__indicator {
-    display: none;
-  }
-  .site-nav__resume {
-    margin: 8px 0 0;
-    justify-content: center;
-  }
 }
 
 /* ====================
@@ -529,9 +397,10 @@ video {
 .contrib__bg {
   opacity: 0.35;
 }
-/* Hairline on real-day cells (like GitHub's cell outline) so the invader
-   silhouette reads even where most days are empty. */
-.contrib__graph rect[data-tip] {
+/* Hairline on every silhouette cell (like GitHub's cell outline): lit day
+   cells and the dark gap cells, so the invader reads as one solid shape. */
+.contrib__graph rect[data-tip],
+.contrib__gap {
   stroke: rgba(240, 246, 252, 0.1);
   stroke-width: 1px;
 }
@@ -609,45 +478,26 @@ video {
   border-radius: var(--radius);
 }
 
-/* experience: activity-feed timeline */
-.timeline-wrap {
-  position: relative;
-}
+/* experience: a plain list of entries (no rail, no markers); the "Current" pill
+   is the only status indicator. Rows bleed 8px each side so the hover highlight
+   has room while tiles and dates sit on the panel's content edges. */
 .timeline {
-  position: relative;
   list-style: none;
-  padding-left: 28px;
 }
-.timeline::before {
-  content: "";
-  position: absolute;
-  left: 7px;
-  top: 6px;
-  bottom: 6px;
-  width: 2px;
-  background: var(--border);
-}
+/* Each entry is a two-column grid: the logo tile hangs in a 32px gutter like a
+   bullet, and the head and body share the second column, so the name and the
+   paragraph start at the same x and the text never runs under the tile. */
 .tl-item {
   position: relative;
   isolation: isolate;
-  margin-left: -8px;
-  padding: 8px;
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  column-gap: 12px;
+  margin: 0 -8px;
+  padding: 6px 8px;
 }
-.tl-item + .tl-item,
-.tl-note + .tl-item {
-  margin-top: 8px;
-}
-/* each entry's own static hollow marker; the active entry's marker fills in (no travelling element) */
-.tl-item::before {
-  content: "";
-  position: absolute;
-  left: -17px;
-  top: 23px; /* centered on the 40px title row (8px padding + 20px - 5px) */
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--bg);
-  box-shadow: 0 0 0 2px var(--border);
+.tl-item + .tl-item {
+  margin-top: 4px;
 }
 /* hover background on an inset layer: fades, never shifts layout */
 .tl-item::after {
@@ -666,30 +516,44 @@ video {
 .tl-item > * {
   position: relative;
 }
+/* The tile link (its own link to the org, out of the tab order since the name
+   link already goes there) sits in column 1 beside the head line. */
+.tl-item__logo {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+}
+/* Name, role and division flow left; the date column is pushed right. The 32px
+   minimum height centres a one-line head on the tile. */
 .tl-item__head {
+  grid-column: 2;
+  grid-row: 1;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 4px 12px;
+  align-content: center;
+  column-gap: 10px;
+  row-gap: 0;
+  min-height: 32px;
   margin-bottom: 4px;
 }
 .tl-item__org {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
   font-weight: 600;
   color: var(--fg);
 }
-.tl-item__head {
-  align-items: center;
+/* small cap / briefcase glyph after the name, muted */
+.tl-item__icon {
+  flex: none;
+  color: var(--fg-subtle);
 }
-/* iOS-app-style organization tile, inline after the title */
 .org-tile {
   position: relative;
-  flex: none;
   display: block;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   overflow: hidden;
   border: 1px solid #30363d;
   border-radius: 22%;
@@ -709,19 +573,10 @@ video {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
   pointer-events: none;
 }
-.tl-item__org:hover .org-tile,
-.org-tile:hover {
+.tl-item:has(.tl-item__org:hover) .org-tile,
+.tl-item__logo:hover .org-tile {
   transform: translateY(-1px);
   box-shadow: 0 6px 14px rgba(1, 4, 9, 0.55);
-}
-@media (max-width: 767px) {
-  .org-tile {
-    width: 32px;
-    height: 32px;
-  }
-  .tl-item::before {
-    top: 19px; /* centered on the 32px title row */
-  }
 }
 .tl-item:hover .tl-item__org {
   color: var(--link-hover);
@@ -732,29 +587,24 @@ video {
   font-size: 12px;
   color: var(--fg-muted);
 }
+/* "Current" status pill: the repo-card "Public" pill, in the marker's green */
+.tl-pill {
+  display: inline-block;
+  margin-right: 8px; /* sits left of the date, so every date ends on the same right edge */
+  padding: 0 7px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 2em;
+  vertical-align: middle;
+}
 .tl-item__body {
-  max-width: 72ch;
+  grid-column: 2;
   font-size: 15px;
   color: var(--fg);
-}
-.tl-note {
-  position: relative;
-  margin: 16px 0 8px;
-  font-size: 14px;
-  color: var(--fg-muted);
-}
-.tl-note::before {
-  content: "";
-  position: absolute;
-  left: -25px;
-  top: 50%;
-  width: 14px;
-  height: 2px;
-  background: var(--border);
-}
-.tl-item.is-active::before {
-  background: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent);
 }
 
 /* work cards: GitHub-repo-style project grid, 3-up on desktop */
@@ -1085,10 +935,6 @@ video {
 .work-card:hover .work-card__tag::after {
   opacity: 1;
 }
-.contrib__graph rect {
-  transform-box: fill-box;
-  transform-origin: center;
-}
 
 /* Inline links: underline draws in from the left; external ones get a glyph. */
 .section-text a,
@@ -1143,7 +989,7 @@ video {
 
 /* motion on (data-motion on <html>; was prefers-reduced-motion: no-preference) */
 /* Scroll reveal: hidden only when JS is present, revealed once. */
-:root[data-motion="on"].js :is(.contrib, .work-card, .tl-item, .photo-strip li, .contact-links a, .proj-gallery__item, .proj-stage__item, .proj-comp-card, .proj-specs, .proj-widget-list, .proj-cta, .repo-head, .readme-panel, .resume-head, .resume-page):not(.in) {
+:root[data-motion="on"].js :is(.work-card, .tl-item, .photo-strip li, .contact-links a, .proj-gallery__item, .proj-stage__item, .proj-comp-card, .proj-specs, .proj-widget-list, .proj-cta, .repo-head, .readme-panel, .resume-head, .resume-page):not(.in) {
   opacity: 0;
   transform: translateY(12px);
 }
@@ -1170,30 +1016,6 @@ video {
   }
 }
 
-/* Contribution graph: left-to-right fill wave, then a gentle pulse on hover. */
-:root[data-motion="on"].js .contrib:not(.is-drawn) rect {
-  opacity: 0;
-}
-:root[data-motion="on"] .contrib.is-drawn rect {
-  animation: cell-in var(--dur-slide) var(--ease-out) calc(var(--d, 0ms) + var(--stagger, 0ms)) backwards;
-}
-@keyframes cell-in {
-  from {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-}
-:root[data-motion="on"] .contrib__graph:hover rect[fill="#39d353"],
-:root[data-motion="on"] .contrib__graph:hover rect[fill="#26a641"],
-:root[data-motion="on"] .contrib__graph:hover rect[fill="#006d32"] {
-  animation: cell-pulse calc(var(--dur-slow) * 4) var(--ease-in-out) calc(var(--d, 0ms) / 3) infinite;
-}
-@keyframes cell-pulse {
-  50% {
-    opacity: 0.6;
-  }
-}
-
 :root[data-motion="on"] .hero__photo {
   transition: transform var(--dur-slow) var(--ease-out), opacity var(--dur-slow) var(--ease-out);
   will-change: transform;
@@ -1201,10 +1023,6 @@ video {
 
 :root[data-motion="on"] .photo-strip img {
   transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
-}
-
-:root[data-motion="on"] .site-nav__indicator {
-  transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
 }
 
 :root[data-motion="on"] .section-text a,
@@ -1231,7 +1049,7 @@ video {
 /* motion on (data-motion on <html>; was prefers-reduced-motion: no-preference) */
 /* Baseline for every interactive element (zero specificity via :where, so the
      longer, specific transitions below still win): nothing interactive snaps. */
-:root[data-motion="on"] :where(a, button, [role="button"], summary, .outline-btn, .nav-toggle, .site-nav__link,
+:root[data-motion="on"] :where(a, button, [role="button"], summary, .outline-btn,
     .work-card, .work-card__tag, .breadcrumb__crumb, .tl-item, .proj-stage__item) {
   transition: var(--t-ui);
 }
@@ -1249,19 +1067,6 @@ video {
   opacity: 0;
   transform: translateY(4px);
   transition: none;
-}
-
-/* Mobile menu: slides down and fades; bars morph to X. */
-@media (max-width: 767px) {
-  :root[data-motion="on"] .site-nav {
-    transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-base);
-  }
-  :root[data-motion="on"] .site-header.is-open .site-nav {
-    transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), visibility 0s;
-  }
-}
-:root[data-motion="on"] .nav-toggle__bars span {
-  transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
 }
 
 /* Graph tooltip fades and rises in. */
@@ -1283,10 +1088,7 @@ video {
   transition: opacity var(--dur-fast) var(--ease-out);
 }
 
-/* Timeline: the active entry's marker fills with a soft eased fade; hover fades an inset background. */
-:root[data-motion="on"] .tl-item::before {
-  transition: background-color var(--dur-slow) var(--ease-out), box-shadow var(--dur-slow) var(--ease-out);
-}
+/* Timeline: hover fades an inset background. */
 :root[data-motion="on"] .tl-item::after {
   transition: opacity var(--dur-base) var(--ease-out);
 }
@@ -1342,13 +1144,13 @@ video {
 /* Hero entrance, once per load: label, name, tagline, button, contact row, photo. */
 :root[data-motion="on"] .hero__eyebrow,
 :root[data-motion="on"] .hero__subtitle,
-:root[data-motion="on"] .hero__text > .outline-btn {
+:root[data-motion="on"] .hero__actions {
   animation: hero-in var(--dur-slow) var(--ease-out) backwards;
 }
 :root[data-motion="on"] .hero__subtitle {
   animation-delay: calc(var(--dur-step) * 2);
 }
-:root[data-motion="on"] .hero__text > .outline-btn {
+:root[data-motion="on"] .hero__actions {
   animation-delay: calc(var(--dur-step) * 3);
 }
 :root[data-motion="on"] .hero__headline {
@@ -1440,33 +1242,12 @@ video {
   }
 }
 
-/* Section headers: the index slides in from the left, the title fades. */
-:root[data-motion="on"] .section-block.in .section-heading .nav-index {
-  animation: index-in var(--dur-slow) var(--ease-out) backwards;
-}
+/* Section headers: the title fades in. */
 :root[data-motion="on"] .section-block.in .section-title {
   animation: reveal-fade var(--dur-slow) var(--ease-out) var(--dur-step) backwards;
 }
-@keyframes index-in {
-  from {
-    opacity: 0;
-    transform: translateX(-12px);
-  }
-}
 
-/* Timeline: the track draws top to bottom;
-     logo tiles pop with a spring as their entry reveals. */
-:root[data-motion="on"] .timeline::before {
-  transform-origin: 50% 0;
-}
-:root[data-motion="on"] .section-block.in .timeline::before {
-  animation: line-draw var(--dur-draw) var(--ease-out) backwards;
-}
-@keyframes line-draw {
-  from {
-    transform: scaleY(0);
-  }
-}
+/* Timeline: logo tiles pop with a spring as their entry reveals. */
 :root[data-motion="on"] .tl-item.in .org-tile {
   animation: tile-pop var(--dur-slow) var(--ease-spring) calc(var(--stagger, 0ms) + var(--dur-base));
 }
@@ -1554,6 +1335,11 @@ video {
   font-family: var(--font-pixel);
   padding: 6px 12px;
 }
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
 .hero .contact-links {
   gap: 14px;
   margin-top: 16px;
@@ -1562,10 +1348,22 @@ video {
   padding-left: 3px; /* keeps the 3px button outlines on the content edge */
 }
 
-/* timeline labels */
-.tl-item__icon {
-  margin-right: -3px; /* the org row has a 10px gap; icons sit 7px from their label */
-  color: var(--fg-subtle);
+/* timeline labels: the date (and the Current pill) sit flush right in one column;
+   on narrow screens they wrap to their own line under the name, left aligned. */
+.tl-item__when {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+@media (max-width: 767px) {
+  .tl-item__when {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
 }
 .tl-item__date {
   display: inline-flex;
@@ -1620,7 +1418,6 @@ video {
 :root[data-motion="on"] .section-block.in > .section-text .ico--line,
 :root[data-motion="on"] .tl-item.in .ico--line,
 :root[data-motion="on"] .work-card.in .ico--line,
-:root[data-motion="on"] .contrib.in .ico--line,
 :root[data-motion="on"] .resume-head.in .ico--line,
 :root[data-motion="on"] .proj-cta.in .ico--line {
   animation: px-pop var(--dur-base) var(--ease-out) calc(var(--stagger, 0ms) + var(--dur-base)) backwards;
