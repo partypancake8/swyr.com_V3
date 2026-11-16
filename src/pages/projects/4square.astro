@@ -449,6 +449,29 @@ import Icon from '../../components/Icon.astro';
 
   <hr class="proj-divider" />
 
+  <!-- ── sponsor ──────────────────────── -->
+  <section class="proj-section" id="sponsor" data-crumb="sponsor">
+    <p class="proj-section-label"><Icon name="heart" class="proj-section-label__icon" />sponsor</p>
+    <h2 class="proj-section-heading">Project Sponsor</h2>
+    <a
+      class="proj-sponsor-logo"
+      href="https://www.pcbway.com"
+      target="_blank"
+      rel="noopener"
+    ><img src="/images/4square/pcbway-logo.png" alt="PCBWay" width="880" height="328" loading="lazy" /></a>
+    <p>
+      A huge thank you to <a href="https://www.pcbway.com" target="_blank" rel="noopener">PCBWay</a> for sponsoring the fabrication and assembly of the rev P boards. Their support made this revision possible.
+    </p>
+    <p>
+      PCBWay is building the 10 rev P boards (2 layer, ENIG) and assembling all of them. Before running the full batch they assemble one board first and send a photo for approval, which is exactly the check this project needed after an earlier run came back with parts rotated.
+    </p>
+    <p>
+      The design files are on <a href="https://github.com/partypancake8/4square_production" target="_blank" rel="noopener">GitHub</a>.
+    </p>
+  </section>
+
+  <hr class="proj-divider" />
+
   <!-- ── source ───────────────────────── -->
   <section class="proj-section" id="source" data-crumb="source">
     <p class="proj-section-label"><Icon name="rocket" class="proj-section-label__icon" />source</p>
@@ -470,3 +493,17 @@ import Icon from '../../components/Icon.astro';
     </div>
   </section>
 </ProjectLayout>
+
+<style>
+  .proj-sponsor-logo {
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .proj-sponsor-logo img {
+    display: block;
+    width: 220px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+</style>
