@@ -1,6 +1,7 @@
 ---
 import ProjectLayout from '../../layouts/ProjectLayout.astro';
 import Icon from '../../components/Icon.astro';
+import SponsorBadge from '../../components/SponsorBadge.astro';
 ---
 
 <ProjectLayout title="4square · build log" breadcrumb="4square">
@@ -46,13 +47,16 @@ import Icon from '../../components/Icon.astro';
 
   <!-- ── hero image ───────────────────── -->
   <div class="proj-hero-media">
-    <img
-      class="proj-hero-img"
-      src="/images/4square/v1-early-front.jpg"
-      width="1600"
-      height="1200"
-      alt="Finished 4square build on a desk"
-    />
+    <div class="proj-hero-photo">
+      <img
+        class="proj-hero-img"
+        src="/images/4square/v1-early-front.jpg"
+        width="1600"
+        height="1200"
+        alt="Finished 4square build on a desk"
+      />
+      <SponsorBadge size="hero" />
+    </div>
   </div>
   <p class="proj-media-caption">
     V1 &middot; custom PCB &middot; 4&times; SSD1306 OLEDs &middot; printed shell
@@ -495,6 +499,10 @@ import Icon from '../../components/Icon.astro';
 </ProjectLayout>
 
 <style>
+  .proj-hero-photo {
+    position: relative;
+    max-width: 100%;
+  }
   .proj-sponsor-logo {
     display: inline-block;
     margin-bottom: 16px;

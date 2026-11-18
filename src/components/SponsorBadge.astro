@@ -1,0 +1,157 @@
+---
+// "Sponsored by PCBWay" sticker seal laid over a photo corner. The parent must be
+// position: relative. Not a link: on the work card the stretched title link
+// already covers the photo. ?callout=left moves it to the top-left corner.
+//
+// Seal shape: Phosphor Icons "seal" (fill weight), unmodified path, colour only.
+//   Source:  https://unpkg.com/@phosphor-icons/core@2.1.1/assets/fill/seal-fill.svg
+//   Project: https://github.com/phosphor-icons/core
+//   Licence: MIT, Copyright (c) 2023 Phosphor Icons
+// Saved as /images/4square/pcbway-seal.svg. The PCBWay logo is the official artwork.
+interface Props {
+  /** "card" for the landing page work card, "hero" for the project page photo. */
+  size?: 'card' | 'hero';
+}
+const { size = 'card' } = Astro.props;
+---
+<script is:inline>
+  if (new URLSearchParams(location.search).get('callout') === 'left') {
+    document.documentElement.classList.add('sponsor-left');
+  }
+</script>
+<span class:list={['sponsor-badge', `sponsor-badge--${size}`]}>
+  <span class="sponsor-badge__float">
+    <span class="sponsor-badge__seal">
+      <span class="sponsor-badge__text">Sponsored</span>
+      <span class="sponsor-badge__text">by</span>
+      <img class="sponsor-badge__logo" src="/images/4square/pcbway-logo-ink.png" alt="PCBWay" width="899" height="253" />
+    </span>
+  </span>
+</span>
+
+<style>
+  .sponsor-badge {
+    --seal: 96px;
+    --tilt: 10deg;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    width: var(--seal);
+    height: var(--seal);
+    pointer-events: none;
+  }
+  /* Card seal: one proportional unit sized from the photo box (the thumb is an
+     inline-size container), matching the phone layout at every viewport:
+     seal 24.85% of the photo width, inset 1.86% from the top and side. */
+  .sponsor-badge--card {
+    --seal: 24.85cqw;
+    top: 1.86cqw;
+    right: 1.86cqw;
+  }
+  /* Hero seal: sits inside the photo's top right corner, sized from the photo
+     width (15%, floor 80px, ceiling 140px). The badge is its own size
+     container, so --seal (100cqw) gives the text and logo the seal's width.
+     Insets are margins (percent margins resolve against the photo width) at
+     7.5% of the seal width, the same ratio as the card. */
+  .sponsor-badge--hero {
+    --seal: 100cqw;
+    container-type: size;
+    width: clamp(80px, 15%, 140px);
+    height: auto;
+    aspect-ratio: 1;
+    top: 0;
+    right: 0;
+    margin: clamp(6px, 1.125%, 10.5px) clamp(6px, 1.125%, 10.5px) 0 0;
+  }
+  :global(.sponsor-left) .sponsor-badge {
+    --tilt: -10deg;
+    right: auto;
+    left: 8px;
+  }
+  :global(.sponsor-left) .sponsor-badge--card {
+    left: 1.86cqw;
+  }
+  :global(.sponsor-left) .sponsor-badge--hero {
+    left: 0;
+    margin: clamp(6px, 1.125%, 10.5px) 0 0 clamp(6px, 1.125%, 10.5px);
+  }
+
+  /* Idle motion: a smooth rock 7deg either side of the base tilt (full cycle 4.6s) and a
+     gentle breathing scale 1 to 1.06 (full cycle 3.2s). They animate the separate
+     `rotate` and `scale` properties, so the two loops never fight.
+     Hover changes nothing. */
+  .sponsor-badge__float {
+    display: block;
+    width: 100%;
+    height: 100%;
+    rotate: var(--tilt);
+    scale: 1;
+    animation:
+      sponsor-rock 2.3s ease-in-out infinite alternate,
+      sponsor-breathe 1.6s ease-in-out infinite alternate;
+  }
+  @keyframes sponsor-rock {
+    from { rotate: calc(var(--tilt) - 7deg); }
+    to { rotate: calc(var(--tilt) + 7deg); }
+  }
+  @keyframes sponsor-breathe {
+    from { scale: 1; }
+    to { scale: 1.06; }
+  }
+
+  .sponsor-badge__seal {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding-top: calc(var(--seal) * 0.02);
+    width: 100%;
+    height: 100%;
+  }
+  /* The seal shape, turned half a bump (360 / 16 = 22.5deg) relative to the
+     text so a valley, not a bump, sits above SPONSORED. Shape and text still
+     tilt, rock and breathe together as one unit. */
+  .sponsor-badge__seal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('/images/4square/pcbway-seal.svg') center / 100% 100% no-repeat;
+    rotate: 22.5deg;
+    /* Shadow lives on the shape layer only, so the text and logo are never
+       inside a filtered element. */
+    filter: drop-shadow(0 2px 2px rgba(1, 4, 9, 0.45)) drop-shadow(0 6px 10px rgba(1, 4, 9, 0.35));
+  }
+
+  /* Three-line stack: SPONSORED / BY / logo, filling the seal's inner circle. */
+  .sponsor-badge__text {
+    position: relative;
+    font-family: var(--font-sans);
+    font-size: max(8px, calc(var(--seal) * 0.1));
+    font-weight: 900;
+    letter-spacing: 0;
+    line-height: 0.95;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #1f2328;
+  }
+  .sponsor-badge__logo {
+    position: relative;
+    display: block;
+    width: 58%;
+    height: auto;
+    margin-top: calc(var(--seal) * 0.01);
+    /* The card's global `.work-card__thumb img` rules (hover zoom 1.04 then a
+       1.04 to 1.08 ken-burns loop, plus their transitions) also match this
+       logo because it sits inside the thumb. That resampled the raster logo
+       on hover. Opt the logo out so it renders identically hovered or not. */
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Deliberately no prefers-reduced-motion override: the seal's motion is small,
+     slow and non-parallax, and Sawyer wants it to play with Reduce Motion on. */
+</style>

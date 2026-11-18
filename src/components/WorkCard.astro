@@ -3,6 +3,7 @@
 // card; secondary links (repo) sit above that overlay so they stay clickable.
 import repoData from '../data/repos.json';
 import Icon from './Icon.astro';
+import SponsorBadge from './SponsorBadge.astro';
 
 interface Props {
   title: string;
@@ -22,8 +23,10 @@ interface Props {
   pill?: boolean;
   /** Show the thumbnail whole, centered on a dark panel (for UI screenshots). */
   imageFit?: boolean;
+  /** Overlay the PCBWay sponsor badge on the thumbnail. */
+  sponsor?: boolean;
 }
-const { title, href, desc, tags, image, imageAlt = '', imageWidth = 800, imageHeight = 600, repo, repoLink = false, external = false, pill = false, imageFit = false } = Astro.props;
+const { title, href, desc, tags, image, imageAlt = '', imageWidth = 800, imageHeight = 600, repo, repoLink = false, external = false, pill = false, imageFit = false, sponsor = false } = Astro.props;
 
 const LANG_COLORS: Record<string, string> = {
   Swift: '#F05138', 'C++': '#f34b7d', C: '#555555', Shell: '#89e051', Python: '#3572A5',
@@ -35,8 +38,9 @@ const linkAttrs = external ? { target: '_blank', rel: 'noopener' } : {};
 
 <article class:list={['work-card', { 'work-card--thumb': image, 'work-card--repo': pill }]} data-repo={repo}>
   {image && (
-    <div class:list={['work-card__thumb', { 'work-card__thumb--fit': imageFit }]}>
+    <div class:list={['work-card__thumb', { 'work-card__thumb--fit': imageFit }]} style={sponsor ? 'position: relative; container-type: inline-size' : undefined}>
       <img src={image} alt={imageAlt} width={imageWidth} height={imageHeight} loading="lazy" />
+      {sponsor && <SponsorBadge />}
     </div>
   )}
   <div class="work-card__body">
